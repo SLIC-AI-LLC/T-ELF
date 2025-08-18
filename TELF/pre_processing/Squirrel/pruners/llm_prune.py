@@ -2,12 +2,13 @@ import json
 import logging
 import math
 from pathlib import Path
-from typing import Union
-
+from typing import Callable, Iterable
 import pandas as pd
 from tqdm.auto import tqdm
 
-from ....helpers.llm import get_ollama_llm, vote_once, build_json_vote_prompt
+from ....helpers.llm_operations import vote_once
+from ....helpers.llm_models import get_ollama_llm
+from ....helpers.prompts import build_json_vote_prompt
 
 log = logging.getLogger(__name__)
 
@@ -21,6 +22,7 @@ class LLMPruner:
         llm_promote_threshold: float,
         llm_temperature: float,
         verbose: bool = True,
+        prompt: Callable[[str, Iterable[str]], str] = build_json_vote_prompt
     ):
         """
         Perform LLM-based refinement on an embedding-pruned dataset, annotating each
@@ -40,11 +42,17 @@ class LLMPruner:
             Sampling temperature for the LLM.
         verbose : bool
             Whether to show tqdm progress bars.
+        prompt : Callable[[str, Iterable[str]], str]
+            Function that contains the prompt for the LLM.\n
+            This function should take in a string and iterable where the string is the candidate document\n
+            and the iterable is the context or target context examples to compare the candidate docuiment to.\n
+            Default is ``TELF.helpers.prompts.build_json_vote_prompt``
         """
         self.llm_vote_trials = llm_vote_trials
         self.llm_promote_threshold = llm_promote_threshold
         self.verbose = verbose
         self.NAME = 'llm_prune'
+        self.prompt = prompt
 
         self.llm = get_ollama_llm(
             model=llm_model_name,
@@ -73,7 +81,7 @@ class LLMPruner:
         data_column : str
             Column name containing the data to be voted on.
         """
-        prompt = build_json_vote_prompt(row[data_column], ctx)
+        prompt = self.prompt(row[data_column], ctx)
         votes = [vote_once(self.llm, prompt) for _ in range(self.llm_vote_trials)]
         yes_count = sum(int(v[0]) for v in votes)
         reasons = [v[1] for v in votes]

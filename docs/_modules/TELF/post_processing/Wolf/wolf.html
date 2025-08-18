@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TELF.post_processing.Wolf.wolf &#8212; TELF 0.0.41 documentation</title>
+    <title>TELF.post_processing.Wolf.wolf &#8212; TELF 0.0.42 documentation</title>
   
   
   
@@ -29,7 +29,7 @@
   <link href="../../../../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 <link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
   
@@ -39,7 +39,7 @@
   <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../../../../_static/documentation_options.js?v=1983794d"></script>
+    <script src="../../../../_static/documentation_options.js?v=0ef7f92b"></script>
     <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -125,7 +125,7 @@
   
   
   
-    <p class="title logo__title">TELF 0.0.41 documentation</p>
+    <p class="title logo__title">TELF 0.0.42 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -322,17 +322,17 @@
                 <article class="bd-article">
                   
   <h1>Source code for TELF.post_processing.Wolf.wolf</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
-<span class="kn">from</span> <span class="nn">joblib</span> <span class="kn">import</span> <span class="n">Parallel</span><span class="p">,</span> <span class="n">delayed</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">tqdm</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">joblib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Parallel</span><span class="p">,</span> <span class="n">delayed</span>
 
-<span class="kn">from</span> <span class="nn">.graph</span> <span class="kn">import</span> <span class="n">Graph</span>
-<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">verify_matrix</span><span class="p">,</span> <span class="n">verify_stats</span>
-<span class="kn">from</span> <span class="nn">...helpers.host</span> <span class="kn">import</span> <span class="n">verify_n_jobs</span>
-<span class="kn">from</span> <span class="nn">...helpers.data_structures</span> <span class="kn">import</span> <span class="n">keys_are_sequential</span><span class="p">,</span> <span class="n">values_have_duplicates</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.graph</span><span class="w"> </span><span class="kn">import</span> <span class="n">Graph</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">verify_matrix</span><span class="p">,</span> <span class="n">verify_stats</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">...helpers.host</span><span class="w"> </span><span class="kn">import</span> <span class="n">verify_n_jobs</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">...helpers.data_structures</span><span class="w"> </span><span class="kn">import</span> <span class="n">keys_are_sequential</span><span class="p">,</span> <span class="n">values_have_duplicates</span>
 
 <div class="viewcode-block" id="Wolf">
 <a class="viewcode-back" href="../../../../Wolf.html#TELF.post_processing.Wolf.wolf.Wolf">[docs]</a>
-<span class="k">class</span> <span class="nc">Wolf</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Wolf</span><span class="p">:</span>
 
     <span class="n">PARALLEL_BACKEND_OPTIONS</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s1">&#39;loky&#39;</span><span class="p">,</span> 
@@ -353,7 +353,7 @@
     <span class="p">}</span>
 
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">parallel_backend</span><span class="o">=</span><span class="s1">&#39;loky&#39;</span><span class="p">,</span> <span class="n">max_nbytes</span><span class="o">=</span><span class="s1">&#39;100M&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">parallel_backend</span><span class="o">=</span><span class="s1">&#39;loky&#39;</span><span class="p">,</span> <span class="n">max_nbytes</span><span class="o">=</span><span class="s1">&#39;100M&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">graphs</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">node_ids</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">attributes</span> <span class="o">=</span> <span class="kc">None</span>
@@ -365,7 +365,7 @@
         
 <div class="viewcode-block" id="Wolf.create_graph">
 <a class="viewcode-back" href="../../../../Wolf.html#TELF.post_processing.Wolf.wolf.Wolf.create_graph">[docs]</a>
-    <span class="k">def</span> <span class="nf">create_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">node_ids</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">attributes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">target_nodes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">use_weighted_value</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">node_ids</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">attributes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">target_nodes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">use_weighted_value</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a graph from a matrix. The matrix can either be sparse or dense. </span>
 <span class="sd">        Note that the matrix cannot have entries on the diagonal. A diagonal entry would cause</span>
@@ -447,7 +447,7 @@
 
     
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_apply_stats</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">stats</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_apply_stats</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">stats</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">stats</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">stats</span><span class="p">:</span>
                 <span class="n">kwargs</span> <span class="o">=</span> <span class="n">stats</span><span class="p">[</span><span class="n">s</span><span class="p">]</span>
@@ -459,7 +459,7 @@
     
     
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_get_ranks_helper</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">stats</span><span class="p">,</span> <span class="n">node_ids</span><span class="p">,</span> <span class="n">attributes</span><span class="p">,</span> <span class="n">target_nodes</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">use_weighted_value</span><span class="p">,</span> <span class="n">slice_id</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_ranks_helper</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">stats</span><span class="p">,</span> <span class="n">node_ids</span><span class="p">,</span> <span class="n">attributes</span><span class="p">,</span> <span class="n">target_nodes</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">use_weighted_value</span><span class="p">,</span> <span class="n">slice_id</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">g</span> <span class="o">=</span> <span class="n">Wolf</span><span class="o">.</span><span class="n">create_graph</span><span class="p">(</span><span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="p">,</span> 
                               <span class="n">node_ids</span> <span class="o">=</span> <span class="n">node_ids</span><span class="p">,</span>
                               <span class="n">attributes</span> <span class="o">=</span> <span class="n">attributes</span><span class="p">,</span>
@@ -472,7 +472,7 @@
     
 <div class="viewcode-block" id="Wolf.get_ranks">
 <a class="viewcode-back" href="../../../../Wolf.html#TELF.post_processing.Wolf.wolf.Wolf.get_ranks">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_ranks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">stats</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">slice_ids</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">node_ids</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">attributes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_ranks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">stats</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">slice_ids</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">node_ids</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">attributes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
                   <span class="n">alpha</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">use_weighted_value</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Compute graph statistics for a tensor.</span>
@@ -579,7 +579,7 @@
 
 <div class="viewcode-block" id="Wolf.get_community_ranks">
 <a class="viewcode-back" href="../../../../Wolf.html#TELF.post_processing.Wolf.wolf.Wolf.get_community_ranks">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_community_ranks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">stats</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">node_ids</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">attributes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">top_n</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_community_ranks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">stats</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">node_ids</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">attributes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">top_n</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         
         <span class="c1"># compute the year groups</span>
         <span class="n">third_dim_groups</span> <span class="o">=</span> <span class="p">[]</span>
@@ -643,23 +643,23 @@
 
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">node_ids</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">node_ids</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_node_ids</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">attributes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">attributes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attributes</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">n_jobs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">n_jobs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n_jobs</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">parallel_backend</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">parallel_backend</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parallel_backend</span>
     
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">verbose</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">verbose</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_verbose</span>
 
     
@@ -667,7 +667,7 @@
 
 
     <span class="nd">@node_ids</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">node_ids</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_ids</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">node_ids</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_ids</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node_ids</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>  <span class="c1"># single dictionary, assuming that both dimensions are same</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_node_ids</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="n">node_ids</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="n">node_ids</span><span class="p">}</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node_ids</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">))</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">node_ids</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">node_ids</span><span class="p">):</span>
@@ -684,7 +684,7 @@
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Values of node_ids cannot contain any duplicates&#39;</span><span class="p">)</span>
 
     <span class="nd">@attributes</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">attributes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attributes</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">attributes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attributes</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">attributes</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>  <span class="c1"># single dictionary, assuming that both dimensions are same</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_attributes</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="n">attributes</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="n">attributes</span><span class="p">}</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">attributes</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">))</span> <span class="ow">and</span> \
@@ -697,11 +697,11 @@
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;attributes must be a dictionary, a list or tuple of two dictionaries, or None&#39;</span><span class="p">)</span>
 
     <span class="nd">@n_jobs</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">n_jobs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_jobs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">n_jobs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_jobs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_n_jobs</span> <span class="o">=</span> <span class="n">verify_n_jobs</span><span class="p">(</span><span class="n">n_jobs</span><span class="p">)</span>
         
     <span class="nd">@parallel_backend</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">parallel_backend</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parallel_backend</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">parallel_backend</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parallel_backend</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">parallel_backend</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;parallel_backend must be an str!&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">parallel_backend</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">PARALLEL_BACKEND_OPTIONS</span><span class="p">:</span>
@@ -709,7 +709,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_parallel_backend</span> <span class="o">=</span> <span class="n">parallel_backend</span>
 
     <span class="nd">@verbose</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">verbose</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">verbose</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">verbose</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">verbose</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">verbose</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_verbose</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">verbose</span><span class="p">)</span>  <span class="c1"># convert False to 0, True to 1</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">verbose</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>

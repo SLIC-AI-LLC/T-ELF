@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TELF.post_processing.SeaLion.sealion &#8212; TELF 0.0.41 documentation</title>
+    <title>TELF.post_processing.SeaLion.sealion &#8212; TELF 0.0.42 documentation</title>
   
   
   
@@ -29,7 +29,7 @@
   <link href="../../../../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 <link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
   
@@ -39,7 +39,7 @@
   <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../../../../_static/documentation_options.js?v=1983794d"></script>
+    <script src="../../../../_static/documentation_options.js?v=0ef7f92b"></script>
     <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -125,7 +125,7 @@
   
   
   
-    <p class="title logo__title">TELF 0.0.41 documentation</p>
+    <p class="title logo__title">TELF 0.0.42 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -323,32 +323,32 @@
                   
   <h1>Source code for TELF.post_processing.SeaLion.sealion</h1><div class="highlight"><pre>
 <span></span><span class="c1"># DEPENDENCIES</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">import</span> <span class="nn">warnings</span>
-<span class="kn">import</span> <span class="nn">os</span> 
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span> 
 
 <span class="c1"># SeaLion Tools</span>
-<span class="kn">from</span> <span class="nn">.tools.get_factorization_results</span> <span class="kn">import</span> <span class="n">copy_results</span>
-<span class="kn">from</span> <span class="nn">.tools.get_correlation_matrix</span> <span class="kn">import</span>  <span class="n">corr_matrix</span>
-<span class="kn">from</span> <span class="nn">.tools.get_mixing_patterns</span> <span class="kn">import</span> <span class="n">mixing_patterns</span>
-<span class="kn">from</span> <span class="nn">.tools.get_H_clustering</span> <span class="kn">import</span> <span class="n">H_clustering</span>
-<span class="kn">from</span> <span class="nn">.tools.get_recommendations</span> <span class="kn">import</span> <span class="n">recommendations</span>
-<span class="kn">from</span> <span class="nn">.tools.get_recommendations</span> <span class="kn">import</span> <span class="n">recommendations_masked</span>
-<span class="kn">from</span> <span class="nn">.tools.get_recommendations</span> <span class="kn">import</span> <span class="n">recommendation_graph</span>
-<span class="kn">from</span> <span class="nn">.tools.get_wordclouds</span> <span class="kn">import</span> <span class="n">words_probabilities</span>
-<span class="kn">from</span> <span class="nn">...helpers.figures</span> <span class="kn">import</span> <span class="n">word_cloud</span>
-<span class="kn">from</span> <span class="nn">.tools.get_W_plot</span> <span class="kn">import</span> <span class="n">W_plot</span>
-<span class="kn">from</span> <span class="nn">.tools.get_W_plot</span> <span class="kn">import</span> <span class="n">get_W_sub</span>
-<span class="kn">from</span> <span class="nn">.tools.get_W_plot</span> <span class="kn">import</span> <span class="n">W_UMAP</span>
-<span class="kn">from</span> <span class="nn">.tools.get_X</span> <span class="kn">import</span> <span class="n">original_X</span>
-<span class="kn">from</span> <span class="nn">.tools.get_X</span> <span class="kn">import</span> <span class="n">X_tilda</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.tools.get_factorization_results</span><span class="w"> </span><span class="kn">import</span> <span class="n">copy_results</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.tools.get_correlation_matrix</span><span class="w"> </span><span class="kn">import</span>  <span class="n">corr_matrix</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.tools.get_mixing_patterns</span><span class="w"> </span><span class="kn">import</span> <span class="n">mixing_patterns</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.tools.get_H_clustering</span><span class="w"> </span><span class="kn">import</span> <span class="n">H_clustering</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.tools.get_recommendations</span><span class="w"> </span><span class="kn">import</span> <span class="n">recommendations</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.tools.get_recommendations</span><span class="w"> </span><span class="kn">import</span> <span class="n">recommendations_masked</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.tools.get_recommendations</span><span class="w"> </span><span class="kn">import</span> <span class="n">recommendation_graph</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.tools.get_wordclouds</span><span class="w"> </span><span class="kn">import</span> <span class="n">words_probabilities</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">...helpers.figures</span><span class="w"> </span><span class="kn">import</span> <span class="n">word_cloud</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.tools.get_W_plot</span><span class="w"> </span><span class="kn">import</span> <span class="n">W_plot</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.tools.get_W_plot</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_W_sub</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.tools.get_W_plot</span><span class="w"> </span><span class="kn">import</span> <span class="n">W_UMAP</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.tools.get_X</span><span class="w"> </span><span class="kn">import</span> <span class="n">original_X</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.tools.get_X</span><span class="w"> </span><span class="kn">import</span> <span class="n">X_tilda</span>
 
 <div class="viewcode-block" id="SeaLion">
 <a class="viewcode-back" href="../../../../SeaLion.html#TELF.post_processing.SeaLion.sealion.SeaLion">[docs]</a>
-<span class="k">class</span> <span class="nc">SeaLion</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">SeaLion</span><span class="p">:</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
             <span class="n">save_path</span><span class="o">=</span><span class="s2">&quot;SeaLion/&quot;</span><span class="p">,</span>
             <span class="n">X</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -451,7 +451,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">W_sub</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Wsub_mask</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Starting general post-processing&quot;</span><span class="p">)</span>
 
@@ -475,7 +475,7 @@
 
 <div class="viewcode-block" id="SeaLion.get_masked_recommendations">
 <a class="viewcode-back" href="../../../../SeaLion.html#TELF.post_processing.SeaLion.sealion.SeaLion.get_masked_recommendations">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_masked_recommendations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_masked_recommendations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">UNKNOWN_MASK</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">KNOWN_MASK</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Skipping getting unknown masked recommendations.&quot;</span><span class="p">)</span>
@@ -502,7 +502,7 @@
     
 <div class="viewcode-block" id="SeaLion.get_recommendations_graph">
 <a class="viewcode-back" href="../../../../SeaLion.html#TELF.post_processing.SeaLion.sealion.SeaLion.get_recommendations_graph">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_recommendations_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_recommendations_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">UNKNOWN_MASK</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">KNOWN_MASK</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Skipping getting recommendations graph.&quot;</span><span class="p">)</span>
@@ -528,7 +528,7 @@
 
 <div class="viewcode-block" id="SeaLion.get_recommendations">
 <a class="viewcode-back" href="../../../../SeaLion.html#TELF.post_processing.SeaLion.sealion.SeaLion.get_recommendations">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_recommendations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_recommendations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">recommendations</span><span class="p">(</span>
             <span class="n">W</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="p">,</span>
             <span class="n">H</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">H</span><span class="p">,</span>
@@ -546,7 +546,7 @@
 
 <div class="viewcode-block" id="SeaLion.get_X_tilda">
 <a class="viewcode-back" href="../../../../SeaLion.html#TELF.post_processing.SeaLion.sealion.SeaLion.get_X_tilda">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_X_tilda</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_X_tilda</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">X_tilda</span><span class="p">(</span>
             <span class="n">W</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="p">,</span>
             <span class="n">H</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">H</span><span class="p">,</span>
@@ -562,13 +562,13 @@
 
 <div class="viewcode-block" id="SeaLion.get_original_data">
 <a class="viewcode-back" href="../../../../SeaLion.html#TELF.post_processing.SeaLion.sealion.SeaLion.get_original_data">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_original_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_original_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">original_X</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="n">rows</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">rows</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cols</span><span class="p">,</span> <span class="n">save_path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">save_path</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="SeaLion.get_factorization_results">
 <a class="viewcode-back" href="../../../../SeaLion.html#TELF.post_processing.SeaLion.sealion.SeaLion.get_factorization_results">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_factorization_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">factorization_name</span><span class="o">=</span><span class="s2">&quot;factorization&quot;</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_factorization_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">factorization_name</span><span class="o">=</span><span class="s2">&quot;factorization&quot;</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">factorization_paths</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">copy_results</span><span class="p">(</span>
                 <span class="n">factorization_paths</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">factorization_paths</span><span class="p">,</span>
@@ -582,7 +582,7 @@
 
 <div class="viewcode-block" id="SeaLion.get_W_correlation">
 <a class="viewcode-back" href="../../../../SeaLion.html#TELF.post_processing.SeaLion.sealion.SeaLion.get_W_correlation">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_W_correlation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_W_correlation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">W</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Skipping getting W Factor Column Wise Correlation.&quot;</span><span class="p">)</span>
@@ -592,7 +592,7 @@
 
 <div class="viewcode-block" id="SeaLion.get_H_correlation">
 <a class="viewcode-back" href="../../../../SeaLion.html#TELF.post_processing.SeaLion.sealion.SeaLion.get_H_correlation">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_H_correlation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_H_correlation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">H</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Skipping getting H Factor Row Wise Correlation.&quot;</span><span class="p">)</span>
@@ -602,7 +602,7 @@
 
 <div class="viewcode-block" id="SeaLion.get_S_mixing_patterns">
 <a class="viewcode-back" href="../../../../SeaLion.html#TELF.post_processing.SeaLion.sealion.SeaLion.get_S_mixing_patterns">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_S_mixing_patterns</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_S_mixing_patterns</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">S</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Skipping getting S mixing matrix patterns&quot;</span><span class="p">)</span>
@@ -612,7 +612,7 @@
 
 <div class="viewcode-block" id="SeaLion.get_H_clustering">
 <a class="viewcode-back" href="../../../../SeaLion.html#TELF.post_processing.SeaLion.sealion.SeaLion.get_H_clustering">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_H_clustering</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_H_clustering</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">H</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Skipping getting the H clustering results&quot;</span><span class="p">)</span>
@@ -622,7 +622,7 @@
 
 <div class="viewcode-block" id="SeaLion.get_words_probabilities">
 <a class="viewcode-back" href="../../../../SeaLion.html#TELF.post_processing.SeaLion.sealion.SeaLion.get_words_probabilities">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_words_probabilities</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_words_probabilities</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">W</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Skipping getting top words and their probabilities&quot;</span><span class="p">)</span>
@@ -638,7 +638,7 @@
         
 <div class="viewcode-block" id="SeaLion.get_wordclouds">
 <a class="viewcode-back" href="../../../../SeaLion.html#TELF.post_processing.SeaLion.sealion.SeaLion.get_wordclouds">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_wordclouds</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_wordclouds</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">W</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
                     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Skipping getting top words and their probabilities&quot;</span><span class="p">)</span>
@@ -655,7 +655,7 @@
     
 <div class="viewcode-block" id="SeaLion.get_W_plot">
 <a class="viewcode-back" href="../../../../SeaLion.html#TELF.post_processing.SeaLion.sealion.SeaLion.get_W_plot">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_W_plot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_W_plot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">W</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
                     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Skipping getting the W plot&quot;</span><span class="p">)</span>
@@ -686,7 +686,7 @@
         
 <div class="viewcode-block" id="SeaLion.get_W_UMAP">
 <a class="viewcode-back" href="../../../../SeaLion.html#TELF.post_processing.SeaLion.sealion.SeaLion.get_W_UMAP">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_W_UMAP</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">{}):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_W_UMAP</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">{}):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">W</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
                     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Skipping getting the W UMAP plot&quot;</span><span class="p">)</span>

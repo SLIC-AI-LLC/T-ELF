@@ -1,9 +1,11 @@
 import numpy as np
 from tqdm import tqdm
 from sklearn.metrics import pairwise_distances
-from ...helpers.embeddings import (compute_doc_embedding, produce_label,
-                                   compute_embeddings, closest_embedding_to_centroid,
+from ...helpers.embeddings import (compute_doc_embedding, compute_embeddings, 
+                                   closest_embedding_to_centroid,
                                    compute_centroids)
+from ...helpers.llm_operations import produce_label
+from ...helpers.llm_models import get_openai_llm
 
 MODEL = 'SCINCL'  # either 'SCINCL' or 'SPECTER'
 DISTANCE_METRIC = 'cosine'  # either 'cosine' or 'euclidean'
@@ -20,7 +22,8 @@ def label_clusters(top_words_df, api_key, n_trials=1):
         words = top_words_df[col].to_list()
 
         for _ in range(n_trials):
-            label = produce_label(api_key, words)
+            client = get_openai_llm(openai_api_key=api_key)
+            label = produce_label(client=client,  words=words, model="gpt-3.5-turbo-instruct")
             output[col_key].append(label)
     return output
 

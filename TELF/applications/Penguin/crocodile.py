@@ -18,6 +18,7 @@ import pathlib
 import warnings
 import xmltodict
 import pandas as pd
+import sys
 pd.options.mode.chained_assignment = None
 
 from collections import Counter
@@ -325,9 +326,9 @@ def process_s2_json(file_path, output_dir):
         try:
             output = json.load(fh)
         except json.JSONDecodeError as e:
-            print(f'Failed to decode JSON from {fn!r}: {e}', file=sys.stderr)
+            print(f'Failed to decode JSON from {file_path!r}: {e}', file=sys.stderr)
         except Exception as e:
-            print(f'An error occurred while inserting data from {fn!r}: {e}', file=sys.stderr)
+            print(f'An error occurred while inserting data from {file_path!r}: {e}', file=sys.stderr)
     
     # remove pre-computed embedding so its not taking up space in mongo
     if 'embedding' in output:
@@ -345,7 +346,7 @@ def process_s2_json(file_path, output_dir):
         
     if output_dir is None:
         return output
-    with open(os.path.join(output_dir, f'{fn}.json'), 'w') as fh: 
+    with open(os.path.join(output_dir, f'{file_path}.json'), 'w') as fh: 
         json.dump(output, fh)
         
 
@@ -664,7 +665,6 @@ def form_s2_df(data):
     }
 
     for doc in data:
-
         # get the basic information about the document
         s2id = doc.get('paperId')
         doi = get_from_dict(doc, ['externalIds', 'DOI'])
@@ -675,7 +675,9 @@ def form_s2_df(data):
         # get author information
         authors = []
         author_ids = []
-        for auth in doc.get('authors'):
+
+        for auth in doc.get('authors', []):
+            
             auth_id = auth.get('authorId')
             auth_name = auth.get('name', 'Unknown')
             if auth_id:
@@ -692,7 +694,12 @@ def form_s2_df(data):
         # get citations
         citations = None
         num_citations = None
-        if doc.get('citations'):
+        citation_raw = doc.get('citations')
+        if isinstance(citation_raw, str):
+            citations = citation_raw.split(';')
+            num_citations = len(citations)
+            citations = ';'.join(citations)
+        elif citation_raw and isinstance(citation_raw, dict):
             citations = [x.get('paperId', None) for x in doc['citations']]
             citations = [str(x) for x in citations if x is not None]
             if not citations:
@@ -704,7 +711,13 @@ def form_s2_df(data):
         # get references
         references = None
         num_references = None
-        if doc.get('references'):
+        references_raw = doc.get('references')
+
+        if isinstance(references_raw, str):
+            references = references_raw.split(';')
+            num_references = len(references)
+            references = ';'.join(references)
+        elif references_raw and isinstance(references_raw, dict):
             references = [x.get('paperId') for x in doc['references']]
             references = [str(x) for x in references if x is not None]
             if not references:

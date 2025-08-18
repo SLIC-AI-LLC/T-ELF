@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TELF.factorization.decompositions.utilities.concensus_matrix &#8212; TELF 0.0.41 documentation</title>
+    <title>TELF.factorization.decompositions.utilities.concensus_matrix &#8212; TELF 0.0.42 documentation</title>
   
   
   
@@ -29,7 +29,7 @@
   <link href="../../../../../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 <link href="../../../../../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../../../../../_static/graphviz.css?v=4ae1632d" />
   
@@ -39,7 +39,7 @@
   <link rel="preload" as="script" href="../../../../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../../../../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../../../../../_static/documentation_options.js?v=1983794d"></script>
+    <script src="../../../../../_static/documentation_options.js?v=0ef7f92b"></script>
     <script src="../../../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -125,7 +125,7 @@
   
   
   
-    <p class="title logo__title">TELF 0.0.41 documentation</p>
+    <p class="title logo__title">TELF 0.0.42 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -322,15 +322,15 @@
                 <article class="bd-article">
                   
   <h1>Source code for TELF.factorization.decompositions.utilities.concensus_matrix</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">scipy.spatial.distance</span> <span class="k">as</span> <span class="nn">ssd</span>
-<span class="kn">from</span> <span class="nn">scipy.cluster.hierarchy</span> <span class="kn">import</span> <span class="n">linkage</span><span class="p">,</span> <span class="n">cophenet</span><span class="p">,</span> <span class="n">leaves_list</span><span class="p">,</span> <span class="n">optimal_leaf_ordering</span>
-<span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">SpectralClustering</span><span class="p">,</span> <span class="n">AgglomerativeClustering</span>
-<span class="kn">from</span> <span class="nn">.math_utils</span> <span class="kn">import</span> <span class="n">unprune</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">scipy.spatial.distance</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ssd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.cluster.hierarchy</span><span class="w"> </span><span class="kn">import</span> <span class="n">linkage</span><span class="p">,</span> <span class="n">cophenet</span><span class="p">,</span> <span class="n">leaves_list</span><span class="p">,</span> <span class="n">optimal_leaf_ordering</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.cluster</span><span class="w"> </span><span class="kn">import</span> <span class="n">SpectralClustering</span><span class="p">,</span> <span class="n">AgglomerativeClustering</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.math_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">unprune</span>
 
 <div class="viewcode-block" id="compute_consensus_matrix">
 <a class="viewcode-back" href="../../../../../TELF.factorization.decompositions.utilities.html#TELF.factorization.decompositions.utilities.concensus_matrix.compute_consensus_matrix">[docs]</a>
-<span class="k">def</span> <span class="nf">compute_consensus_matrix</span><span class="p">(</span><span class="n">H_all</span><span class="p">,</span> <span class="n">pruned</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">pruned_cols</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_consensus_matrix</span><span class="p">(</span><span class="n">H_all</span><span class="p">,</span> <span class="n">pruned</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">pruned_cols</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 
     <span class="c1"># * H_all&#39;s shape: k x m x n_perturb</span>
     <span class="n">k</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">npert</span> <span class="o">=</span> <span class="n">H_all</span><span class="o">.</span><span class="n">shape</span>
@@ -356,7 +356,7 @@
 
 <div class="viewcode-block" id="compute_connectivity_mat">
 <a class="viewcode-back" href="../../../../../TELF.factorization.decompositions.utilities.html#TELF.factorization.decompositions.utilities.concensus_matrix.compute_connectivity_mat">[docs]</a>
-<span class="k">def</span> <span class="nf">compute_connectivity_mat</span><span class="p">(</span><span class="n">h</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_connectivity_mat</span><span class="p">(</span><span class="n">h</span><span class="p">):</span>
     <span class="c1">#* need to add a step to normalize each row of h here</span>
     <span class="n">hsum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">h</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">h</span> <span class="o">=</span> <span class="n">h</span><span class="o">/</span><span class="n">hsum</span>
@@ -372,7 +372,7 @@
 
 <div class="viewcode-block" id="reorder_con_mat">
 <a class="viewcode-back" href="../../../../../TELF.factorization.decompositions.utilities.html#TELF.factorization.decompositions.utilities.concensus_matrix.reorder_con_mat">[docs]</a>
-<span class="k">def</span> <span class="nf">reorder_con_mat</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">return_index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;HC&#39;</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">reorder_con_mat</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">return_index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;HC&#39;</span><span class="p">):</span>
     <span class="c1"># * method option: &#39;spectral&#39; and &#39;HC&#39; - Hierachy Clustering</span>
     <span class="n">cophenetic_coeff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
     <span class="n">m</span> <span class="o">=</span> <span class="n">C</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -407,7 +407,7 @@
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="c1"># * testing the HC averge linkage</span>
-    <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
     <span class="n">k</span><span class="p">,</span> <span class="n">m</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">10</span>
     <span class="n">W</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
     <span class="n">W</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">10</span>

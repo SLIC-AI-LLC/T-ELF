@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TELF.pre_processing.Orca.orca &#8212; TELF 0.0.41 documentation</title>
+    <title>TELF.pre_processing.Orca.orca &#8212; TELF 0.0.42 documentation</title>
   
   
   
@@ -29,7 +29,7 @@
   <link href="../../../../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 <link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
   
@@ -39,7 +39,7 @@
   <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../../../../_static/documentation_options.js?v=1983794d"></script>
+    <script src="../../../../_static/documentation_options.js?v=0ef7f92b"></script>
     <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -125,7 +125,7 @@
   
   
   
-    <p class="title logo__title">TELF 0.0.41 documentation</p>
+    <p class="title logo__title">TELF 0.0.42 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -322,34 +322,34 @@
                 <article class="bd-article">
                   
   <h1>Source code for TELF.pre_processing.Orca.orca</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">ast</span>
-<span class="kn">import</span> <span class="nn">copy</span>
-<span class="kn">import</span> <span class="nn">pickle</span>
-<span class="kn">import</span> <span class="nn">warnings</span> 
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
-<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span> 
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ast</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">copy</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pickle</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span> 
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">networkx</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nx</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tqdm</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span> 
 
-<span class="kn">from</span> <span class="nn">.AuthorMatcher</span> <span class="kn">import</span> <span class="n">AuthorMatcher</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.AuthorMatcher</span><span class="w"> </span><span class="kn">import</span> <span class="n">AuthorMatcher</span>
 
 <div class="viewcode-block" id="Orca">
 <a class="viewcode-back" href="../../../../Orca.html#TELF.pre_processing.Orca.orca.Orca">[docs]</a>
-<span class="k">class</span> <span class="nc">Orca</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Orca</span><span class="p">:</span>
 
     <span class="c1">#Code where we have a precomputed duplicates.</span>
     <span class="c1"># Pre-computed Scopus duplicates file containing entries.</span>
     <span class="c1"># If no duplicates are computed with DAF, this file will be used instead for duplicate removal</span>
     <span class="c1">#DUPLICATES_1M = &#39;scopus_1m_cited_collab_matches.p&#39;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">duplicates</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">s2_duplicates</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">duplicates</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">s2_duplicates</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">slic_df</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">duplicates</span> <span class="o">=</span> <span class="n">duplicates</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">s2_duplicates</span> <span class="o">=</span> <span class="n">s2_duplicates</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span>
     
     
-    <span class="k">def</span> <span class="nf">_run_scopus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_run_scopus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Helper function for creating a SLIC map file for a dataset that only contains Scopus information</span>
 <span class="sd">        &quot;&quot;&quot;</span> 
@@ -412,7 +412,7 @@
     
 <div class="viewcode-block" id="Orca.run">
 <a class="viewcode-back" href="../../../../Orca.html#TELF.pre_processing.Orca.orca.Orca.run">[docs]</a>
-    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">scopus_duplicates</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">s2_duplicates</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">known_matches</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">scopus_duplicates</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">s2_duplicates</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">known_matches</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Run Orca and form SLIC ids for a given dataset</span>
 
@@ -573,7 +573,7 @@
     
 <div class="viewcode-block" id="Orca.apply">
 <a class="viewcode-back" href="../../../../Orca.html#TELF.pre_processing.Orca.orca.Orca.apply">[docs]</a>
-    <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">slic_df</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">slic_df</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Apply the SLIC id mapping to a SLIC papers dataframe</span>
 
@@ -638,7 +638,7 @@
                 
         <span class="c1"># add a column of slic author names using the matched slic ids</span>
         <span class="n">slic_authors</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span><span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">slic_df</span><span class="o">.</span><span class="n">slic_id</span><span class="o">.</span><span class="n">to_list</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">slic_df</span><span class="o">.</span><span class="n">slic_name</span><span class="o">.</span><span class="n">to_list</span><span class="p">())}</span>
-        <span class="k">def</span> <span class="nf">map_ids_to_names</span><span class="p">(</span><span class="n">ids</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">map_ids_to_names</span><span class="p">(</span><span class="n">ids</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">ids</span><span class="p">):</span>
                 <span class="k">return</span> <span class="kc">None</span>
             <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="n">slic_authors</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">ids</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">)]</span>
@@ -649,7 +649,7 @@
 
         
         
-    <span class="k">def</span> <span class="nf">__verify_df</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__verify_df</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Verify that the given papers dataframe matches the SLIC standard and can be used with Orca</span>
 
@@ -673,7 +673,7 @@
         <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">None</span>
     
     
-    <span class="k">def</span> <span class="nf">__verify_slic_df</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slic_df</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__verify_slic_df</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slic_df</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Verify that the given papers dataframe matches the SLIC standard and can be used with Orca</span>
 
@@ -697,7 +697,7 @@
         <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">None</span>
         
         
-    <span class="k">def</span> <span class="nf">__add_scopus_duplicates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">auth_df</span><span class="p">,</span> <span class="n">duplicates</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__add_scopus_duplicates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">auth_df</span><span class="p">,</span> <span class="n">duplicates</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Helper function that enriches the results of AuthorMatcher with any previously detected Scopus </span>
 <span class="sd">        duplicates. These duplicates are given a shared S2 id that will be used to connect them in the</span>
@@ -737,7 +737,7 @@
         <span class="k">return</span> <span class="n">out_df</span>
     
     
-    <span class="k">def</span> <span class="nf">__add_s2_duplicates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">duplicates</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__add_s2_duplicates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">duplicates</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Converts a list of sets into a dictionary such that each key in the dictionary </span>
 <span class="sd">        is an element from a set, and its value is a list of the other elements in that set.</span>
@@ -783,7 +783,7 @@
         <span class="k">return</span> <span class="n">out_dict</span>
 
     
-    <span class="k">def</span> <span class="nf">__propagate_duplicates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a_map</span><span class="p">,</span> <span class="n">a_duplicates</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__propagate_duplicates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a_map</span><span class="p">,</span> <span class="n">a_duplicates</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Propagate the ids associated with keys in a_map to their duplicate keys.</span>
 
@@ -823,7 +823,7 @@
         <span class="n">a_map</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">a_map_update</span><span class="p">)</span>
 
     
-    <span class="k">def</span> <span class="nf">__uncouple_author_matches</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">auth_df</span><span class="p">,</span> <span class="n">s2_duplicates</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__uncouple_author_matches</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">auth_df</span><span class="p">,</span> <span class="n">s2_duplicates</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Helper function that takes the authors DataFrame produced by AuthorMatcher (could be enriched with scopus duplicates</span>
 <span class="sd">        or not) and finds out which sets of authors ids represent the same individual. This is done by building a graph of</span>
@@ -903,7 +903,7 @@
         <span class="k">return</span> <span class="n">matches</span>
     
     
-    <span class="k">def</span> <span class="nf">__generate_author_map</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">id_col</span><span class="p">,</span> <span class="n">name_col</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__generate_author_map</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">id_col</span><span class="p">,</span> <span class="n">name_col</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Helper function that generates a map of author ids to author names</span>
 <span class="sd">        </span>
@@ -933,7 +933,7 @@
         <span class="k">return</span> <span class="n">auth_map</span>
     
     
-    <span class="k">def</span> <span class="nf">__compute_slic_scopus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__compute_slic_scopus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Helper function applies the SLIC id map to papers that have scopus information</span>
 <span class="sd">        </span>
@@ -990,8 +990,11 @@
             <span class="n">affiliations</span> <span class="o">=</span> <span class="n">scopus_affiliations</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">eid</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">affiliations</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">aff_id</span><span class="p">,</span> <span class="n">aff_info_shallow</span> <span class="ow">in</span> <span class="n">affiliations</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">aff_info_shallow</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                        <span class="k">continue</span>
                     <span class="n">del_list</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># items to remove</span>
                     <span class="n">aff_info</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">aff_info_shallow</span><span class="p">)</span>
+
                     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">aff_info</span><span class="p">[</span><span class="s1">&#39;authors&#39;</span><span class="p">])):</span>
                         <span class="n">scopus_id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">aff_info</span><span class="p">[</span><span class="s1">&#39;authors&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">])</span>
                         <span class="k">if</span> <span class="n">scopus_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">scopus_to_slic</span><span class="p">:</span>
@@ -1030,7 +1033,7 @@
         <span class="k">return</span> <span class="n">scopus_df</span>
     
     
-    <span class="k">def</span> <span class="nf">__compute_slic_s2</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__compute_slic_s2</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Helper function applies the SLIC id map to papers that have S2 information</span>
 <span class="sd">        </span>
@@ -1081,7 +1084,7 @@
         <span class="k">return</span> <span class="n">s2_df</span>
 
 
-    <span class="k">def</span> <span class="nf">__load_pickle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fn</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__load_pickle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fn</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Helper function for loading pickle files saved in data package</span>
 <span class="sd">        If upgrading to python &gt;=3.9, change this function make use of importlib.resources</span>
@@ -1099,7 +1102,7 @@
         <span class="k">return</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">((</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">current_dir</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="n">fn</span><span class="p">)),</span> <span class="s1">&#39;rb&#39;</span><span class="p">))</span>
 
 
-    <span class="k">def</span> <span class="nf">__generate_affiliations_map</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__generate_affiliations_map</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Helper function for computing a map of affiliations for scopus authors. </span>
 <span class="sd">        The output map is a dict that adheres to the following structure:</span>
@@ -1145,6 +1148,8 @@
                 <span class="n">year</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">year</span><span class="p">)</span>
                 
             <span class="k">for</span> <span class="n">aff_id</span><span class="p">,</span> <span class="n">info</span> <span class="ow">in</span> <span class="n">affiliations</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                    <span class="k">continue</span>
                 <span class="n">aff_name</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;Unknown&#39;</span><span class="p">)</span>
                 <span class="n">aff_country</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;country&#39;</span><span class="p">,</span> <span class="s1">&#39;Unknown&#39;</span><span class="p">)</span>
 
@@ -1179,7 +1184,7 @@
         <span class="k">return</span> <span class="n">affiliations_map</span>
 
 
-    <span class="k">def</span> <span class="nf">__merge_scopus_affiliations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scopus_ids</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__merge_scopus_affiliations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scopus_ids</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Helper function for merging the scopus affiliation maps for entries where multiple scopus</span>
 <span class="sd">        ids correspond to the same author</span>
@@ -1224,15 +1229,15 @@
     
     
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">duplicates</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">duplicates</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_duplicates</span>
     
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">s2_duplicates</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">s2_duplicates</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_s2_duplicates</span>
 
     <span class="nd">@duplicates</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">duplicates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">duplicates</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">duplicates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">duplicates</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">duplicates</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_duplicates</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">duplicates</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
@@ -1254,7 +1259,7 @@
     
     
     <span class="nd">@s2_duplicates</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">s2_duplicates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s2_duplicates</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">s2_duplicates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s2_duplicates</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">s2_duplicates</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_s2_duplicates</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">s2_duplicates</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>

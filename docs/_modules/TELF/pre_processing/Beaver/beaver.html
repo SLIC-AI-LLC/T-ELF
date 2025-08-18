@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TELF.pre_processing.Beaver.beaver &#8212; TELF 0.0.41 documentation</title>
+    <title>TELF.pre_processing.Beaver.beaver &#8212; TELF 0.0.42 documentation</title>
   
   
   
@@ -29,7 +29,7 @@
   <link href="../../../../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 <link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
   
@@ -39,7 +39,7 @@
   <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../../../../_static/documentation_options.js?v=1983794d"></script>
+    <script src="../../../../_static/documentation_options.js?v=0ef7f92b"></script>
     <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -125,7 +125,7 @@
   
   
   
-    <p class="title logo__title">TELF 0.0.41 documentation</p>
+    <p class="title logo__title">TELF 0.0.42 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -336,43 +336,43 @@
 <span class="sd">others to do so.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="k">try</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">mpi4py</span> <span class="kn">import</span> <span class="n">MPI</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mpi4py</span><span class="w"> </span><span class="kn">import</span> <span class="n">MPI</span>
 <span class="k">except</span><span class="p">:</span>
     <span class="n">MPI</span> <span class="o">=</span> <span class="kc">None</span>
 
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">warnings</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">multiprocessing</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span><span class="p">,</span> <span class="n">Counter</span>
-<span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfVectorizer</span>
-<span class="kn">import</span> <span class="nn">sparse</span>
-<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
-<span class="kn">import</span> <span class="nn">scipy.sparse</span> <span class="k">as</span> <span class="nn">ss</span>
-<span class="kn">from</span> <span class="nn">joblib</span> <span class="kn">import</span> <span class="n">Parallel</span><span class="p">,</span> <span class="n">delayed</span>
-<span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfTransformer</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">multiprocessing</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">defaultdict</span><span class="p">,</span> <span class="n">Counter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.feature_extraction.text</span><span class="w"> </span><span class="kn">import</span> <span class="n">TfidfVectorizer</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sparse</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tqdm</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">scipy.sparse</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ss</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">joblib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Parallel</span><span class="p">,</span> <span class="n">delayed</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.feature_extraction.text</span><span class="w"> </span><span class="kn">import</span> <span class="n">TfidfTransformer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 
-<span class="kn">from</span> <span class="nn">.tenmat</span> <span class="kn">import</span> <span class="n">fold</span><span class="p">,</span> <span class="n">unfold</span>
-<span class="kn">from</span> <span class="nn">.vectorize</span> <span class="kn">import</span> <span class="n">tfidf</span>
-<span class="kn">from</span> <span class="nn">.cooccurrence</span> <span class="kn">import</span> <span class="n">co_occurrence</span>
-<span class="kn">from</span> <span class="nn">.sppmi</span> <span class="kn">import</span> <span class="n">sppmi</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
-<span class="kn">from</span> <span class="nn">...helpers.file_system</span> <span class="kn">import</span> <span class="n">check_path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.tenmat</span><span class="w"> </span><span class="kn">import</span> <span class="n">fold</span><span class="p">,</span> <span class="n">unfold</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.vectorize</span><span class="w"> </span><span class="kn">import</span> <span class="n">tfidf</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.cooccurrence</span><span class="w"> </span><span class="kn">import</span> <span class="n">co_occurrence</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.sppmi</span><span class="w"> </span><span class="kn">import</span> <span class="n">sppmi</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Union</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">...helpers.file_system</span><span class="w"> </span><span class="kn">import</span> <span class="n">check_path</span>
 
 
 <div class="viewcode-block" id="Beaver">
 <a class="viewcode-back" href="../../../../TELF.pre_processing.Beaver.html#TELF.pre_processing.Beaver.beaver.Beaver">[docs]</a>
-<span class="k">class</span> <span class="nc">Beaver</span><span class="p">():</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Beaver</span><span class="p">():</span>
 
     <span class="n">SUPPORTED_OUTPUT_FORMATS</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s1">&#39;scipy&#39;</span><span class="p">,</span>   <span class="c1"># spicy.sparse.csr </span>
         <span class="s1">&#39;pydata&#39;</span><span class="p">,</span>  <span class="c1"># sparse.coo</span>
     <span class="p">}</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_nodes</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_nodes</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_nodes</span> <span class="o">=</span> <span class="n">n_nodes</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span> <span class="o">=</span> <span class="n">n_jobs</span>
 
@@ -395,7 +395,7 @@
 
 <div class="viewcode-block" id="Beaver.get_vocabulary">
 <a class="viewcode-back" href="../../../../TELF.pre_processing.Beaver.html#TELF.pre_processing.Beaver.beaver.Beaver.get_vocabulary">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_vocabulary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_vocabulary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                        <span class="n">dataset</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
                        <span class="n">target_column</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                        <span class="n">max_df</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
@@ -452,7 +452,7 @@
 
 <div class="viewcode-block" id="Beaver.coauthor_tensor">
 <a class="viewcode-back" href="../../../../TELF.pre_processing.Beaver.html#TELF.pre_processing.Beaver.beaver.Beaver.coauthor_tensor">[docs]</a>
-    <span class="k">def</span> <span class="nf">coauthor_tensor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">coauthor_tensor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                         <span class="n">dataset</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
                         <span class="n">target_columns</span><span class="p">:</span> <span class="nb">tuple</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;authorIDs&quot;</span><span class="p">,</span> <span class="s2">&quot;year&quot;</span><span class="p">),</span>
                         <span class="n">split_authors_with</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s2">&quot;;&quot;</span><span class="p">,</span>
@@ -591,7 +591,7 @@
 
 <div class="viewcode-block" id="Beaver.cocitation_tensor">
 <a class="viewcode-back" href="../../../../TELF.pre_processing.Beaver.html#TELF.pre_processing.Beaver.beaver.Beaver.cocitation_tensor">[docs]</a>
-    <span class="k">def</span> <span class="nf">cocitation_tensor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">cocitation_tensor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                           <span class="n">dataset</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
                           <span class="n">target_columns</span><span class="p">:</span> <span class="nb">tuple</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;authorIDs&quot;</span><span class="p">,</span> <span class="s2">&quot;year&quot;</span><span class="p">,</span> <span class="s2">&quot;paper_id&quot;</span><span class="p">,</span> <span class="s2">&quot;references&quot;</span><span class="p">),</span>
                           <span class="n">split_authors_with</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s2">&quot;;&quot;</span><span class="p">,</span>
@@ -753,7 +753,7 @@
 
 <div class="viewcode-block" id="Beaver.participation_tensor">
 <a class="viewcode-back" href="../../../../TELF.pre_processing.Beaver.html#TELF.pre_processing.Beaver.beaver.Beaver.participation_tensor">[docs]</a>
-    <span class="k">def</span> <span class="nf">participation_tensor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">participation_tensor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                              <span class="n">dataset</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
                              <span class="n">target_columns</span><span class="p">:</span> <span class="nb">tuple</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;author_ids&quot;</span><span class="p">,</span> <span class="s2">&quot;paper_id&quot;</span><span class="p">,</span> <span class="s2">&quot;year&quot;</span><span class="p">),</span>
                              <span class="n">dimension_order</span><span class="p">:</span> <span class="nb">list</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
@@ -898,7 +898,7 @@
 
 <div class="viewcode-block" id="Beaver.citation_tensor">
 <a class="viewcode-back" href="../../../../TELF.pre_processing.Beaver.html#TELF.pre_processing.Beaver.beaver.Beaver.citation_tensor">[docs]</a>
-    <span class="k">def</span> <span class="nf">citation_tensor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">citation_tensor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                         <span class="n">dataset</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
                         <span class="n">target_columns</span><span class="p">:</span> <span class="nb">tuple</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;author_ids&quot;</span><span class="p">,</span> <span class="s2">&quot;paper_id&quot;</span><span class="p">,</span> <span class="s2">&quot;references&quot;</span><span class="p">,</span> <span class="s2">&quot;year&quot;</span><span class="p">),</span>
                         <span class="n">dimension_order</span><span class="p">:</span> <span class="nb">list</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
@@ -1055,7 +1055,7 @@
 
 <div class="viewcode-block" id="Beaver.cooccurrence_matrix">
 <a class="viewcode-back" href="../../../../TELF.pre_processing.Beaver.html#TELF.pre_processing.Beaver.beaver.Beaver.cooccurrence_matrix">[docs]</a>
-    <span class="k">def</span> <span class="nf">cooccurrence_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">cooccurrence_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                            <span class="n">dataset</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
                            <span class="n">target_column</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s2">&quot;abstracts&quot;</span><span class="p">,</span>
                            <span class="n">cooccurrence_settings</span><span class="p">:</span> <span class="nb">dict</span><span class="o">=</span><span class="p">{},</span>
@@ -1131,7 +1131,7 @@
 
 <div class="viewcode-block" id="Beaver.documents_words">
 <a class="viewcode-back" href="../../../../TELF.pre_processing.Beaver.html#TELF.pre_processing.Beaver.beaver.Beaver.documents_words">[docs]</a>
-    <span class="k">def</span> <span class="nf">documents_words</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">documents_words</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                         <span class="n">dataset</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
                         <span class="n">target_column</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s2">&quot;abstracts&quot;</span><span class="p">,</span>
                         <span class="n">options</span><span class="p">:</span> <span class="nb">dict</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;min_df&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;max_df&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">},</span>
@@ -1267,7 +1267,7 @@
 
 <div class="viewcode-block" id="Beaver.something_words">
 <a class="viewcode-back" href="../../../../TELF.pre_processing.Beaver.html#TELF.pre_processing.Beaver.beaver.Beaver.something_words">[docs]</a>
-    <span class="k">def</span> <span class="nf">something_words</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">something_words</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                         <span class="n">dataset</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
                         <span class="n">target_columns</span><span class="p">:</span> <span class="nb">tuple</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;authorIDs&quot;</span><span class="p">,</span> <span class="s2">&quot;abstracts&quot;</span><span class="p">),</span>
                         <span class="n">split_something_with</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s2">&quot;;&quot;</span><span class="p">,</span>
@@ -1372,7 +1372,7 @@
 
 <div class="viewcode-block" id="Beaver.something_words_time">
 <a class="viewcode-back" href="../../../../TELF.pre_processing.Beaver.html#TELF.pre_processing.Beaver.beaver.Beaver.something_words_time">[docs]</a>
-    <span class="k">def</span> <span class="nf">something_words_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">something_words_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                              <span class="n">dataset</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
                              <span class="n">vocabulary</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
                              <span class="n">target_columns</span><span class="p">:</span> <span class="nb">tuple</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;authorIDs&quot;</span><span class="p">,</span> <span class="s2">&quot;abstracts&quot;</span><span class="p">,</span> <span class="s2">&quot;year&quot;</span><span class="p">),</span>
@@ -1526,7 +1526,7 @@
 
 
 
-    <span class="k">def</span> <span class="nf">_dist_parallel_tensor_build_helper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_dist_parallel_tensor_build_helper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                                            <span class="n">tensor_dicts_all</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
                                            <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
                                            <span class="n">n_nodes</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
@@ -1636,7 +1636,7 @@
         <span class="k">return</span> <span class="n">X</span>
 
 
-    <span class="k">def</span> <span class="nf">_cocitation_tensor_helper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_cocitation_tensor_helper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                                   <span class="n">all_doc_ids</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
                                   <span class="n">times</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
                                   <span class="n">documents_references_map</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
@@ -1704,7 +1704,7 @@
         <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">tensor_dict</span><span class="p">)</span>
 
 
-    <span class="k">def</span> <span class="nf">_coauthor_tensor_helper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_coauthor_tensor_helper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                                 <span class="n">time_idx_map</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
                                 <span class="n">authors_idx_map</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
                                 <span class="n">all_authors</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
@@ -1758,7 +1758,7 @@
         <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">tensor_dict</span><span class="p">)</span>
 
 
-    <span class="k">def</span> <span class="nf">_participation_tensor_helper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_participation_tensor_helper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                                      <span class="n">dimension_order</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
                                      <span class="n">authors_idx_map</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
                                      <span class="n">papers_idx_map</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
@@ -1814,7 +1814,7 @@
         <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">tensor_dict</span><span class="p">)</span>
 
 
-    <span class="k">def</span> <span class="nf">_citation_tensor_helper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_citation_tensor_helper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                                 <span class="n">dimension_order</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
                                 <span class="n">authors_idx_map</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
                                 <span class="n">papers_idx_map</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
@@ -1874,7 +1874,7 @@
 
         <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">tensor_dict</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_output_pydata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_output_pydata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return tensor as a sparse.coo object. This is a reflective function</span>
 
@@ -1889,7 +1889,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">x</span>
 
-    <span class="k">def</span> <span class="nf">_output_scipy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_output_scipy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return matrix as a scipy.sparse.csr object</span>
 
@@ -1906,7 +1906,7 @@
         <span class="n">x</span> <span class="o">=</span> <span class="n">ss</span><span class="o">.</span><span class="n">csr_matrix</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float32&quot;</span><span class="p">)</span>  <span class="c1"># convert to scipy csr </span>
         <span class="k">return</span> <span class="n">x</span>
     
-    <span class="k">def</span> <span class="nf">_save_pydata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_save_pydata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Save a pydata sparse tensor x to path</span>
 <span class="sd">        </span>
@@ -1923,7 +1923,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">sparse</span><span class="o">.</span><span class="n">save_npz</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_save_scipy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_save_scipy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Save a scipy sparse matrix x to path</span>
 <span class="sd">            </span>
@@ -1943,21 +1943,21 @@
         
     <span class="c1"># Getters and Setters</span>
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">n_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">n_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n_nodes</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">n_jobs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">n_jobs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n_jobs</span>
 
     <span class="nd">@n_nodes</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">n_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_nodes</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">n_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_nodes</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">n_nodes</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">or</span> <span class="n">n_nodes</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported value for n_nodes: &#39;</span><span class="si">{</span><span class="n">n_nodes</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_n_nodes</span> <span class="o">=</span> <span class="n">n_nodes</span>
 
     <span class="nd">@n_jobs</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">n_jobs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_jobs</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">n_jobs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_jobs</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
         <span class="n">cpu_count</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">()</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">n_jobs</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;n_jobs must be an int&#39;</span><span class="p">)</span>
@@ -1973,7 +1973,7 @@
 
 
 
-    <span class="k">def</span> <span class="nf">__get_ngrams_helper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__get_ngrams_helper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
         <span class="n">ngrams</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">tokens</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
         <span class="n">num_tokens</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
@@ -1997,7 +1997,7 @@
                     
         <span class="k">return</span> <span class="n">ngrams</span>
     
-    <span class="k">def</span> <span class="nf">__save_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">save_path</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__save_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">save_path</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
         <span class="n">filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">save_path</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
@@ -2008,7 +2008,7 @@
 
 <div class="viewcode-block" id="Beaver.get_ngrams">
 <a class="viewcode-back" href="../../../../TELF.pre_processing.Beaver.html#TELF.pre_processing.Beaver.beaver.Beaver.get_ngrams">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_ngrams</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span>  <span class="n">dataset</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">target_column</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> 
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_ngrams</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span>  <span class="n">dataset</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">target_column</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> 
                     <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="n">save_path</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generates n-grams from a column in a dataset</span>

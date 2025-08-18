@@ -1,7 +1,8 @@
 import rapidfuzz
 import unicodedata
 from itertools import permutations
-
+import json
+import pandas as pd
 
 def generate_name_variations(name):
     """ 
@@ -131,3 +132,54 @@ def match_name(name_a, name_b, normalize=False, scorer=rapidfuzz.distance.Indel.
     else:
         _, score, _ = fuzz_output
         return score
+    
+
+def orca_summary(df, save_path=None):
+    rows = []
+
+    df_filtered = df.dropna(subset=['type'])
+
+    for t in sorted(df_filtered['type'].unique()):
+        subset = df_filtered[df_filtered['type'] == t]
+
+        # Unique slic_author_ids (split by ';')
+        unique_authors = set()
+        subset['slic_author_ids'].dropna().apply(lambda x: unique_authors.update(x.split(';')))
+
+        # Unique slic_affiliations (as dict keys)
+        unique_affils = set()
+        for aff in subset['slic_affiliations'].dropna():
+            if isinstance(aff, str):
+                try:
+                    aff = json.loads(aff.replace("'", '"'))  # fix improperly formatted dicts
+                except:
+                    continue
+            if isinstance(aff, dict):
+                unique_affils.update(aff.keys())
+
+        # Unique countries from affiliations
+        unique_countries = set()
+        for a in subset['affiliations'].dropna():
+            try:
+                aff_dict = json.loads(a.replace("'", '"'))
+                for aff in aff_dict.values():
+                    if isinstance(aff, dict) and 'country' in aff:
+                        unique_countries.add(aff['country'])
+            except Exception:
+                continue
+
+        rows.append({
+            'type': t,
+            'count': len(subset),
+            'unique_slic_author_ids': len(unique_authors),
+            'unique_slic_affiliations': len(unique_affils),
+            'unique_countries': len(unique_countries)
+        })
+
+    summary_df = pd.DataFrame(rows)
+
+    # Save to CSV
+    if save_path:
+        summary_df.to_csv(save_path , index=False) # "type_summary.csv"
+    
+    return summary_df

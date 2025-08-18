@@ -377,17 +377,41 @@ class Graph():
         Parameters
         ----------
         max_iter: integer; optional
-            Maximum number of iterations in power method. Default=None.
+            Maximum number of iterations in power method. Default=100.
 
         Returns
         -------
         dict
             Dictionary with hubs, authorities, and the graph uid as values
         """
-        hubs, authorities = nx.hits(self.G, max_iter=max_iter)
+        n_nodes = self.G.number_of_nodes()
+
+        # Handle trivial graphs
+        if n_nodes == 0:
+            hubs = {}
+            authorities = {}
+        elif n_nodes == 1:
+            only_node = next(iter(self.G.nodes()))
+            hubs = {only_node: 1.0}
+            authorities = {only_node: 1.0}
+        else:
+            try:
+                hubs, authorities = nx.hits(self.G, max_iter=max_iter)
+            except ValueError:
+                # fallback if svds fails for unexpected reasons
+                hubs = {n: 0.0 for n in self.G.nodes()}
+                authorities = hubs.copy()
+
+        # record in stats
         self.stats["hubs"] = hubs
         self.stats["authorities"] = authorities
-        return {"hubs": hubs, "authorities": authorities, "uid": self.uid}
+
+        return {
+            "hubs": hubs,
+            "authorities": authorities,
+            "uid": self.uid
+        }
+
 
 
     def strongly_connected_components(self):

@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TELF.applications.Penguin.penguin &#8212; TELF 0.0.41 documentation</title>
+    <title>TELF.applications.Penguin.penguin &#8212; TELF 0.0.42 documentation</title>
   
   
   
@@ -29,7 +29,7 @@
   <link href="../../../../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 <link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
   
@@ -39,7 +39,7 @@
   <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../../../../_static/documentation_options.js?v=1983794d"></script>
+    <script src="../../../../_static/documentation_options.js?v=0ef7f92b"></script>
     <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -125,7 +125,7 @@
   
   
   
-    <p class="title logo__title">TELF 0.0.41 documentation</p>
+    <p class="title logo__title">TELF 0.0.42 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -322,27 +322,28 @@
                 <article class="bd-article">
                   
   <h1>Source code for TELF.applications.Penguin.penguin</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">pathlib</span>
-<span class="kn">import</span> <span class="nn">warnings</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
-<span class="kn">from</span> <span class="nn">rbloom</span> <span class="kn">import</span> <span class="n">Bloom</span>
-<span class="kn">from</span> <span class="nn">joblib</span> <span class="kn">import</span> <span class="n">Parallel</span><span class="p">,</span> <span class="n">delayed</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pathlib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tqdm</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rbloom</span><span class="w"> </span><span class="kn">import</span> <span class="n">Bloom</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">joblib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Parallel</span><span class="p">,</span> <span class="n">delayed</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sequence</span>
 
-<span class="kn">from</span> <span class="nn">pymongo</span> <span class="kn">import</span> <span class="n">MongoClient</span><span class="p">,</span> <span class="n">ASCENDING</span>
-<span class="kn">from</span> <span class="nn">pymongo.errors</span> <span class="kn">import</span> <span class="n">ConnectionFailure</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pymongo</span><span class="w"> </span><span class="kn">import</span> <span class="n">MongoClient</span><span class="p">,</span> <span class="n">ASCENDING</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pymongo.errors</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConnectionFailure</span>
 
-<span class="kn">from</span> <span class="nn">...helpers.host</span> <span class="kn">import</span> <span class="n">verify_n_jobs</span>
-<span class="kn">from</span> <span class="nn">...helpers.data_structures</span> <span class="kn">import</span> <span class="n">verify_attributes</span><span class="p">,</span> <span class="n">transform_dict</span>
-<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">create_text_query</span>
-<span class="kn">from</span> <span class="nn">.crocodile</span> <span class="kn">import</span> <span class="n">process_scopus_json</span><span class="p">,</span> <span class="n">process_scopus_xml</span><span class="p">,</span> <span class="n">process_s2_json</span> 
-<span class="kn">from</span> <span class="nn">.crocodile</span> <span class="kn">import</span> <span class="n">form_scopus_df</span><span class="p">,</span> <span class="n">form_s2_df</span><span class="p">,</span> <span class="n">form_df</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">...helpers.host</span><span class="w"> </span><span class="kn">import</span> <span class="n">verify_n_jobs</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">...helpers.data_structures</span><span class="w"> </span><span class="kn">import</span> <span class="n">verify_attributes</span><span class="p">,</span> <span class="n">transform_dict</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_text_query</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.crocodile</span><span class="w"> </span><span class="kn">import</span> <span class="n">process_scopus_json</span><span class="p">,</span> <span class="n">process_scopus_xml</span><span class="p">,</span> <span class="n">process_s2_json</span> 
+<span class="kn">from</span><span class="w"> </span><span class="nn">.crocodile</span><span class="w"> </span><span class="kn">import</span> <span class="n">form_scopus_df</span><span class="p">,</span> <span class="n">form_s2_df</span><span class="p">,</span> <span class="n">form_df</span>
 
 <div class="viewcode-block" id="Penguin">
 <a class="viewcode-back" href="../../../../Penguin.html#TELF.applications.Penguin.penguin.Penguin">[docs]</a>
-<span class="k">class</span> <span class="nc">Penguin</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Penguin</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A handler class for managing connections and operations with a documents MongoDB database.</span>
 
@@ -377,7 +378,7 @@
     <span class="p">}</span>
 
     
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">db_name</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="p">,</span> <span class="n">db_name</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initializes the Penguin instance with the specified URI, database name, and optional settings.</span>
 
@@ -429,7 +430,7 @@
     <span class="c1"># 1. Connecting to the Penguin Database</span>
         
         
-    <span class="k">def</span> <span class="nf">_connect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_connect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Establishes a connection to the MongoDB database and validates its structure.</span>
 
@@ -476,7 +477,7 @@
             <span class="k">raise</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
 
             
-    <span class="k">def</span> <span class="nf">_validate_database</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">required_collections</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_validate_database</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">required_collections</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Validates the presence of required collections in the connected MongoDB database.</span>
 
@@ -524,7 +525,7 @@
         
 <div class="viewcode-block" id="Penguin.add_many_documents">
 <a class="viewcode-back" href="../../../../Penguin.html#TELF.applications.Penguin.penguin.Penguin.add_many_documents">[docs]</a>
-    <span class="k">def</span> <span class="nf">add_many_documents</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">directory</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_many_documents</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">directory</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Processes a directory of document files that need to be added to the database. The</span>
 <span class="sd">        function can add both Scopus and S2 documents depending on the `source` agument. </span>
@@ -560,7 +561,7 @@
         
 <div class="viewcode-block" id="Penguin.add_single_document">
 <a class="viewcode-back" href="../../../../Penguin.html#TELF.applications.Penguin.penguin.Penguin.add_single_document">[docs]</a>
-    <span class="k">def</span> <span class="nf">add_single_document</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_single_document</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Processes a single data file and adds / updates its content in the database.</span>
 <span class="sd">        </span>
@@ -601,7 +602,7 @@
 
     
     
-    <span class="k">def</span> <span class="nf">_file_path_generator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">directory</span><span class="p">,</span> <span class="n">ext</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_file_path_generator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">directory</span><span class="p">,</span> <span class="n">ext</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generator function that yields paths to files with certain extensions in </span>
 <span class="sd">        the given directory.</span>
@@ -631,7 +632,7 @@
                 <span class="k">yield</span> <span class="n">file_path</span>
             
             
-    <span class="k">def</span> <span class="nf">_add_single_s2_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_add_single_s2_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Processes a single S2 data file for addition </span>
 
@@ -661,7 +662,7 @@
         <span class="k">if</span> <span class="n">file_path</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s1">&#39;.json&#39;</span><span class="p">:</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">process_s2_json</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">output_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;S2 `file_path` has an unsupported file extension: </span><span class="si">{</span><span class="n">source</span><span class="si">!r}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;S2 `file_path` has an unsupported file extension: </span><span class="si">{</span><span class="n">file_path</span><span class="si">!r}</span><span class="s1">&#39;</span><span class="p">)</span>
         
         <span class="n">collection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">S2_COL</span><span class="p">]</span>
         <span class="n">id_attr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">s2_attributes</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
@@ -675,7 +676,7 @@
                 <span class="k">pass</span>
                 
                 
-    <span class="k">def</span> <span class="nf">_add_single_scopus_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_add_single_scopus_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_path</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Processes a single Scopus data file for addition </span>
 
@@ -707,7 +708,7 @@
         <span class="k">elif</span> <span class="n">file_path</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s1">&#39;.json&#39;</span><span class="p">:</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">process_scopus_json</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">output_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Scopus `file_path` has an unsupported file extension: </span><span class="si">{</span><span class="n">source</span><span class="si">!r}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Scopus `file_path` has an unsupported file extension: </span><span class="si">{</span><span class="n">file_path</span><span class="si">!r}</span><span class="s1">&#39;</span><span class="p">)</span>
         
         <span class="n">collection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">SCOPUS_COL</span><span class="p">]</span>
         <span class="n">id_attr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scopus_attributes</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
@@ -726,7 +727,7 @@
     
 <div class="viewcode-block" id="Penguin.count_documents">
 <a class="viewcode-back" href="../../../../Penguin.html#TELF.applications.Penguin.penguin.Penguin.count_documents">[docs]</a>
-    <span class="k">def</span> <span class="nf">count_documents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">count_documents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return the number of documents in the Scopus and S2.</span>
 <span class="sd">    </span>
@@ -755,7 +756,7 @@
         
 <div class="viewcode-block" id="Penguin.text_search">
 <a class="viewcode-back" href="../../../../Penguin.html#TELF.applications.Penguin.penguin.Penguin.text_search">[docs]</a>
-    <span class="k">def</span> <span class="nf">text_search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">join</span><span class="o">=</span><span class="s1">&#39;OR&#39;</span><span class="p">,</span> <span class="n">scopus</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">s2</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">as_pandas</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">text_search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">join</span><span class="o">=</span><span class="s1">&#39;OR&#39;</span><span class="p">,</span> <span class="n">scopus</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">s2</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">as_pandas</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Search the Penguin database by text matching in either Scopus documents, S2 documents or both.</span>
 
@@ -854,7 +855,7 @@
     
 <div class="viewcode-block" id="Penguin.id_search">
 <a class="viewcode-back" href="../../../../Penguin.html#TELF.applications.Penguin.penguin.Penguin.id_search">[docs]</a>
-    <span class="k">def</span> <span class="nf">id_search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ids</span><span class="p">,</span> <span class="n">as_pandas</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">id_search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ids</span><span class="p">,</span> <span class="n">as_pandas</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Search the Penguin database by document IDs in either Scopus documents, S2 documents, or both.</span>
 <span class="sd">    </span>
@@ -953,7 +954,7 @@
     
 <div class="viewcode-block" id="Penguin.citation_search">
 <a class="viewcode-back" href="../../../../Penguin.html#TELF.applications.Penguin.penguin.Penguin.citation_search">[docs]</a>
-    <span class="k">def</span> <span class="nf">citation_search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">scopus</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">s2</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">as_pandas</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">citation_search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">scopus</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">s2</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">as_pandas</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Searches for documents based on citation or reference targets within a specified collection.</span>
 
@@ -1039,7 +1040,7 @@
                         
 <div class="viewcode-block" id="Penguin.query_by_author">
 <a class="viewcode-back" href="../../../../Penguin.html#TELF.applications.Penguin.penguin.Penguin.query_by_author">[docs]</a>
-    <span class="k">def</span> <span class="nf">query_by_author</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">collection_name</span><span class="p">,</span> <span class="n">doc_id</span><span class="p">,</span> <span class="n">id_attribute</span><span class="o">=</span><span class="s1">&#39;paperId&#39;</span><span class="p">,</span> 
+    <span class="k">def</span><span class="w"> </span><span class="nf">query_by_author</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">collection_name</span><span class="p">,</span> <span class="n">doc_id</span><span class="p">,</span> <span class="n">id_attribute</span><span class="o">=</span><span class="s1">&#39;paperId&#39;</span><span class="p">,</span> 
                         <span class="n">author_attribute_list</span><span class="o">=</span><span class="s1">&#39;authors&#39;</span><span class="p">,</span> <span class="n">author_attribute</span><span class="o">=</span><span class="s1">&#39;authorId&#39;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Query a MongoDB collection for a document by a direct match and then locate all of the other papers</span>
@@ -1079,7 +1080,7 @@
     
 <div class="viewcode-block" id="Penguin.resolve_document_id">
 <a class="viewcode-back" href="../../../../Penguin.html#TELF.applications.Penguin.penguin.Penguin.resolve_document_id">[docs]</a>
-    <span class="k">def</span> <span class="nf">resolve_document_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pid</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">resolve_document_id</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pid</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Resolves the collection and unique identifier (uid) for a given document_id.</span>
 <span class="sd">        The document id can either be a Scopus id or a SemanticScholar id.</span>
@@ -1098,7 +1099,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">prefix</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">actual_id</span> <span class="o">=</span> <span class="n">pid</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">actual_id</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Encountered unknown `id`: </span><span class="si">{</span><span class="n">doc_id</span><span class="si">}</span><span class="s1">. Prepend id with eid: or s2id: to specify id type&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Encountered unknown `id`: </span><span class="si">{</span><span class="n">pid</span><span class="si">}</span><span class="s1">. Prepend id with eid: or s2id: to specify id type&#39;</span><span class="p">)</span>
     
         <span class="n">document</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">collection</span> <span class="o">=</span> <span class="kc">None</span>
@@ -1123,7 +1124,7 @@
     
 <div class="viewcode-block" id="Penguin.add_tag">
 <a class="viewcode-back" href="../../../../Penguin.html#TELF.applications.Penguin.penguin.Penguin.add_tag">[docs]</a>
-    <span class="k">def</span> <span class="nf">add_tag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">document_id</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_tag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">document_id</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds a tag to the specified document.</span>
 <span class="sd">        </span>
@@ -1158,7 +1159,7 @@
     
 <div class="viewcode-block" id="Penguin.remove_tag">
 <a class="viewcode-back" href="../../../../Penguin.html#TELF.applications.Penguin.penguin.Penguin.remove_tag">[docs]</a>
-    <span class="k">def</span> <span class="nf">remove_tag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">document_id</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">remove_tag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">document_id</span><span class="p">,</span> <span class="n">tag</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Removes a tag from the specified document.</span>
 <span class="sd">        </span>
@@ -1193,7 +1194,7 @@
 
 <div class="viewcode-block" id="Penguin.update_tags">
 <a class="viewcode-back" href="../../../../Penguin.html#TELF.applications.Penguin.penguin.Penguin.update_tags">[docs]</a>
-    <span class="k">def</span> <span class="nf">update_tags</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">document_id</span><span class="p">,</span> <span class="n">new_tags</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_tags</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">document_id</span><span class="p">,</span> <span class="n">new_tags</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Updates the tags for the specified document with a new set of tags. Used for </span>
 <span class="sd">        updating the entire list of tags at once</span>
@@ -1229,7 +1230,7 @@
             
 <div class="viewcode-block" id="Penguin.find_by_tag">
 <a class="viewcode-back" href="../../../../Penguin.html#TELF.applications.Penguin.penguin.Penguin.find_by_tag">[docs]</a>
-    <span class="k">def</span> <span class="nf">find_by_tag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">as_pandas</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">find_by_tag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">as_pandas</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Finds and returns documents that have the specified tag.</span>
 <span class="sd">        </span>
@@ -1257,13 +1258,47 @@
             <span class="k">return</span> <span class="n">out</span></div>
 
 
+
+<div class="viewcode-block" id="Penguin.distinct_field">
+<a class="viewcode-back" href="../../../../Penguin.html#TELF.applications.Penguin.penguin.Penguin.distinct_field">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">distinct_field</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">source</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">field</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">filter_spec</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">set</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the set of unique values for `field` in `source` matching `filter_spec`.</span>
+<span class="sd">        If filter_spec is None, returns all distinct values of that field.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">coll</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="p">[</span><span class="n">source</span><span class="p">]</span>
+        <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="n">coll</span><span class="o">.</span><span class="n">distinct</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">filter_spec</span> <span class="ow">or</span> <span class="p">{}))</span></div>
+
+
+<div class="viewcode-block" id="Penguin.distinct_dois">
+<a class="viewcode-back" href="../../../../Penguin.html#TELF.applications.Penguin.penguin.Penguin.distinct_dois">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">distinct_dois</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">source</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">S2_COL</span><span class="p">,</span>
+        <span class="n">dois</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">set</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the subset of `dois` that are already in the database (or all DOIs if `dois` is None).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">doi_field</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">s2_attributes</span><span class="p">[</span><span class="s1">&#39;doi&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="n">source</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">S2_COL</span>
+            <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">scopus_attributes</span><span class="p">[</span><span class="s1">&#39;doi&#39;</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="n">spec</span> <span class="o">=</span> <span class="p">{</span><span class="n">doi_field</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;$in&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dois</span><span class="p">]}}</span> <span class="k">if</span> <span class="n">dois</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">distinct_field</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">doi_field</span><span class="p">,</span> <span class="n">spec</span><span class="p">)</span></div>
+
     
     <span class="c1"># 5. iPenguin Hook</span>
     
     
 <div class="viewcode-block" id="Penguin.get_id_bloom">
 <a class="viewcode-back" href="../../../../Penguin.html#TELF.applications.Penguin.penguin.Penguin.get_id_bloom">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_id_bloom</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">max_items</span><span class="o">=</span><span class="mf">1.25</span><span class="p">,</span> <span class="n">false_positive_rate</span><span class="o">=</span><span class="mf">0.001</span><span class="p">):</span>  
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_id_bloom</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">max_items</span><span class="o">=</span><span class="mf">1.25</span><span class="p">,</span> <span class="n">false_positive_rate</span><span class="o">=</span><span class="mf">0.001</span><span class="p">):</span>  
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initializes a Bloom filter with IDs from a specified source collection.</span>
 
@@ -1339,7 +1374,7 @@
 
         
     
-    <span class="k">def</span> <span class="nf">_query_to_pandas</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scopus_query</span><span class="p">,</span> <span class="n">s2_query</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_query_to_pandas</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scopus_query</span><span class="p">,</span> <span class="n">s2_query</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Retrieves data based on two separate queries to Scopus and S2 collections and transforms them </span>
 <span class="sd">        into a single Pandas DataFrame in SLIC format.</span>
@@ -1368,7 +1403,7 @@
         <span class="k">return</span> <span class="n">form_df</span><span class="p">(</span><span class="n">scopus_df</span><span class="p">,</span> <span class="n">s2_df</span><span class="p">)</span>
 
     
-    <span class="k">def</span> <span class="nf">_query_to_pandas_helper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">processor</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_query_to_pandas_helper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">processor</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Retrieves data from a MongoDB collection based on a query and turns it into a </span>
 <span class="sd">        Pandas DataFrame.</span>
@@ -1412,7 +1447,7 @@
             <span class="k">return</span> <span class="n">processor</span><span class="p">([])</span>  <span class="c1"># create empty df (just header basically)</span>
 
     
-    <span class="k">def</span> <span class="nf">_parallel_cursors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">collection</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parallel_cursors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">collection</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generates a list of cursors for a MongoDB collection, each pointing to a subset of documents</span>
 <span class="sd">        based on the specified query. The total number of documents matched by the query is divided</span>
@@ -1455,11 +1490,11 @@
     
     
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">uri</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">uri</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_uri</span>
 
     <span class="nd">@uri</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">uri</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">uri</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;`uri` must be a string!&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^[a-zA-Z0-9.-]+:[0-9]+$&#39;</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
@@ -1467,65 +1502,65 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_uri</span> <span class="o">=</span> <span class="n">value</span>
     
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">db_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">db_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_db_name</span>
 
     <span class="nd">@db_name</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">db_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">db_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;`db_name` must be a string!&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_db_name</span> <span class="o">=</span> <span class="n">value</span>
     
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">username</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">username</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_username</span>
 
     <span class="nd">@username</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">username</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">username</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">value</span><span class="o">.</span><span class="n">strip</span><span class="p">()):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;`username` must be a non-empty string or None&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_username</span> <span class="o">=</span> <span class="n">value</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">password</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">password</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_password</span>
 
     <span class="nd">@password</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">password</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">password</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">value</span><span class="o">.</span><span class="n">strip</span><span class="p">()):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;`password` must be a non-empty string or None&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_password</span> <span class="o">=</span> <span class="n">value</span>
     
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">n_jobs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">n_jobs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n_jobs</span>
     
     <span class="nd">@n_jobs</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">n_jobs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_jobs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">n_jobs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_jobs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_n_jobs</span> <span class="o">=</span> <span class="n">verify_n_jobs</span><span class="p">(</span><span class="n">n_jobs</span><span class="p">)</span>
         
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">scopus_attributes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">scopus_attributes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scopus_attributes</span>
     
     <span class="nd">@scopus_attributes</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">scopus_attributes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scopus_attributes</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">scopus_attributes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scopus_attributes</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_scopus_attributes</span> <span class="o">=</span> <span class="n">verify_attributes</span><span class="p">(</span><span class="n">scopus_attributes</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">scopus_attributes</span><span class="p">,</span> <span class="s1">&#39;scopus_attributes&#39;</span><span class="p">)</span>
         
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">s2_attributes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">s2_attributes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_s2_attributes</span>
     
     <span class="nd">@s2_attributes</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">s2_attributes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s2_attributes</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">s2_attributes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s2_attributes</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_s2_attributes</span> <span class="o">=</span> <span class="n">verify_attributes</span><span class="p">(</span><span class="n">s2_attributes</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">s2_attributes</span><span class="p">,</span> <span class="s1">&#39;s2_attributes&#39;</span><span class="p">)</span>
         
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">verbose</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">verbose</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_verbose</span>
         
     <span class="nd">@verbose</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">verbose</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">verbose</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">verbose</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">verbose</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">verbose</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_verbose</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">verbose</span><span class="p">)</span>  <span class="c1"># convert False to 0, True to 1</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">verbose</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>

@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TELF.pre_processing.Squirrel.pruners.llm_prune &#8212; TELF 0.0.41 documentation</title>
+    <title>TELF.pre_processing.Squirrel.pruners.llm_prune &#8212; TELF 0.0.42 documentation</title>
   
   
   
@@ -29,7 +29,7 @@
   <link href="../../../../../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 <link href="../../../../../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../../../../../_static/graphviz.css?v=4ae1632d" />
   
@@ -39,7 +39,7 @@
   <link rel="preload" as="script" href="../../../../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../../../../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../../../../../_static/documentation_options.js?v=1983794d"></script>
+    <script src="../../../../../_static/documentation_options.js?v=0ef7f92b"></script>
     <script src="../../../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -125,7 +125,7 @@
   
   
   
-    <p class="title logo__title">TELF 0.0.41 documentation</p>
+    <p class="title logo__title">TELF 0.0.42 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -322,24 +322,25 @@
                 <article class="bd-article">
                   
   <h1>Source code for TELF.pre_processing.Squirrel.pruners.llm_prune</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">import</span> <span class="nn">math</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Iterable</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tqdm.auto</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
 
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">tqdm.auto</span> <span class="kn">import</span> <span class="n">tqdm</span>
-
-<span class="kn">from</span> <span class="nn">....helpers.llm</span> <span class="kn">import</span> <span class="n">get_ollama_llm</span><span class="p">,</span> <span class="n">vote_once</span><span class="p">,</span> <span class="n">build_json_vote_prompt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">....helpers.llm_operations</span><span class="w"> </span><span class="kn">import</span> <span class="n">vote_once</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">....helpers.llm_models</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_ollama_llm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">....helpers.prompts</span><span class="w"> </span><span class="kn">import</span> <span class="n">build_json_vote_prompt</span>
 
 <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 <div class="viewcode-block" id="LLMPruner">
 <a class="viewcode-back" href="../../../../../Squirrel.html#TELF.pre_processing.Squirrel.pruners.llm_prune.LLMPruner">[docs]</a>
-<span class="k">class</span> <span class="nc">LLMPruner</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">LLMPruner</span><span class="p">:</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">llm_model_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">llm_api_url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -347,6 +348,7 @@
         <span class="n">llm_promote_threshold</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
         <span class="n">llm_temperature</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
         <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">prompt</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">build_json_vote_prompt</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Perform LLM-based refinement on an embedding-pruned dataset, annotating each</span>
@@ -366,11 +368,17 @@
 <span class="sd">            Sampling temperature for the LLM.</span>
 <span class="sd">        verbose : bool</span>
 <span class="sd">            Whether to show tqdm progress bars.</span>
+<span class="sd">        prompt : Callable[[str, Iterable[str]], str]</span>
+<span class="sd">            Function that contains the prompt for the LLM.\n</span>
+<span class="sd">            This function should take in a string and iterable where the string is the candidate document\n</span>
+<span class="sd">            and the iterable is the context or target context examples to compare the candidate docuiment to.\n</span>
+<span class="sd">            Default is ``TELF.helpers.prompts.build_json_vote_prompt``</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">llm_vote_trials</span> <span class="o">=</span> <span class="n">llm_vote_trials</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">llm_promote_threshold</span> <span class="o">=</span> <span class="n">llm_promote_threshold</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">NAME</span> <span class="o">=</span> <span class="s1">&#39;llm_prune&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">prompt</span> <span class="o">=</span> <span class="n">prompt</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">llm</span> <span class="o">=</span> <span class="n">get_ollama_llm</span><span class="p">(</span>
             <span class="n">model</span><span class="o">=</span><span class="n">llm_model_name</span><span class="p">,</span>
@@ -378,7 +386,7 @@
             <span class="n">temperature</span><span class="o">=</span><span class="n">llm_temperature</span>
         <span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_vote_on_document</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">ctx</span><span class="p">,</span> <span class="n">keep</span><span class="p">,</span> <span class="n">fout</span><span class="p">,</span> <span class="n">data_column</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_vote_on_document</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">ctx</span><span class="p">,</span> <span class="n">keep</span><span class="p">,</span> <span class="n">fout</span><span class="p">,</span> <span class="n">data_column</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Perform the LLM voting process on a single document.</span>
 
@@ -399,7 +407,7 @@
 <span class="sd">        data_column : str</span>
 <span class="sd">            Column name containing the data to be voted on.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">prompt</span> <span class="o">=</span> <span class="n">build_json_vote_prompt</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="n">data_column</span><span class="p">],</span> <span class="n">ctx</span><span class="p">)</span>
+        <span class="n">prompt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prompt</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="n">data_column</span><span class="p">],</span> <span class="n">ctx</span><span class="p">)</span>
         <span class="n">votes</span> <span class="o">=</span> <span class="p">[</span><span class="n">vote_once</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">llm</span><span class="p">,</span> <span class="n">prompt</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">llm_vote_trials</span><span class="p">)]</span>
         <span class="n">yes_count</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">votes</span><span class="p">)</span>
         <span class="n">reasons</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">votes</span><span class="p">]</span>
@@ -419,7 +427,7 @@
         <span class="k">if</span> <span class="n">decision</span><span class="p">:</span>
             <span class="n">keep</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">,</span> <span class="n">label_column</span><span class="p">,</span> <span class="n">reference_label</span><span class="p">,</span> <span class="n">data_column</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">,</span> <span class="n">label_column</span><span class="p">,</span> <span class="n">reference_label</span><span class="p">,</span> <span class="n">data_column</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Run LLM voting across all rows, annotate `llm_accept`, save vote</span>
 <span class="sd">        records and the annotated DataFrame, and return it.</span>

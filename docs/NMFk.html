@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>TELF.factorization.NMFk: Non-negative Matrix Factorization with Automatic Model Determination &#8212; TELF 0.0.41 documentation</title>
+    <title>TELF.factorization.NMFk: Non-negative Matrix Factorization with Automatic Model Determination &#8212; TELF 0.0.42 documentation</title>
   
   
   
@@ -30,7 +30,7 @@
   <link href="_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 <link href="_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
   
@@ -40,7 +40,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="_static/documentation_options.js?v=1983794d"></script>
+    <script src="_static/documentation_options.js?v=0ef7f92b"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -126,7 +126,7 @@
   
   
   
-    <p class="title logo__title">TELF 0.0.41 documentation</p>
+    <p class="title logo__title">TELF 0.0.42 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -397,15 +397,15 @@
 <section id="example">
 <h1>Example<a class="headerlink" href="#example" title="Link to this heading">#</a></h1>
 <p>First generate synthetic data with pre-determined k. It can be either dense (<code class="docutils literal notranslate"><span class="pre">np.ndarray</span></code>) or sparse matrix (<code class="docutils literal notranslate"><span class="pre">scipy.sparse._csr.csr_matrix</span></code>). Here, we are using the provided scripts for matrix generation (located <a class="reference external" href="https://github.com/lanl/T-ELF/tree/main/scripts">here</a>):</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span><span class="p">;</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;../../scripts/&quot;</span><span class="p">)</span>
-<span class="kn">from</span> <span class="nn">generate_X</span> <span class="kn">import</span> <span class="n">gen_data</span><span class="p">,</span><span class="n">gen_data_sparse</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span><span class="p">;</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;../../scripts/&quot;</span><span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">generate_X</span><span class="w"> </span><span class="kn">import</span> <span class="n">gen_data</span><span class="p">,</span><span class="n">gen_data_sparse</span>
 
 <span class="n">Xsp</span> <span class="o">=</span> <span class="n">gen_data_sparse</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">],</span> <span class="n">density</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)[</span><span class="s2">&quot;X&quot;</span><span class="p">]</span>
 <span class="n">X</span> <span class="o">=</span> <span class="n">gen_data</span><span class="p">(</span><span class="n">R</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">])[</span><span class="s2">&quot;X&quot;</span><span class="p">]</span>
 </pre></div>
 </div>
 <p>Now we can factorize the given matrix:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">TELF.factorization</span> <span class="kn">import</span> <span class="n">NMFk</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">TELF.factorization</span><span class="w"> </span><span class="kn">import</span> <span class="n">NMFk</span>
 
 <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;n_perturbs&quot;</span><span class="p">:</span><span class="mi">36</span><span class="p">,</span>

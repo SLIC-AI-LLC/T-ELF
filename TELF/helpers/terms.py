@@ -1,9 +1,14 @@
+from __future__ import annotations
 import warnings
 import pathlib
 
 from .file_system import load_list
 from ..pre_processing.Vulture.default_stop_words import STOP_WORDS
 from ..pre_processing.Vulture.default_stop_phrases import STOP_PHRASES
+
+from ..pre_processing.Vulture.modules import  LemmatizeCleaner
+from typing import Any, Callable, Dict, List, Tuple, Optional,Sequence
+
 
 def load_stop_terms(terms, words=True):
     """
@@ -245,3 +250,77 @@ def unite_terms(*args):
         result.append({key: values})
     result.extend(unique_strings)
     return result
+
+
+
+def resolve_substitution_conflicts(
+    sub_map: Dict[str, Any],
+    *,
+    resolver: Callable[[List[Tuple[str, Any]]], Tuple[str, Any]] | None = None,
+    warn: bool = True,
+) -> tuple[Dict[str, Any], set[str]]:
+    """
+    Collapse keys that lemmatize to the same token but map to different
+    targets.
+
+    Returns
+    -------
+    cleaned : Dict[str, Any]
+        Conflict-free forward map (orig -> replacement).
+    dropped : set[str]
+        Every orig key that was removed during conflict resolution.
+    """
+    # ------------------------------------------------------------------ #
+    # 1) pick a lemmatizer                                               #
+    # ------------------------------------------------------------------ #
+    try:
+        lemmatizer = LemmatizeCleaner(library="spacy")
+    except TypeError:
+        lemmatizer = LemmatizeCleaner(library="nltk")       # safe fallback
+
+    # ------------------------------------------------------------------ #
+    # 2) default conflict policy: keep the *shortest* original string    #
+    # ------------------------------------------------------------------ #
+    if resolver is None:
+        resolver = lambda items: min(items, key=lambda kv: len(kv[0]))
+
+    # ------------------------------------------------------------------ #
+    # 3) bucket originals by their normalized (lemmatized) form          #
+    # ------------------------------------------------------------------ #
+    buckets: Dict[str, List[Tuple[str, Any]]] = {}
+    for orig, val in sub_map.items():
+        try:
+            _, cleaned = lemmatizer((None, orig))
+            norm = cleaned.lower()
+        except Exception as e:
+            if warn:
+                print(f"[resolve_subs] warn: could not lemmatize “{orig}” ({e})")
+            norm = orig.lower()
+
+        buckets.setdefault(norm, []).append((orig, val))
+
+    # ------------------------------------------------------------------ #
+    # 4) resolve each bucket                                             #
+    # ------------------------------------------------------------------ #
+    cleaned: Dict[str, Any] = {}
+    dropped: set[str] = set()
+
+    for norm, items in buckets.items():
+        vals = {v for _, v in items}
+
+        if len(vals) == 1:
+            # unanimous → keep *all* originals
+            cleaned.update(items)
+        else:
+            # conflict → call resolver, drop the rest
+            keep_orig, keep_val = resolver(items)
+            cleaned[keep_orig] = keep_val
+
+            toss = [o for o, _ in items if o != keep_orig]
+            dropped.update(toss)
+
+            if warn:
+                print(f"[resolve_subs] conflict on {norm!r}: keeping "
+                      f"'{keep_orig}', dropping {toss}")
+
+    return cleaned, dropped

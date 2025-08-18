@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TELF.factorization.HNMFk &#8212; TELF 0.0.41 documentation</title>
+    <title>TELF.factorization.HNMFk &#8212; TELF 0.0.42 documentation</title>
   
   
   
@@ -29,7 +29,7 @@
   <link href="../../../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 <link href="../../../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
   
@@ -39,7 +39,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../../../_static/documentation_options.js?v=1983794d"></script>
+    <script src="../../../_static/documentation_options.js?v=0ef7f92b"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -125,7 +125,7 @@
   
   
   
-    <p class="title logo__title">TELF 0.0.41 documentation</p>
+    <p class="title logo__title">TELF 0.0.42 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -329,17 +329,17 @@
 <span class="sd">signal-exit  - 400</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">.NMFk</span> <span class="kn">import</span> <span class="n">NMFk</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">uuid</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">import</span> <span class="nn">pickle</span>
-<span class="kn">import</span> <span class="nn">warnings</span>
-<span class="kn">from</span> <span class="nn">..helpers.inits</span> <span class="kn">import</span> <span class="n">organize_required_params</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.NMFk</span><span class="w"> </span><span class="kn">import</span> <span class="n">NMFk</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">uuid</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pickle</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..helpers.inits</span><span class="w"> </span><span class="kn">import</span> <span class="n">organize_required_params</span>
 
-<span class="kn">from</span> <span class="nn">.utilities.hpc_comm_helpers</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.utilities.hpc_comm_helpers</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">signal_workers_exit</span><span class="p">,</span> 
     <span class="n">worker_check_exit_status</span><span class="p">,</span> 
     <span class="n">get_next_job_at_worker</span><span class="p">,</span> 
@@ -348,15 +348,15 @@
 <span class="p">)</span>
 
 <span class="k">try</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">mpi4py</span> <span class="kn">import</span> <span class="n">MPI</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mpi4py</span><span class="w"> </span><span class="kn">import</span> <span class="n">MPI</span>
 <span class="k">except</span><span class="p">:</span>
     <span class="n">MPI</span> <span class="o">=</span> <span class="kc">None</span>
 
 
 <div class="viewcode-block" id="OnlineNode">
 <a class="viewcode-back" href="../../../HNMFk.html#TELF.factorization.HNMFk.OnlineNode">[docs]</a>
-<span class="k">class</span> <span class="nc">OnlineNode</span><span class="p">():</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+<span class="k">class</span><span class="w"> </span><span class="nc">OnlineNode</span><span class="p">():</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
                  <span class="n">node_path</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span>
                  <span class="n">node_name</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span>
                  <span class="n">parent_node</span><span class="p">:</span><span class="nb">object</span><span class="p">,</span>
@@ -368,15 +368,15 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">child_nodes</span> <span class="o">=</span> <span class="n">child_nodes</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">original_child_nodes</span> <span class="o">=</span> <span class="n">child_nodes</span>
     
-    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">node_path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">))</span></div>
 
 
 
 <div class="viewcode-block" id="Node">
 <a class="viewcode-back" href="../../../HNMFk.html#TELF.factorization.HNMFk.Node">[docs]</a>
-<span class="k">class</span> <span class="nc">Node</span><span class="p">():</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Node</span><span class="p">():</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">node_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
                  <span class="n">depth</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
                  <span class="n">parent_topic</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
@@ -427,8 +427,8 @@
 
 <div class="viewcode-block" id="HNMFk">
 <a class="viewcode-back" href="../../../HNMFk.html#TELF.factorization.HNMFk.HNMFk">[docs]</a>
-<span class="k">class</span> <span class="nc">HNMFk</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">HNMFk</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">nmfk_params</span><span class="o">=</span><span class="p">[{}],</span>
                  <span class="n">cluster_on</span><span class="o">=</span><span class="s2">&quot;H&quot;</span><span class="p">,</span>
                  <span class="n">depth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
@@ -549,7 +549,7 @@
 
 <div class="viewcode-block" id="HNMFk.load_model">
 <a class="viewcode-back" href="../../../HNMFk.html#TELF.factorization.HNMFk.HNMFk.load_model">[docs]</a>
-    <span class="k">def</span> <span class="nf">load_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">load_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Loads existing model from checkpoint file located at self.experiment_name path.</span>
 <span class="sd">        This checkpoint file exists if fit(save_checkpoint=True) was used.</span>
@@ -606,7 +606,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_iterator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span></div>
 
 
-    <span class="k">def</span> <span class="nf">_fix_node_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">old_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">new_base_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_fix_node_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">old_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">new_base_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adjust the node path when loading from a different directory.</span>
 <span class="sd">        This will calculate the relative path based on the new `self.experiment_name`.</span>
@@ -615,7 +615,7 @@
         <span class="n">new_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">new_base_path</span><span class="p">,</span> <span class="n">relative_path</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">new_path</span>
 
-    <span class="k">def</span> <span class="nf">_prepare_iterator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_prepare_iterator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
         <span class="n">node_object</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">node_save_paths</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">node_name</span><span class="p">],</span> <span class="s2">&quot;rb&quot;</span><span class="p">))</span>
         <span class="n">child_node_names</span> <span class="o">=</span> <span class="n">node_object</span><span class="o">.</span><span class="n">child_node_names</span>
 
@@ -646,7 +646,7 @@
         <span class="k">return</span>
 
 
-    <span class="k">def</span> <span class="nf">_load_checkpoint_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_load_checkpoint_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">ckpt_file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">experiment_save_path</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;checkpoint.p&quot;</span>
             <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">ckpt_file</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
@@ -656,17 +656,17 @@
             <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;No checkpoint file found!&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="p">{}</span>
 
-    <span class="k">def</span> <span class="nf">_load_checkpoint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">saved_class_params</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_load_checkpoint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">saved_class_params</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Loading saved object state from checkpoint...&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_set_params</span><span class="p">(</span><span class="n">saved_class_params</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_set_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">class_parameters</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_set_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">class_parameters</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Sets class variables from the loaded checkpoint&quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">parameter</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">class_parameters</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameter</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_save_checkpoint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_save_checkpoint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">class_params</span> <span class="o">=</span> <span class="nb">vars</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="k">del</span> <span class="n">class_params</span><span class="p">[</span><span class="s2">&quot;X&quot;</span><span class="p">]</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_X_callback</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -676,7 +676,7 @@
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">ckpt_file</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">class_params</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_process_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_results</span><span class="p">,</span> <span class="n">save_checkpoint</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_process_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_results</span><span class="p">,</span> <span class="n">save_checkpoint</span><span class="p">):</span>
         <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_jobs</span><span class="p">[</span><span class="n">node_results</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">node_save_paths</span><span class="p">[</span><span class="n">node_results</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">node_results</span><span class="p">[</span><span class="s2">&quot;node_save_path&quot;</span><span class="p">]</span>
 
@@ -689,7 +689,7 @@
 
 <div class="viewcode-block" id="HNMFk.fit">
 <a class="viewcode-back" href="../../../HNMFk.html#TELF.factorization.HNMFk.HNMFk.fit">[docs]</a>
-    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Ks</span><span class="p">,</span> <span class="n">from_checkpoint</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">save_checkpoint</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Ks</span><span class="p">,</span> <span class="n">from_checkpoint</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">save_checkpoint</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Factorize the input matrix ``X`` for the each given K value in ``Ks``.</span>
 
@@ -887,7 +887,7 @@
 
 
         
-    <span class="k">def</span> <span class="nf">_process_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Ks</span><span class="p">,</span> 
+    <span class="k">def</span><span class="w"> </span><span class="nf">_process_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Ks</span><span class="p">,</span> 
                       <span class="n">depth</span><span class="p">,</span> 
                       <span class="n">original_indices</span><span class="p">,</span> <span class="n">cluster_indices_in_parent</span><span class="p">,</span> 
                       <span class="n">node_name</span><span class="p">,</span> <span class="n">parent_node_name</span><span class="p">,</span> 
@@ -1109,7 +1109,7 @@
 
         <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="n">node_name</span><span class="p">,</span> <span class="s2">&quot;target_jobs&quot;</span><span class="p">:</span><span class="n">target_jobs</span><span class="p">,</span> <span class="s2">&quot;node_save_path&quot;</span><span class="p">:</span><span class="n">pickle_path</span><span class="p">}</span>
     
-    <span class="k">def</span> <span class="nf">_adjust_curr_Ks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X_shape</span><span class="p">,</span> <span class="n">Ks</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_adjust_curr_Ks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X_shape</span><span class="p">,</span> <span class="n">Ks</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">max</span><span class="p">(</span><span class="n">Ks</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="nb">min</span><span class="p">(</span><span class="n">X_shape</span><span class="p">):</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">Ks</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">X_shape</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">Ks_deep_step</span><span class="p">)</span>
@@ -1119,7 +1119,7 @@
             
         <span class="k">return</span> <span class="n">Ks</span>
     
-    <span class="k">def</span> <span class="nf">_get_curr_Ks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_k</span><span class="p">,</span> <span class="n">num_samples</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_curr_Ks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_k</span><span class="p">,</span> <span class="n">num_samples</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">K2</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">Ks_deep_max</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">k_max</span> <span class="o">=</span> <span class="n">node_k</span> <span class="o">+</span> <span class="mi">1</span>
@@ -1135,7 +1135,7 @@
 
 <div class="viewcode-block" id="HNMFk.traverse_nodes">
 <a class="viewcode-back" href="../../../HNMFk.html#TELF.factorization.HNMFk.HNMFk.traverse_nodes">[docs]</a>
-    <span class="k">def</span> <span class="nf">traverse_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">traverse_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Graph iterator. Returns all nodes in list format.\n</span>
 <span class="sd">        This operation will load each node persistently into the memory.</span>
@@ -1156,7 +1156,7 @@
     
 <div class="viewcode-block" id="HNMFk.traverse_tiny_leaf_topics">
 <a class="viewcode-back" href="../../../HNMFk.html#TELF.factorization.HNMFk.HNMFk.traverse_tiny_leaf_topics">[docs]</a>
-    <span class="k">def</span> <span class="nf">traverse_tiny_leaf_topics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">traverse_tiny_leaf_topics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Graph iterator with thresholding on number of documents. Returns a list of nodes where number of documents are less than the threshold.\n</span>
 <span class="sd">        This operation is online, only the nodes that are outliers based on the number of documents are kept in the memory.</span>
@@ -1182,7 +1182,7 @@
     
 <div class="viewcode-block" id="HNMFk.get_tiny_leaf_topics">
 <a class="viewcode-back" href="../../../HNMFk.html#TELF.factorization.HNMFk.HNMFk.get_tiny_leaf_topics">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_tiny_leaf_topics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_tiny_leaf_topics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Graph iterator for tiny documents if processed already with self.process_tiny_leaf_topics(threshold:int).\n</span>
 
@@ -1201,7 +1201,7 @@
     
 <div class="viewcode-block" id="HNMFk.process_tiny_leaf_topics">
 <a class="viewcode-back" href="../../../HNMFk.html#TELF.factorization.HNMFk.HNMFk.process_tiny_leaf_topics">[docs]</a>
-    <span class="k">def</span> <span class="nf">process_tiny_leaf_topics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">process_tiny_leaf_topics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Graph post-processing with thresholding on number of documents.\n</span>
 <span class="sd">        Returns a list of all tiny nodes, with all the nodes that had number of documents less than the threshold.\n</span>
@@ -1254,7 +1254,7 @@
         <span class="k">return</span> <span class="n">tiny_leafs</span></div>
 
     
-    <span class="k">def</span> <span class="nf">_update_child_nodes_traversal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_update_child_nodes_traversal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
         
         <span class="k">for</span> <span class="n">nn</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">original_child_nodes</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_update_child_nodes_traversal</span><span class="p">(</span><span class="n">nn</span><span class="p">)</span>
@@ -1267,7 +1267,7 @@
             <span class="n">node_loaded</span><span class="o">.</span><span class="n">child_node_names</span> <span class="o">=</span> <span class="n">node_loaded</span><span class="o">.</span><span class="n">original_child_node_names</span>
             <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">node_loaded</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_resolve_path</span><span class="p">(</span><span class="n">node_loaded</span><span class="o">.</span><span class="n">node_save_path</span><span class="p">),</span> <span class="s2">&quot;wb&quot;</span><span class="p">))</span>
     
-    <span class="k">def</span> <span class="nf">_search_traversal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_search_traversal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
         
         <span class="c1"># Base case: if the current node matches the target name</span>
         <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">node_name</span> <span class="o">==</span> <span class="n">name</span><span class="p">:</span>
@@ -1284,7 +1284,7 @@
         <span class="c1"># If the node is not found in this branch, return None</span>
         <span class="k">return</span> <span class="kc">None</span>
 
-    <span class="k">def</span> <span class="nf">_get_traversal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">small_docs_thresh</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_traversal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">small_docs_thresh</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 
         <span class="k">for</span> <span class="n">nn</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">child_nodes</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_get_traversal</span><span class="p">(</span><span class="n">nn</span><span class="p">,</span> <span class="n">small_docs_thresh</span><span class="o">=</span><span class="n">small_docs_thresh</span><span class="p">)</span>
@@ -1307,7 +1307,7 @@
 
 <div class="viewcode-block" id="HNMFk.go_to_root">
 <a class="viewcode-back" href="../../../HNMFk.html#TELF.factorization.HNMFk.HNMFk.go_to_root">[docs]</a>
-    <span class="k">def</span> <span class="nf">go_to_root</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">go_to_root</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Graph iterator. Goes to root node.\n</span>
 <span class="sd">        This operation is online, only one node is kept in the memory at a time.</span>
@@ -1333,7 +1333,7 @@
     
 <div class="viewcode-block" id="HNMFk.go_to_node">
 <a class="viewcode-back" href="../../../HNMFk.html#TELF.factorization.HNMFk.HNMFk.go_to_node">[docs]</a>
-    <span class="k">def</span> <span class="nf">go_to_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">go_to_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Graph iterator. Goes to node specified by name (node.node_name).\n</span>
 <span class="sd">        This operation is online, only one node is kept in the memory at a time.</span>
@@ -1370,7 +1370,7 @@
 
 <div class="viewcode-block" id="HNMFk.get_node">
 <a class="viewcode-back" href="../../../HNMFk.html#TELF.factorization.HNMFk.HNMFk.get_node">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_node</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_node</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Graph iterator. Returns the current node.\n</span>
 <span class="sd">        This operation is online, only one node is kept in the memory at a time.</span>
@@ -1395,7 +1395,7 @@
 
 <div class="viewcode-block" id="HNMFk.go_to_parent">
 <a class="viewcode-back" href="../../../HNMFk.html#TELF.factorization.HNMFk.HNMFk.go_to_parent">[docs]</a>
-    <span class="k">def</span> <span class="nf">go_to_parent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">go_to_parent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Graph iterator. Goes to the parent of current node.\n</span>
 <span class="sd">        This operation is online, only one node is kept in the memory at a time.</span>
@@ -1423,7 +1423,7 @@
 
 <div class="viewcode-block" id="HNMFk.go_to_children">
 <a class="viewcode-back" href="../../../HNMFk.html#TELF.factorization.HNMFk.HNMFk.go_to_children">[docs]</a>
-    <span class="k">def</span> <span class="nf">go_to_children</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">go_to_children</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Graph iterator. Goes to the child node specified by index.\n</span>
 <span class="sd">        This operation is online, only one node is kept in the memory at a time.</span>
@@ -1456,7 +1456,7 @@
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Children at index &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot; from the current does not exist!&quot;</span><span class="p">)</span></div>
 
 
-    <span class="k">def</span> <span class="nf">_resolve_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">original_node_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_resolve_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">original_node_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">old_experiment_base</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">original_node_path</span>
 
