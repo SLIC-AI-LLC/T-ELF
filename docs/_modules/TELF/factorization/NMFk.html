@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TELF.factorization.NMFk &#8212; TELF 0.0.41 documentation</title>
+    <title>TELF.factorization.NMFk &#8212; TELF 0.0.42 documentation</title>
   
   
   
@@ -29,7 +29,7 @@
   <link href="../../../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 <link href="../../../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
   
@@ -39,7 +39,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../../../_static/documentation_options.js?v=1983794d"></script>
+    <script src="../../../_static/documentation_options.js?v=0ef7f92b"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -125,7 +125,7 @@
   
   
   
-    <p class="title logo__title">TELF 0.0.41 documentation</p>
+    <p class="title logo__title">TELF 0.0.42 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -335,59 +335,59 @@
 <span class="sd">derivative works, distribute copies to the public, perform publicly and display publicly, and to permit</span>
 <span class="sd">others to do so.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">.utilities.take_note</span> <span class="kn">import</span> <span class="n">take_note</span><span class="p">,</span> <span class="n">take_note_fmat</span><span class="p">,</span> <span class="n">append_to_note</span>
-<span class="kn">from</span> <span class="nn">.utilities.plot_NMFk</span> <span class="kn">import</span> <span class="n">plot_NMFk</span><span class="p">,</span> <span class="n">plot_consensus_mat</span><span class="p">,</span> <span class="n">plot_cophenetic_coeff</span>
-<span class="kn">from</span> <span class="nn">.utilities.pvalue_analysis</span> <span class="kn">import</span> <span class="n">pvalue_analysis</span>
-<span class="kn">from</span> <span class="nn">.utilities.organize_n_jobs</span> <span class="kn">import</span> <span class="n">organize_n_jobs</span><span class="p">,</span> <span class="n">organize_devices</span>
-<span class="kn">from</span> <span class="nn">.utilities.data_host_transfer_helpers</span> <span class="kn">import</span> <span class="n">put_X_gpu</span><span class="p">,</span> <span class="n">put_A_gpu</span><span class="p">,</span> <span class="n">put_A_cpu</span><span class="p">,</span> <span class="n">put_other_results_cpu</span>
-<span class="kn">from</span> <span class="nn">.utilities.run_factorization_helpers</span> <span class="kn">import</span> <span class="n">run_nmf</span><span class="p">,</span> <span class="n">run_thresholding</span>
-<span class="kn">from</span> <span class="nn">.utilities.perturbation_helpers</span> <span class="kn">import</span> <span class="n">perturb_X</span>
-<span class="kn">from</span> <span class="nn">.utilities.initialization_helpers</span> <span class="kn">import</span> <span class="n">init_WH</span>
-<span class="kn">from</span> <span class="nn">.utilities.regression_helpers</span> <span class="kn">import</span> <span class="n">H_regression</span>
-<span class="kn">from</span> <span class="nn">.utilities.bst_helper</span> <span class="kn">import</span> <span class="n">BST</span>
-<span class="kn">from</span> <span class="nn">.utilities.factor_thresholding</span> <span class="kn">import</span> <span class="p">(</span><span class="n">find_thres_WH</span><span class="p">,</span> <span class="n">coord_desc_thresh</span><span class="p">,</span> 
+<span class="kn">from</span><span class="w"> </span><span class="nn">.utilities.take_note</span><span class="w"> </span><span class="kn">import</span> <span class="n">take_note</span><span class="p">,</span> <span class="n">take_note_fmat</span><span class="p">,</span> <span class="n">append_to_note</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.utilities.plot_NMFk</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_NMFk</span><span class="p">,</span> <span class="n">plot_consensus_mat</span><span class="p">,</span> <span class="n">plot_cophenetic_coeff</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.utilities.pvalue_analysis</span><span class="w"> </span><span class="kn">import</span> <span class="n">pvalue_analysis</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.utilities.organize_n_jobs</span><span class="w"> </span><span class="kn">import</span> <span class="n">organize_n_jobs</span><span class="p">,</span> <span class="n">organize_devices</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.utilities.data_host_transfer_helpers</span><span class="w"> </span><span class="kn">import</span> <span class="n">put_X_gpu</span><span class="p">,</span> <span class="n">put_A_gpu</span><span class="p">,</span> <span class="n">put_A_cpu</span><span class="p">,</span> <span class="n">put_other_results_cpu</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.utilities.run_factorization_helpers</span><span class="w"> </span><span class="kn">import</span> <span class="n">run_nmf</span><span class="p">,</span> <span class="n">run_thresholding</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.utilities.perturbation_helpers</span><span class="w"> </span><span class="kn">import</span> <span class="n">perturb_X</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.utilities.initialization_helpers</span><span class="w"> </span><span class="kn">import</span> <span class="n">init_WH</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.utilities.regression_helpers</span><span class="w"> </span><span class="kn">import</span> <span class="n">H_regression</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.utilities.bst_helper</span><span class="w"> </span><span class="kn">import</span> <span class="n">BST</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.utilities.factor_thresholding</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span><span class="n">find_thres_WH</span><span class="p">,</span> <span class="n">coord_desc_thresh</span><span class="p">,</span> 
                                             <span class="n">coord_desc_thresh_onefactor</span><span class="p">,</span> <span class="n">otsu_thresh</span><span class="p">,</span> 
                                             <span class="n">otsu_thresh_onefactor</span><span class="p">,</span> <span class="n">kmeans_thresh_onefactor</span><span class="p">,</span> <span class="n">kmeans_thresh</span><span class="p">)</span>
-<span class="kn">from</span> <span class="nn">.decompositions.nmf_kl_mu</span> <span class="kn">import</span> <span class="n">nmf</span> <span class="k">as</span> <span class="n">nmf_kl_mu</span>
-<span class="kn">from</span> <span class="nn">.decompositions.nmf_fro_mu</span> <span class="kn">import</span> <span class="n">nmf</span> <span class="k">as</span> <span class="n">nmf_fro_mu</span>
-<span class="kn">from</span> <span class="nn">.decompositions.wnmf</span> <span class="kn">import</span> <span class="n">nmf</span> <span class="k">as</span> <span class="n">wnmf</span>
-<span class="kn">from</span> <span class="nn">.decompositions.bnmf</span> <span class="kn">import</span> <span class="n">nmf</span> <span class="k">as</span> <span class="n">bnmf</span>
-<span class="kn">from</span> <span class="nn">.decompositions.nmf_recommender</span> <span class="kn">import</span> <span class="n">nmf</span> <span class="k">as</span> <span class="n">nmf_recommender</span>
-<span class="kn">from</span> <span class="nn">.decompositions.utilities.clustering</span> <span class="kn">import</span> <span class="n">custom_k_means</span><span class="p">,</span> <span class="n">custom_bool_clustering</span>
-<span class="kn">from</span> <span class="nn">.decompositions.utilities.silhouettes</span> <span class="kn">import</span> <span class="n">silhouettes</span><span class="p">,</span> <span class="n">silhouettes_with_distance</span>
-<span class="kn">from</span> <span class="nn">.decompositions.utilities.math_utils</span> <span class="kn">import</span> <span class="n">prune</span><span class="p">,</span> <span class="n">unprune</span><span class="p">,</span> <span class="n">relative_error</span><span class="p">,</span> <span class="n">get_pac</span>
-<span class="kn">from</span> <span class="nn">.decompositions.utilities.concensus_matrix</span> <span class="kn">import</span> <span class="n">compute_consensus_matrix</span><span class="p">,</span> <span class="n">reorder_con_mat</span>
-<span class="kn">from</span> <span class="nn">..helpers.data_structures</span> <span class="kn">import</span> <span class="n">chunk_Ks</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.decompositions.nmf_kl_mu</span><span class="w"> </span><span class="kn">import</span> <span class="n">nmf</span> <span class="k">as</span> <span class="n">nmf_kl_mu</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.decompositions.nmf_fro_mu</span><span class="w"> </span><span class="kn">import</span> <span class="n">nmf</span> <span class="k">as</span> <span class="n">nmf_fro_mu</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.decompositions.wnmf</span><span class="w"> </span><span class="kn">import</span> <span class="n">nmf</span> <span class="k">as</span> <span class="n">wnmf</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.decompositions.bnmf</span><span class="w"> </span><span class="kn">import</span> <span class="n">nmf</span> <span class="k">as</span> <span class="n">bnmf</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.decompositions.nmf_recommender</span><span class="w"> </span><span class="kn">import</span> <span class="n">nmf</span> <span class="k">as</span> <span class="n">nmf_recommender</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.decompositions.utilities.clustering</span><span class="w"> </span><span class="kn">import</span> <span class="n">custom_k_means</span><span class="p">,</span> <span class="n">custom_bool_clustering</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.decompositions.utilities.silhouettes</span><span class="w"> </span><span class="kn">import</span> <span class="n">silhouettes</span><span class="p">,</span> <span class="n">silhouettes_with_distance</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.decompositions.utilities.math_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">prune</span><span class="p">,</span> <span class="n">unprune</span><span class="p">,</span> <span class="n">relative_error</span><span class="p">,</span> <span class="n">get_pac</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.decompositions.utilities.concensus_matrix</span><span class="w"> </span><span class="kn">import</span> <span class="n">compute_consensus_matrix</span><span class="p">,</span> <span class="n">reorder_con_mat</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..helpers.data_structures</span><span class="w"> </span><span class="kn">import</span> <span class="n">chunk_Ks</span>
 
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">scipy.sparse</span>
-<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">warnings</span>
-<span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">import</span> <span class="nn">socket</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">import</span> <span class="nn">concurrent.futures</span>
-<span class="kn">from</span> <span class="nn">threading</span> <span class="kn">import</span> <span class="n">Lock</span>
-<span class="kn">import</span> <span class="nn">pickle</span>
-<span class="kn">import</span> <span class="nn">fcntl</span>
-<span class="kn">import</span> <span class="nn">tempfile</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">scipy.sparse</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tqdm</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">socket</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">concurrent.futures</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">threading</span><span class="w"> </span><span class="kn">import</span> <span class="n">Lock</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pickle</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">fcntl</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
 
 <span class="k">try</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">cupy</span> <span class="k">as</span> <span class="nn">cp</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">cupy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cp</span>
 <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
     <span class="n">cp</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">cupyx</span> <span class="o">=</span> <span class="kc">None</span>
 
 <span class="k">try</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">mpi4py</span> <span class="kn">import</span> <span class="n">MPI</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mpi4py</span><span class="w"> </span><span class="kn">import</span> <span class="n">MPI</span>
 <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
     <span class="n">MPI</span> <span class="o">=</span> <span class="kc">None</span>
 
-<span class="k">def</span> <span class="nf">_HPC_K_search_settings_update</span><span class="p">(</span><span class="n">n_nodes</span><span class="p">,</span> <span class="n">my_rank</span><span class="p">,</span> <span class="n">K_search_settings</span><span class="p">,</span> <span class="n">save_path</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_HPC_K_search_settings_update</span><span class="p">(</span><span class="n">n_nodes</span><span class="p">,</span> <span class="n">my_rank</span><span class="p">,</span> <span class="n">K_search_settings</span><span class="p">,</span> <span class="n">save_path</span><span class="p">):</span>
     <span class="k">for</span> <span class="n">node_rank</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_nodes</span><span class="p">):</span> 
         <span class="k">if</span> <span class="p">(</span><span class="n">node_rank</span> <span class="o">==</span> <span class="n">my_rank</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="ow">not</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">save_path</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">node_rank</span><span class="si">}</span><span class="s1">-K_search_settings.p&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">is_file</span><span class="p">()):</span>
             <span class="k">continue</span>
@@ -403,7 +403,7 @@
         <span class="k">if</span> <span class="n">node_settings</span><span class="p">[</span><span class="s2">&quot;k_max&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">K_search_settings</span><span class="p">[</span><span class="s2">&quot;k_max&quot;</span><span class="p">]:</span>
             <span class="n">K_search_settings</span><span class="p">[</span><span class="s2">&quot;k_max&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">node_settings</span><span class="p">[</span><span class="s2">&quot;k_max&quot;</span><span class="p">]</span>
 
-<span class="k">def</span> <span class="nf">_perturb_parallel_wrapper</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_perturb_parallel_wrapper</span><span class="p">(</span>
     <span class="n">perturbation</span><span class="p">,</span>
     <span class="n">gpuid</span><span class="p">,</span>
     <span class="n">epsilon</span><span class="p">,</span>
@@ -475,7 +475,7 @@
         
     <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;exit_early&quot;</span><span class="p">:</span><span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;W&quot;</span><span class="p">:</span><span class="n">W</span><span class="p">,</span> <span class="s2">&quot;H&quot;</span><span class="p">:</span><span class="n">H</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">:</span><span class="n">error</span><span class="p">,</span> <span class="s2">&quot;other_results&quot;</span><span class="p">:</span><span class="n">other_results</span><span class="p">}</span>
 
-<span class="k">def</span> <span class="nf">_take_exit_note</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">n_perturbs</span><span class="p">,</span> <span class="n">logging_stats</span><span class="p">,</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">save_path</span><span class="p">,</span> <span class="n">note_name</span><span class="p">,</span> <span class="n">lock</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_take_exit_note</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">n_perturbs</span><span class="p">,</span> <span class="n">logging_stats</span><span class="p">,</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">save_path</span><span class="p">,</span> <span class="n">note_name</span><span class="p">,</span> <span class="n">lock</span><span class="p">):</span>
     <span class="n">note_data</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">logging_stats</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;k&#39;</span><span class="p">:</span>
@@ -508,7 +508,7 @@
     <span class="n">take_note_fmat</span><span class="p">(</span><span class="n">save_path</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">note_name</span><span class="p">,</span> <span class="n">lock</span><span class="o">=</span><span class="n">lock</span><span class="p">,</span> <span class="o">**</span><span class="n">note_data</span><span class="p">)</span>
         
 
-<span class="k">def</span> <span class="nf">_nmf_parallel_wrapper</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_nmf_parallel_wrapper</span><span class="p">(</span>
         <span class="n">n_perturbs</span><span class="p">,</span> 
         <span class="n">nmf</span><span class="p">,</span> 
         <span class="n">nmf_params</span><span class="p">,</span>
@@ -879,8 +879,8 @@
 
 <div class="viewcode-block" id="NMFk">
 <a class="viewcode-back" href="../../../TELF.factorization.html#TELF.factorization.NMFk.NMFk">[docs]</a>
-<span class="k">class</span> <span class="nc">NMFk</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">NMFk</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
             <span class="n">n_perturbs</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
             <span class="n">n_iters</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
@@ -1353,7 +1353,7 @@
 
 <div class="viewcode-block" id="NMFk.fit">
 <a class="viewcode-back" href="../../../TELF.factorization.html#TELF.factorization.NMFk.NMFk.fit">[docs]</a>
-    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Ks</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;NMFk&quot;</span><span class="p">,</span> <span class="n">note</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Ks</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;NMFk&quot;</span><span class="p">,</span> <span class="n">note</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Factorize the input matrix ``X`` for the each given K value in ``Ks``.</span>
 

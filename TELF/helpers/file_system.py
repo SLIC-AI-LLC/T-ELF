@@ -5,6 +5,9 @@ import re
 import csv
 import shutil
 import fnmatch
+import shutil
+from pathlib import Path
+from typing import Union
 
 def load_file_as_dict(fn):
     """
@@ -267,3 +270,44 @@ def copy_file(source_dir, dest_dir, file_pattern):
         shutil.copy(os.path.join(source_dir, matching_files[0]), dest_dir)
     except IOError as e:
         raise IOError(f"Failed to copy file: {e}")
+    
+
+
+def copy_all_files(src_dir: str, dst_dir: str, preserve_metadata: bool = True) -> None:
+    """
+    Recursively copy everything under src_dir into dst_dir.
+    If a file fails to copy due to permissions (or any OSError), log+skip it.
+    """
+    src_dir = os.fspath(src_dir)
+    dst_dir = os.fspath(dst_dir)
+    skipped = []
+
+    for root, dirs, files in os.walk(src_dir):
+        rel = os.path.relpath(root, src_dir)
+        target_root = os.path.join(dst_dir, rel)
+        os.makedirs(target_root, exist_ok=True)
+
+        # create subdirs
+        for d in dirs:
+            os.makedirs(os.path.join(target_root, d), exist_ok=True)
+
+        for name in files:
+            src_path = os.path.join(root, name)
+            dst_path = os.path.join(target_root, name)
+
+            try:
+                if preserve_metadata:
+                    shutil.copy2(src_path, dst_path)
+                else:
+                    shutil.copy(src_path, dst_path)
+            except OSError as e:
+                skipped.append(src_path)
+                # we skip this file and continue
+                continue
+
+    if skipped:
+        warnings.warn(
+            f"copy_all_files: skipped {len(skipped)} files due to permissions or IO errors. "
+            f"First few: {skipped[:5]!r}"
+        )
+

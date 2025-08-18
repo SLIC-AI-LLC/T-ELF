@@ -110,7 +110,7 @@ class Vulture:
     ]
     
     
-    def __init__(self, *, n_jobs = -1, n_nodes = 1, parallel_backend = "multiprocessing", cache = '/tmp', verbose = False):
+    def __init__(self, *, n_jobs = -1, n_nodes = 1, parallel_backend = "threading", cache = '/tmp', verbose = False):
         self.n_jobs = n_jobs
         self.n_nodes = n_nodes
         self.parallel_backend = parallel_backend

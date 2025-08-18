@@ -3,6 +3,20 @@ import numpy as np
 import rapidfuzz
 import uuid
 import warnings
+import re
+from typing import Sequence
+from tqdm import tqdm
+import ast
+from .data_structures import process_countries, process_affiliations
+from sklearn.feature_extraction.text import TfidfVectorizer
+from typing import List
+
+ALPHA = 1e-12
+def apply_alpha(x):
+    if isinstance(x, (int, float)):
+        return 0 if abs(x) < ALPHA else x
+    else:
+        return x
 
 def create_coauthor_affil_df(auth_affil_map, name_map):
     data = {
@@ -241,8 +255,8 @@ def merge_frames(df1, df2, col, common_cols, key=None, remove_duplicates=False,
     pd.DataFrame: 
         Merged DataFrame
     """
-    df1[col] = df1[col].str.lower()
-    df2[col] = df2[col].str.lower()
+    df1[col] = df1[col].astype(str).str.lower()
+    df2[col] = df2[col].astype(str).str.lower()
 
     merged_df = df1.merge(df2, on=col, how='outer', suffixes=('_df1', '_df2'))
 
@@ -263,3 +277,198 @@ def merge_frames(df1, df2, col, common_cols, key=None, remove_duplicates=False,
         merged_df = merged_df[order].reset_index(drop=True)
 
     return merged_df
+
+
+def add_num_known_col(slic_df):
+    slic_df['num_papers'] = [0] * len(slic_df)
+    for index, row in tqdm(slic_df.iterrows(), total=len(slic_df)):
+        affiliations = row.scopus_affiliations
+        if pd.isna(affiliations):
+            continue
+        if isinstance(affiliations, str):
+            affiliations = ast.literal_eval(affiliations)
+
+        num_papers = len(set.union(*[set(x['papers']) for x in affiliations.values()]))
+        slic_df.at[index, 'num_papers'] = num_papers
+    return slic_df
+
+def prep_affiliations(df):
+    df[['affiliation_ids', 'affiliation_names']] = df['slic_affiliations'].apply(lambda row: pd.Series(process_affiliations(row)))
+    # df['countries'] = df['slic_affiliations'].apply(process_countries)
+
+    df['countries'] = df['slic_affiliations'].map(lambda row: pd.Series(process_countries(row))[0])
+    df = df.dropna(subset=['affiliation_ids', 'affiliation_names', 'countries']).reset_index(drop=True)
+    return df
+
+def term_frequency(df, term, col):
+    """
+    Count total occurrences of `term` in column `col` of DataFrame `df`,
+    treating `term` as a literal substring (no regex specials).
+    """
+    pattern = re.escape(term.lower())
+    return df[col] \
+        .str.lower() \
+        .str.count(pattern) \
+        .sum()
+
+def document_frequency(df, term, col):
+    """
+    Count how many rows in column `col` contain `term` at least once,
+    treating `term` as a literal substring.
+    """
+    pattern = re.escape(term.lower())
+    return df[col] \
+        .str.lower() \
+        .str.contains(pattern, na=False) \
+        .sum()
+
+def calculate_term_representations(df, terms, col):
+    """
+    Calculate term frequency, document frequency, and TF-IDF scores
+    for a list of terms in a pandas DataFrame.
+
+    Parameters:
+    -----------
+    df: pd.DataFrame
+        Pandas DataFrame with a column col containing the text data.
+    col: str
+        The column in which to search for terms
+    terms: list
+        List of terms to calculate TF-IDF scores, term frequency, and document frequency for.
+
+    Returns:
+    --------
+    pd.DataFrame
+        A new DataFrame with columns 'Term', 'Term Frequency', 'Document Frequency', 'TF-IDF Score'.
+    """
+    vectorizer = TfidfVectorizer(vocabulary=terms, dtype=np.float32)
+    tfidf_matrix = vectorizer.fit_transform(df[col].dropna())
+    
+    # get feature names (the terms vocabulary) from vectorizer
+    feature_names = list(vectorizer.get_feature_names_out())
+    
+    # calculate average TF-IDF score for each term
+    avg_tfidf_scores = tfidf_matrix.mean(axis=0).tolist()[0]
+    
+    # prepare results DataFrame
+    results_df = {
+        'Term': [], 
+        'Term Frequency': [], 
+        'Document Frequency': [], 
+        'TF-IDF Score': []
+    }
+
+    # calculate TF, DF for each term
+    for term in terms:
+        term_index = feature_names.index(term)
+        tf = term_frequency(df, term, col)
+        df_count = document_frequency(df, term, col)
+        tfidf_score = avg_tfidf_scores[term_index]
+
+        results_df['Term'].append(term)
+        results_df['Term Frequency'].append(tf)
+        results_df['Document Frequency'].append(df_count)
+        results_df['TF-IDF Score'].append(tfidf_score)
+
+    return pd.DataFrame.from_dict(results_df)
+
+
+def clean_duplicates(df):
+    duplicates = df.duplicated(subset=['doi', 'title', 'abstract'], keep=False)
+    conflicts = df.duplicated(subset=['doi'], keep=False) & ~duplicates
+    df = df[~df['doi'].isin(df[conflicts]['doi'])]
+    df = df.drop_duplicates(subset=['doi', 'title', 'abstract'], keep='first')
+    return df
+
+
+def merge_scopus_s2(df_scopus: pd.DataFrame, 
+                    s2_df: pd.DataFrame, 
+                    df_order=[
+                        'eid', 's2id', 'doi', 'title', 'abstract', 'year', 'authors', 'author_ids',
+                        'affiliations', 'funding', 'PACs', 'publication_name', 'subject_areas',
+                        's2_authors', 's2_author_ids', 'citations', 'references',
+                        'num_citations', 'num_references'
+                    ]
+ ) -> pd.DataFrame:
+    # Ensure 'doi' exists in both DataFrames
+    if 'doi' not in df_scopus.columns:
+        df_scopus['doi'] = np.nan
+    if 'doi' not in s2_df.columns:
+        s2_df['doi'] = np.nan
+
+    # Ensure all columns exist in both DataFrames before merging
+    for col in df_order:
+        if col not in df_scopus.columns:
+            df_scopus[col] = np.nan
+        if col not in s2_df.columns:
+            s2_df[col] = np.nan
+
+    # Perform merging, ensuring 'doi' is used as the key, not in common_cols
+    merged_df = merge_frames(
+        df1=df_scopus,
+        df2=s2_df,
+        col='doi',
+        common_cols=[col for col in df_order if col != 'doi'],  # Exclude 'doi' from common_cols
+        remove_duplicates=True,
+        remove_nan=True,
+        order=None
+    )
+    # Ensure merged_df has all required columns
+    for col in df_order:
+        if col not in merged_df.columns:
+            merged_df[col] = np.nan
+    # Reorder columns and reset index
+    merged_df = merged_df[df_order].reset_index(drop=True)
+    merged_df.info()
+    return merged_df
+
+
+def drop_columns_if_exist(df: pd.DataFrame, cols: List[str], inplace: bool = False) -> pd.DataFrame:
+    to_drop = [c for c in cols if c in df.columns]
+    if not to_drop:
+        return None if inplace else df.copy()
+    
+    if inplace:
+        df.drop(columns=to_drop, inplace=True)
+        return None
+    else:
+        return df.drop(columns=to_drop)
+    
+
+def calculate_term_attribution(
+    df: pd.DataFrame,
+    terms: Sequence[str],
+    col: str
+) -> pd.DataFrame:
+    """
+    Add a `term_attribution` column to `df` consisting of the
+    terms (from the provided list) that appear in each row’s `col`.
+
+    Parameters:
+    -----------
+    df : pd.DataFrame
+        DataFrame with a text column named `col`.
+    terms : Sequence[str]
+        List of terms to search for in each text.
+    col : str
+        Name of the column in which to search for terms.
+
+    Returns:
+    --------
+    pd.DataFrame
+        The same DataFrame with an extra column `term_attribution`
+        which is a string of matching terms joined by ', '.
+    """
+    # ensure all terms are lowercased once
+    terms_lc = [t.lower() for t in terms]
+
+    def _find_terms(text: str) -> str:
+        if not isinstance(text, str) or not text:
+            return ""
+        text_lc = text.lower()
+        matched = [terms[i] for i, t in enumerate(terms_lc) if t in text_lc]
+        return ", ".join(matched)
+
+    df = df.copy()
+    df["term_attribution"] = df[col].apply(_find_terms)
+    return df

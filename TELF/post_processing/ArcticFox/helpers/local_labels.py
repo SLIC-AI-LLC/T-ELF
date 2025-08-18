@@ -4,9 +4,11 @@ from tqdm import tqdm
 from sklearn.metrics import pairwise_distances
 from langchain_ollama import OllamaLLM
 
-from ....helpers.embeddings import (compute_doc_embedding, produce_label,
-                                    compute_embeddings, closest_embedding_to_centroid,
+from ....helpers.embeddings import (compute_doc_embedding, compute_embeddings, 
+                                    closest_embedding_to_centroid,
                                     compute_centroids)
+from ....helpers.llm_operations import produce_label
+from ....helpers.llm_models import get_openai_llm
 
 class ClusterLabeler:
 
@@ -122,7 +124,8 @@ class ClusterLabeler:
         if models.get('openai'):
             openai_api_key = api_keys.get('openai')
             for _ in range(number_of_labels):
-                candidate = produce_label(openai_api_key, input_words)
+                client = get_openai_llm(openai_api_key=openai_api_key)
+                candidate = produce_label(client=client,  words=input_words, model="gpt-3.5-turbo-instruct")
                 if self.validate_llm_output(candidate, criteria):
                     all_labels.append(candidate)
 

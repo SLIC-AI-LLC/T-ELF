@@ -45,14 +45,15 @@ def get_top_words(documents,
     word_stats = defaultdict(lambda: {"tf": 0, "df": 0})
 
     for doc in tqdm(documents, disable=not verbose):
-        tokens = doc.split()
-        ngrams = zip(*[tokens[i:] for i in range(n_gram)])
-        ngrams = [" ".join(ngram) for ngram in ngrams]
+        if isinstance(doc, str):
+            tokens = doc.split()
+            ngrams = zip(*[tokens[i:] for i in range(n_gram)])
+            ngrams = [" ".join(ngram) for ngram in ngrams]
 
-        for gram in ngrams:
-            word_stats[gram]["tf"] += 1
-        for gram in set(ngrams):
-            word_stats[gram]["df"] += 1
+            for gram in ngrams:
+                word_stats[gram]["tf"] += 1
+            for gram in set(ngrams):
+                word_stats[gram]["df"] += 1
 
     word_stats = dict(word_stats)
     top_words = dict(sorted(word_stats.items(), key=lambda x: x[1]["tf"], reverse=True)[:top_n])

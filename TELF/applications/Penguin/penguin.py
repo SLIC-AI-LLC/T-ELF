@@ -6,6 +6,7 @@ import pandas as pd
 from tqdm import tqdm
 from rbloom import Bloom
 from joblib import Parallel, delayed
+from typing import Sequence
 
 from pymongo import MongoClient, ASCENDING
 from pymongo.errors import ConnectionFailure
@@ -329,7 +330,7 @@ class Penguin:
         if file_path.suffix == '.json':
             data = process_s2_json(file_path, output_dir=None)
         else:
-            raise ValueError(f'S2 `file_path` has an unsupported file extension: {source!r}')
+            raise ValueError(f'S2 `file_path` has an unsupported file extension: {file_path!r}')
         
         collection = self.db[self.S2_COL]
         id_attr = self.s2_attributes['id']
@@ -375,7 +376,7 @@ class Penguin:
         elif file_path.suffix == '.json':
             data = process_scopus_json(file_path, output_dir=None)
         else:
-            raise ValueError(f'Scopus `file_path` has an unsupported file extension: {source!r}')
+            raise ValueError(f'Scopus `file_path` has an unsupported file extension: {file_path!r}')
         
         collection = self.db[self.SCOPUS_COL]
         id_attr = self.scopus_attributes['id']
@@ -749,7 +750,7 @@ class Penguin:
         """
         prefix, _, actual_id = pid.partition(':')
         if not actual_id:
-            raise ValueError(f'Encountered unknown `id`: {doc_id}. Prepend id with eid: or s2id: to specify id type')
+            raise ValueError(f'Encountered unknown `id`: {pid}. Prepend id with eid: or s2id: to specify id type')
     
         document = None
         collection = None
@@ -895,6 +896,34 @@ class Penguin:
             out['s2'] = self.db[self.S2_COL].find({"tags": tag})
             return out
 
+
+    def distinct_field(
+        self,
+        source: str,
+        field: str,
+        filter_spec: dict | None = None
+    ) -> set:
+        """
+        Return the set of unique values for `field` in `source` matching `filter_spec`.
+        If filter_spec is None, returns all distinct values of that field.
+        """
+        coll = self.db[source]
+        return set(coll.distinct(field, filter_spec or {}))
+
+    def distinct_dois(
+        self,
+        source: str = S2_COL,
+        dois: Sequence[str] | None = None
+    ) -> set:
+        """
+        Return the subset of `dois` that are already in the database (or all DOIs if `dois` is None).
+        """
+        doi_field = (
+            self.s2_attributes['doi'] if source == self.S2_COL
+            else self.scopus_attributes['doi']
+        )
+        spec = {doi_field: {'$in': [d.lower() for d in dois]}} if dois else None
+        return self.distinct_field(source, doi_field, spec)
     
     # 5. iPenguin Hook
     

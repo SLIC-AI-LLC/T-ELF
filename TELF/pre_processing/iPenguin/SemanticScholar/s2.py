@@ -61,7 +61,7 @@ def get_df_helper(files):
         data['year'].append(year)
 
         authors = None
-        if contents is not None and 'authors' in contents:
+        if contents is not None and 'authors' in contents and contents["authors"] is not None:
             authors = [str(x.get('name', None)) for x in contents['authors']]
             authors = [x for x in authors if x is not None]
             if not authors:
@@ -71,7 +71,7 @@ def get_df_helper(files):
         data['s2_authors'].append(authors)
 
         author_ids = None
-        if contents is not None and 'authors' in contents:
+        if contents is not None and 'authors' in contents and contents["authors"] is not None:
             author_ids = [str(x.get('authorId', None)) for x in contents['authors']]
             author_ids = [x for x in author_ids if x is not None]
             if not author_ids:
@@ -82,7 +82,7 @@ def get_df_helper(files):
 
         citations = None
         num_citations = 0
-        if contents is not None and 'citations' in contents:
+        if contents is not None and 'citations' in contents and contents["citations"] is not None:
             citations = [str(x.get('paperId', None)) for x in contents['citations']]
             citations = [x for x in citations if x is not None]
             if not citations:
@@ -95,7 +95,7 @@ def get_df_helper(files):
         
         references = None
         num_references = 0
-        if contents is not None and 'references' in contents:
+        if contents is not None and 'references' in contents and contents["references"] is not None:
             references = [str(x.get('paperId', None)) for x in contents['references']]
             references = [x for x in references if x is not None]
             if not references:

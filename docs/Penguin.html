@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>TELF.applications.Penguin: Text storage tool &#8212; TELF 0.0.41 documentation</title>
+    <title>TELF.applications.Penguin: Text storage tool &#8212; TELF 0.0.42 documentation</title>
   
   
   
@@ -30,7 +30,7 @@
   <link href="_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 <link href="_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
   
@@ -40,7 +40,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="_static/documentation_options.js?v=1983794d"></script>
+    <script src="_static/documentation_options.js?v=0ef7f92b"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -126,7 +126,7 @@
   
   
   
-    <p class="title logo__title">TELF 0.0.41 documentation</p>
+    <p class="title logo__title">TELF 0.0.42 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -381,6 +381,8 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#TELF.applications.Penguin.penguin.Penguin.citation_search"><code class="docutils literal notranslate"><span class="pre">Penguin.citation_search()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#TELF.applications.Penguin.penguin.Penguin.count_documents"><code class="docutils literal notranslate"><span class="pre">Penguin.count_documents()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#TELF.applications.Penguin.penguin.Penguin.db_name"><code class="docutils literal notranslate"><span class="pre">Penguin.db_name</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#TELF.applications.Penguin.penguin.Penguin.distinct_dois"><code class="docutils literal notranslate"><span class="pre">Penguin.distinct_dois()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#TELF.applications.Penguin.penguin.Penguin.distinct_field"><code class="docutils literal notranslate"><span class="pre">Penguin.distinct_field()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#TELF.applications.Penguin.penguin.Penguin.find_by_tag"><code class="docutils literal notranslate"><span class="pre">Penguin.find_by_tag()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#TELF.applications.Penguin.penguin.Penguin.get_id_bloom"><code class="docutils literal notranslate"><span class="pre">Penguin.get_id_bloom()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#TELF.applications.Penguin.penguin.Penguin.id_search"><code class="docutils literal notranslate"><span class="pre">Penguin.id_search()</span></code></a></li>
@@ -696,6 +698,19 @@ in each respective collection.</p>
 <dt class="sig sig-object py" id="TELF.applications.Penguin.penguin.Penguin.db_name">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">db_name</span></span><a class="headerlink" href="#TELF.applications.Penguin.penguin.Penguin.db_name" title="Link to this definition">#</a></dt>
 <dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TELF.applications.Penguin.penguin.Penguin.distinct_dois">
+<span class="sig-name descname"><span class="pre">distinct_dois</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'S2'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dois</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">set</span></span></span><a class="reference internal" href="_modules/TELF/applications/Penguin/penguin.html#Penguin.distinct_dois"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#TELF.applications.Penguin.penguin.Penguin.distinct_dois" title="Link to this definition">#</a></dt>
+<dd><p>Return the subset of <cite>dois</cite> that are already in the database (or all DOIs if <cite>dois</cite> is None).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TELF.applications.Penguin.penguin.Penguin.distinct_field">
+<span class="sig-name descname"><span class="pre">distinct_field</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter_spec</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">set</span></span></span><a class="reference internal" href="_modules/TELF/applications/Penguin/penguin.html#Penguin.distinct_field"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#TELF.applications.Penguin.penguin.Penguin.distinct_field" title="Link to this definition">#</a></dt>
+<dd><p>Return the set of unique values for <cite>field</cite> in <cite>source</cite> matching <cite>filter_spec</cite>.
+If filter_spec is None, returns all distinct values of that field.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="TELF.applications.Penguin.penguin.Penguin.find_by_tag">
@@ -1104,6 +1119,8 @@ signify a Scopus document or ‘s2id:’ to signify an S2 document.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#TELF.applications.Penguin.penguin.Penguin.citation_search"><code class="docutils literal notranslate"><span class="pre">Penguin.citation_search()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#TELF.applications.Penguin.penguin.Penguin.count_documents"><code class="docutils literal notranslate"><span class="pre">Penguin.count_documents()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#TELF.applications.Penguin.penguin.Penguin.db_name"><code class="docutils literal notranslate"><span class="pre">Penguin.db_name</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#TELF.applications.Penguin.penguin.Penguin.distinct_dois"><code class="docutils literal notranslate"><span class="pre">Penguin.distinct_dois()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#TELF.applications.Penguin.penguin.Penguin.distinct_field"><code class="docutils literal notranslate"><span class="pre">Penguin.distinct_field()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#TELF.applications.Penguin.penguin.Penguin.find_by_tag"><code class="docutils literal notranslate"><span class="pre">Penguin.find_by_tag()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#TELF.applications.Penguin.penguin.Penguin.get_id_bloom"><code class="docutils literal notranslate"><span class="pre">Penguin.get_id_bloom()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#TELF.applications.Penguin.penguin.Penguin.id_search"><code class="docutils literal notranslate"><span class="pre">Penguin.id_search()</span></code></a></li>

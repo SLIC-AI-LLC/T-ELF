@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TELF.applications.Bunny.auto_bunny &#8212; TELF 0.0.41 documentation</title>
+    <title>TELF.applications.Bunny.auto_bunny &#8212; TELF 0.0.42 documentation</title>
   
   
   
@@ -29,7 +29,7 @@
   <link href="../../../../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 <link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
   
@@ -39,7 +39,7 @@
   <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../../../../_static/documentation_options.js?v=1983794d"></script>
+    <script src="../../../../_static/documentation_options.js?v=0ef7f92b"></script>
     <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -125,7 +125,7 @@
   
   
   
-    <p class="title logo__title">TELF 0.0.41 documentation</p>
+    <p class="title logo__title">TELF 0.0.42 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -322,24 +322,24 @@
                 <article class="bd-article">
                   
   <h1>Source code for TELF.applications.Bunny.auto_bunny</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">pathlib</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pathlib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
 
-<span class="kn">from</span> <span class="nn">.bunny</span> <span class="kn">import</span> <span class="n">Bunny</span><span class="p">,</span> <span class="n">BunnyFilter</span>
-<span class="kn">from</span> <span class="nn">..Cheetah</span> <span class="kn">import</span> <span class="n">Cheetah</span>
-<span class="kn">from</span> <span class="nn">...pre_processing.iPenguin.Scopus</span> <span class="kn">import</span> <span class="n">Scopus</span>
-<span class="kn">from</span> <span class="nn">...pre_processing.iPenguin.SemanticScholar</span> <span class="kn">import</span> <span class="n">SemanticScholar</span>
-<span class="kn">from</span> <span class="nn">...pre_processing.Vulture</span> <span class="kn">import</span> <span class="n">Vulture</span>
-<span class="kn">from</span> <span class="nn">...helpers.file_system</span> <span class="kn">import</span> <span class="n">check_path_var</span> <span class="k">as</span> <span class="n">check_path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.bunny</span><span class="w"> </span><span class="kn">import</span> <span class="n">Bunny</span><span class="p">,</span> <span class="n">BunnyFilter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..Cheetah</span><span class="w"> </span><span class="kn">import</span> <span class="n">Cheetah</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">...pre_processing.iPenguin.Scopus</span><span class="w"> </span><span class="kn">import</span> <span class="n">Scopus</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">...pre_processing.iPenguin.SemanticScholar</span><span class="w"> </span><span class="kn">import</span> <span class="n">SemanticScholar</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">...pre_processing.Vulture</span><span class="w"> </span><span class="kn">import</span> <span class="n">Vulture</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">...helpers.file_system</span><span class="w"> </span><span class="kn">import</span> <span class="n">check_path_var</span> <span class="k">as</span> <span class="n">check_path</span>
 
 <div class="viewcode-block" id="AutoBunnyStep">
 <a class="viewcode-back" href="../../../../Bunny.html#TELF.applications.Bunny.auto_bunny.AutoBunnyStep">[docs]</a>
 <span class="nd">@dataclass</span>
-<span class="k">class</span> <span class="nc">AutoBunnyStep</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">AutoBunnyStep</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Class for keeping track of AutoBunny args&quot;&quot;&quot;</span>
     <span class="n">modes</span><span class="p">:</span> <span class="nb">list</span>
     <span class="n">max_papers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
@@ -351,7 +351,7 @@
     
 <div class="viewcode-block" id="AutoBunny">
 <a class="viewcode-back" href="../../../../Bunny.html#TELF.applications.Bunny.auto_bunny.AutoBunny">[docs]</a>
-<span class="k">class</span> <span class="nc">AutoBunny</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">AutoBunny</span><span class="p">:</span>
     
     <span class="n">CHEETAH_INDEX</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s1">&#39;title&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span> 
@@ -362,7 +362,7 @@
         <span class="s1">&#39;country&#39;</span><span class="p">:</span> <span class="s1">&#39;affiliations&#39;</span><span class="p">,</span>
     <span class="p">}</span>
     
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">core</span><span class="p">,</span> <span class="n">s2_key</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scopus_keys</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">output_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cache_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cheetah_index</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">core</span><span class="p">,</span> <span class="n">s2_key</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scopus_keys</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">output_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cache_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cheetah_index</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">core</span> <span class="o">=</span> <span class="n">core</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">s2_key</span> <span class="o">=</span> <span class="n">s2_key</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">scopus_keys</span> <span class="o">=</span> <span class="n">scopus_keys</span>
@@ -374,7 +374,7 @@
     
 <div class="viewcode-block" id="AutoBunny.run">
 <a class="viewcode-back" href="../../../../Bunny.html#TELF.applications.Bunny.auto_bunny.AutoBunny.run">[docs]</a>
-    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
             <span class="n">steps</span><span class="p">,</span> 
             <span class="o">*</span><span class="p">,</span> 
             <span class="n">s2_key</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
@@ -459,7 +459,7 @@
     <span class="c1">### Helpers</span>
     
     
-    <span class="k">def</span> <span class="nf">__final_cheetah_table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stem</span><span class="o">=</span><span class="s1">&#39;cheetah_table&#39;</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__final_cheetah_table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stem</span><span class="o">=</span><span class="s1">&#39;cheetah_table&#39;</span><span class="p">):</span>
         <span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_dir</span><span class="p">)</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.csv&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">stem</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
         <span class="n">frames</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
@@ -481,7 +481,7 @@
         <span class="k">return</span> <span class="n">df</span>
     
     
-    <span class="k">def</span> <span class="nf">__bunny_hop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">modes</span><span class="p">,</span> <span class="n">max_papers</span><span class="p">,</span> <span class="n">hop_priority</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__bunny_hop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">modes</span><span class="p">,</span> <span class="n">max_papers</span><span class="p">,</span> <span class="n">hop_priority</span><span class="p">):</span>
         <span class="n">bunny</span> <span class="o">=</span> <span class="n">Bunny</span><span class="p">(</span><span class="n">s2_key</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">s2_key</span><span class="p">,</span> <span class="n">output_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cache_dir</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
         <span class="n">use_scopus</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scopus_keys</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
         <span class="n">hop_df</span> <span class="o">=</span> <span class="n">bunny</span><span class="o">.</span><span class="n">hop</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">modes</span><span class="p">,</span> <span class="n">use_scopus</span><span class="o">=</span><span class="n">use_scopus</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_papers</span><span class="o">=</span><span class="n">max_papers</span><span class="p">,</span> <span class="n">hop_priority</span><span class="o">=</span><span class="n">hop_priority</span><span class="p">,</span>
@@ -489,7 +489,7 @@
         <span class="k">return</span> <span class="n">hop_df</span>
     
     
-    <span class="k">def</span> <span class="nf">__cheetah_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">cheetah_settings</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__cheetah_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">cheetah_settings</span><span class="p">):</span>
     
         <span class="c1"># index settings </span>
         <span class="n">cheetah_columns</span> <span class="o">=</span> <span class="p">{</span>
@@ -524,12 +524,12 @@
             <span class="n">cheetah_table</span><span class="p">[</span><span class="s1">&#39;included_ids&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cheetah_table</span><span class="o">.</span><span class="n">included_ids</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">)</span>\
                 <span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">x</span> <span class="k">if</span> <span class="n">i</span><span class="p">]</span> <span class="k">if</span> <span class="n">x</span> <span class="k">else</span> <span class="p">[])</span>
 
-            <span class="k">def</span> <span class="nf">include_s2ids</span><span class="p">(</span><span class="n">indices</span><span class="p">):</span>
+            <span class="k">def</span><span class="w"> </span><span class="nf">include_s2ids</span><span class="p">(</span><span class="n">indices</span><span class="p">):</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">indices</span><span class="p">:</span>
                     <span class="k">return</span> <span class="kc">None</span>
                 <span class="k">return</span> <span class="s1">&#39;;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">df_curr</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span><span class="o">.</span><span class="n">s2id</span><span class="o">.</span><span class="n">to_list</span><span class="p">()))</span>
             
-            <span class="k">def</span> <span class="nf">exclude_s2ids</span><span class="p">(</span><span class="n">indices</span><span class="p">):</span>
+            <span class="k">def</span><span class="w"> </span><span class="nf">exclude_s2ids</span><span class="p">(</span><span class="n">indices</span><span class="p">):</span>
                 <span class="n">all_s2ids</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">df_curr</span><span class="o">.</span><span class="n">s2id</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">pd</span><span class="o">.</span><span class="n">isna</span><span class="p">(</span><span class="n">x</span><span class="p">)}</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">indices</span><span class="p">:</span>
                     <span class="k">return</span> <span class="s1">&#39;;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">all_s2ids</span><span class="p">))</span>
@@ -547,7 +547,7 @@
         <span class="k">return</span> <span class="n">cheetah_df</span><span class="p">,</span> <span class="n">cheetah_table</span>
     
     
-    <span class="k">def</span> <span class="nf">__vulture_clean</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">vulture_settings</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__vulture_clean</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">vulture_settings</span><span class="p">):</span>
         
         <span class="c1"># setup vulture</span>
         <span class="n">vulture</span> <span class="o">=</span> <span class="n">Vulture</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
@@ -568,31 +568,31 @@
     
     
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">core</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">core</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_core</span>
     
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">s2_key</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">s2_key</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_s2_key</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">scopus_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">scopus_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scopus_keys</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">cheetah_index</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">cheetah_index</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cheetah_index</span>
     
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">output_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">output_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_output_dir</span>
     
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">cache_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">cache_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache_dir</span>
     
     <span class="nd">@core</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">core</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">core</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">core</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">core</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">core</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;AutoBunny expects core to be a SLIC DataFrame!&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="s1">&#39;type&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">core</span><span class="p">:</span>
@@ -600,7 +600,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_core</span> <span class="o">=</span> <span class="n">core</span>
     
     <span class="nd">@s2_key</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">s2_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">s2_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">key</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_s2_key</span> <span class="o">=</span> <span class="n">key</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
@@ -613,7 +613,7 @@
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Unsupported type &quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">key</span><span class="p">)</span><span class="si">}</span><span class="s1">&quot; for Semantic Scholar key&#39;</span><span class="p">)</span>
         
     <span class="nd">@scopus_keys</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">scopus_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scopus_keys</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">scopus_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scopus_keys</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">scopus_keys</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_scopus_keys</span> <span class="o">=</span> <span class="n">scopus_keys</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">scopus_keys</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">set</span><span class="p">)):</span>
@@ -627,7 +627,7 @@
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Unsupported type &quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">key</span><span class="p">)</span><span class="si">}</span><span class="s1">&quot; for Scopus key&#39;</span><span class="p">)</span>
             
     <span class="nd">@cheetah_index</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">cheetah_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cheetah_index</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">cheetah_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cheetah_index</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">cheetah_index</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_cheetah_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">CHEETAH_INDEX</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cheetah_index</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
@@ -640,7 +640,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Unsupported type &quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">cheetah_index</span><span class="p">)</span><span class="si">}</span><span class="s1">&quot; for `cheetah_index`&#39;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__process_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">var_name</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__process_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">var_name</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="s1">&#39;/tmp&#39;</span><span class="p">)</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
@@ -653,11 +653,11 @@
         <span class="k">return</span> <span class="n">_path</span>
             
     <span class="nd">@output_dir</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">output_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">output_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_output_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__process_path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="s1">&#39;output_dir&#39;</span><span class="p">)</span>
         
     <span class="nd">@cache_dir</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">cache_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache_dir</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">cache_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache_dir</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_cache_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__process_path</span><span class="p">(</span><span class="n">cache_dir</span><span class="p">,</span> <span class="s1">&#39;cache_dir&#39;</span><span class="p">)</span></div>
 
         
