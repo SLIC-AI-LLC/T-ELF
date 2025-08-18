@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TELF.factorization.utilities.organize_n_jobs &#8212; TELF 0.0.41 documentation</title>
+    <title>TELF.factorization.utilities.organize_n_jobs &#8212; TELF 0.0.42 documentation</title>
   
   
   
@@ -29,7 +29,7 @@
   <link href="../../../../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 <link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
   
@@ -39,7 +39,7 @@
   <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../../../../_static/documentation_options.js?v=1983794d"></script>
+    <script src="../../../../_static/documentation_options.js?v=0ef7f92b"></script>
     <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -125,7 +125,7 @@
   
   
   
-    <p class="title logo__title">TELF 0.0.41 documentation</p>
+    <p class="title logo__title">TELF 0.0.42 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -322,14 +322,14 @@
                 <article class="bd-article">
                   
   <h1>Source code for TELF.factorization.utilities.organize_n_jobs</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">multiprocessing</span>
-<span class="kn">import</span> <span class="nn">GPUtil</span>
-<span class="kn">import</span> <span class="nn">warnings</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">multiprocessing</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">GPUtil</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 <div class="viewcode-block" id="organize_devices">
 <a class="viewcode-back" href="../../../../TELF.factorization.utilities.html#TELF.factorization.utilities.organize_n_jobs.organize_devices">[docs]</a>
-<span class="k">def</span> <span class="nf">organize_devices</span><span class="p">(</span><span class="n">n_jobs</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">use_gpu</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">organize_devices</span><span class="p">(</span><span class="n">n_jobs</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">use_gpu</span><span class="p">):</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="n">use_gpu</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">device</span><span class="p">]</span>
@@ -372,7 +372,7 @@
 
 <div class="viewcode-block" id="organize_n_jobs">
 <a class="viewcode-back" href="../../../../TELF.factorization.utilities.html#TELF.factorization.utilities.organize_n_jobs.organize_n_jobs">[docs]</a>
-<span class="k">def</span> <span class="nf">organize_n_jobs</span><span class="p">(</span><span class="n">use_gpu</span><span class="p">,</span> <span class="n">n_jobs</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">organize_n_jobs</span><span class="p">(</span><span class="n">use_gpu</span><span class="p">,</span> <span class="n">n_jobs</span><span class="p">):</span>
     <span class="c1"># check if GPUs available if requested</span>
     <span class="k">if</span> <span class="n">use_gpu</span><span class="p">:</span>
 

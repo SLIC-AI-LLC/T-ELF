@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TELF.factorization.TriNMFk &#8212; TELF 0.0.41 documentation</title>
+    <title>TELF.factorization.TriNMFk &#8212; TELF 0.0.42 documentation</title>
   
   
   
@@ -29,7 +29,7 @@
   <link href="../../../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 <link href="../../../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
   
@@ -39,7 +39,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../../../_static/documentation_options.js?v=1983794d"></script>
+    <script src="../../../_static/documentation_options.js?v=0ef7f92b"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -125,7 +125,7 @@
   
   
   
-    <p class="title logo__title">TELF 0.0.41 documentation</p>
+    <p class="title logo__title">TELF 0.0.42 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -333,28 +333,28 @@
 <span class="sd">derivative works, distribute copies to the public, perform publicly and display publicly, and to permit</span>
 <span class="sd">others to do so.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">.NMFk</span> <span class="kn">import</span> <span class="n">NMFk</span>
-<span class="kn">from</span> <span class="nn">.decompositions.utilities.math_utils</span> <span class="kn">import</span> <span class="n">relative_trinmf_error</span><span class="p">,</span> <span class="n">prune</span><span class="p">,</span> <span class="n">unprune</span>
-<span class="kn">from</span> <span class="nn">.decompositions.tri_nmf_fro_mu</span> <span class="kn">import</span> <span class="n">trinmf</span> <span class="k">as</span> <span class="n">trinmf_fro_mu</span>
-<span class="kn">from</span> <span class="nn">.utilities.organize_n_jobs</span> <span class="kn">import</span> <span class="n">organize_n_jobs</span>
-<span class="kn">from</span> <span class="nn">..helpers.inits</span> <span class="kn">import</span> <span class="n">organize_required_params</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.NMFk</span><span class="w"> </span><span class="kn">import</span> <span class="n">NMFk</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.decompositions.utilities.math_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">relative_trinmf_error</span><span class="p">,</span> <span class="n">prune</span><span class="p">,</span> <span class="n">unprune</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.decompositions.tri_nmf_fro_mu</span><span class="w"> </span><span class="kn">import</span> <span class="n">trinmf</span> <span class="k">as</span> <span class="n">trinmf_fro_mu</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.utilities.organize_n_jobs</span><span class="w"> </span><span class="kn">import</span> <span class="n">organize_n_jobs</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..helpers.inits</span><span class="w"> </span><span class="kn">import</span> <span class="n">organize_required_params</span>
 
-<span class="kn">import</span> <span class="nn">concurrent.futures</span>
-<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">warnings</span>
-<span class="kn">import</span> <span class="nn">scipy.sparse</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">concurrent.futures</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tqdm</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">scipy.sparse</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 
 <span class="k">try</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">cupy</span> <span class="k">as</span> <span class="nn">cp</span>
-    <span class="kn">import</span> <span class="nn">cupyx.scipy.sparse</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">cupy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cp</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">cupyx.scipy.sparse</span>
 <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
     <span class="n">cp</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">cupyx</span> <span class="o">=</span> <span class="kc">None</span>
 
-<span class="k">def</span> <span class="nf">_nmf_wrapper</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_nmf_wrapper</span><span class="p">(</span>
         <span class="n">init_num</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span> 
         <span class="n">nmf</span><span class="p">,</span> 
         <span class="n">nmf_params</span><span class="p">:</span><span class="nb">dict</span><span class="p">,</span> 
@@ -409,9 +409,9 @@
 
 <div class="viewcode-block" id="TriNMFk">
 <a class="viewcode-back" href="../../../TriNMFk.html#TELF.factorization.TriNMFk.TriNMFk">[docs]</a>
-<span class="k">class</span> <span class="nc">TriNMFk</span><span class="p">():</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">TriNMFk</span><span class="p">():</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">experiment_name</span><span class="o">=</span><span class="s2">&quot;TriNMFk&quot;</span><span class="p">,</span>
                  <span class="n">nmfk_params</span><span class="o">=</span><span class="p">{},</span>
                  <span class="n">save_path</span> <span class="o">=</span> <span class="s2">&quot;TriNMFk&quot;</span><span class="p">,</span>
@@ -518,7 +518,7 @@
     
 <div class="viewcode-block" id="TriNMFk.fit_nmfk">
 <a class="viewcode-back" href="../../../TriNMFk.html#TELF.factorization.TriNMFk.TriNMFk.fit_nmfk">[docs]</a>
-    <span class="k">def</span> <span class="nf">fit_nmfk</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Ks</span><span class="p">,</span> <span class="n">note</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fit_nmfk</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Ks</span><span class="p">,</span> <span class="n">note</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Factorize the input matrix ``X`` for the each given K value in ``Ks``.</span>
 
@@ -556,7 +556,7 @@
 
 <div class="viewcode-block" id="TriNMFk.fit_tri_nmfk">
 <a class="viewcode-back" href="../../../TriNMFk.html#TELF.factorization.TriNMFk.TriNMFk.fit_tri_nmfk">[docs]</a>
-    <span class="k">def</span> <span class="nf">fit_tri_nmfk</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">k1k2</span><span class="p">:</span><span class="nb">tuple</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fit_tri_nmfk</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">k1k2</span><span class="p">:</span><span class="nb">tuple</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Factorize the input matrix ``X``.\n</span>
 <span class="sd">        after applying ``fit_nmfk()`` to select the ``Wk`` and ``Hk``, to factorize the given matrix with ``k1k2=(Wk, Hk)``.</span>

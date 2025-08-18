@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TELF.factorization.SymNMFk &#8212; TELF 0.0.41 documentation</title>
+    <title>TELF.factorization.SymNMFk &#8212; TELF 0.0.42 documentation</title>
   
   
   
@@ -29,7 +29,7 @@
   <link href="../../../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 <link href="../../../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
   
@@ -39,7 +39,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../../../_static/documentation_options.js?v=1983794d"></script>
+    <script src="../../../_static/documentation_options.js?v=0ef7f92b"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -125,7 +125,7 @@
   
   
   
-    <p class="title logo__title">TELF 0.0.41 documentation</p>
+    <p class="title logo__title">TELF 0.0.42 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -335,46 +335,46 @@
 <span class="sd">derivative works, distribute copies to the public, perform publicly and display publicly, and to permit</span>
 <span class="sd">others to do so.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">import</span> <span class="nn">socket</span>
-<span class="kn">import</span> <span class="nn">warnings</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">scipy.sparse</span>
-<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">import</span> <span class="nn">concurrent.futures</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
-<span class="kn">from</span> <span class="nn">threading</span> <span class="kn">import</span> <span class="n">Lock</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">socket</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">scipy.sparse</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tqdm</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">concurrent.futures</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">threading</span><span class="w"> </span><span class="kn">import</span> <span class="n">Lock</span>
 
-<span class="kn">from</span> <span class="nn">.utilities.take_note</span> <span class="kn">import</span> <span class="n">take_note</span><span class="p">,</span> <span class="n">take_note_fmat</span><span class="p">,</span> <span class="n">append_to_note</span>
-<span class="kn">from</span> <span class="nn">.utilities.plot_NMFk</span> <span class="kn">import</span> <span class="n">plot_SymNMFk</span><span class="p">,</span> <span class="n">plot_consensus_mat</span>
-<span class="kn">from</span> <span class="nn">.utilities.organize_n_jobs</span> <span class="kn">import</span> <span class="n">organize_n_jobs</span>
-<span class="kn">from</span> <span class="nn">.utilities.data_host_transfer_helpers</span> <span class="kn">import</span> <span class="n">put_X_gpu</span><span class="p">,</span> <span class="n">put_A_gpu</span>
-<span class="kn">from</span> <span class="nn">.utilities.run_factorization_helpers</span> <span class="kn">import</span> <span class="n">run_symnmf</span>
-<span class="kn">from</span> <span class="nn">.utilities.perturbation_helpers</span> <span class="kn">import</span> <span class="n">perturb_X</span>
-<span class="kn">from</span> <span class="nn">.utilities.initialization_helpers</span> <span class="kn">import</span> <span class="n">init_W</span>
-<span class="kn">from</span> <span class="nn">.decompositions.sym_nmf</span> <span class="kn">import</span> <span class="n">sym_nmf_newt</span>
-<span class="kn">from</span> <span class="nn">.decompositions.utilities.math_utils</span> <span class="kn">import</span> <span class="n">get_pac</span>
-<span class="kn">from</span> <span class="nn">.decompositions.utilities.concensus_matrix</span> <span class="kn">import</span> <span class="n">reorder_con_mat</span>
-<span class="kn">from</span> <span class="nn">.decompositions.utilities.similarity_matrix</span> <span class="kn">import</span> <span class="n">get_connectivity_matrix</span><span class="p">,</span> <span class="n">dist2</span><span class="p">,</span> <span class="n">scale_dist3</span>
-<span class="kn">from</span> <span class="nn">..helpers.data_structures</span> <span class="kn">import</span> <span class="n">chunk_Ks</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.utilities.take_note</span><span class="w"> </span><span class="kn">import</span> <span class="n">take_note</span><span class="p">,</span> <span class="n">take_note_fmat</span><span class="p">,</span> <span class="n">append_to_note</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.utilities.plot_NMFk</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_SymNMFk</span><span class="p">,</span> <span class="n">plot_consensus_mat</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.utilities.organize_n_jobs</span><span class="w"> </span><span class="kn">import</span> <span class="n">organize_n_jobs</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.utilities.data_host_transfer_helpers</span><span class="w"> </span><span class="kn">import</span> <span class="n">put_X_gpu</span><span class="p">,</span> <span class="n">put_A_gpu</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.utilities.run_factorization_helpers</span><span class="w"> </span><span class="kn">import</span> <span class="n">run_symnmf</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.utilities.perturbation_helpers</span><span class="w"> </span><span class="kn">import</span> <span class="n">perturb_X</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.utilities.initialization_helpers</span><span class="w"> </span><span class="kn">import</span> <span class="n">init_W</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.decompositions.sym_nmf</span><span class="w"> </span><span class="kn">import</span> <span class="n">sym_nmf_newt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.decompositions.utilities.math_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_pac</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.decompositions.utilities.concensus_matrix</span><span class="w"> </span><span class="kn">import</span> <span class="n">reorder_con_mat</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.decompositions.utilities.similarity_matrix</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_connectivity_matrix</span><span class="p">,</span> <span class="n">dist2</span><span class="p">,</span> <span class="n">scale_dist3</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..helpers.data_structures</span><span class="w"> </span><span class="kn">import</span> <span class="n">chunk_Ks</span>
 
 <span class="k">try</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">cupy</span> <span class="k">as</span> <span class="nn">cp</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">cupy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cp</span>
 <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
     <span class="n">cp</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">cupyx</span> <span class="o">=</span> <span class="kc">None</span>
 
 <span class="k">try</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">mpi4py</span> <span class="kn">import</span> <span class="n">MPI</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mpi4py</span><span class="w"> </span><span class="kn">import</span> <span class="n">MPI</span>
 <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
     <span class="n">MPI</span> <span class="o">=</span> <span class="kc">None</span>
 
 
-<span class="k">def</span> <span class="nf">_perturb_parallel_wrapper</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_perturb_parallel_wrapper</span><span class="p">(</span>
     <span class="n">perturbation</span><span class="p">,</span>
     <span class="n">gpuid</span><span class="p">,</span>
     <span class="n">epsilon</span><span class="p">,</span>
@@ -423,7 +423,7 @@
     <span class="k">return</span> <span class="n">Wq</span><span class="p">,</span> <span class="n">obj</span>
 
 
-<span class="k">def</span> <span class="nf">_symnmf_parallel_wrapper</span><span class="p">(</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_symnmf_parallel_wrapper</span><span class="p">(</span>
         <span class="n">n_perturbs</span><span class="p">,</span> 
         <span class="n">nmf</span><span class="p">,</span> 
         <span class="n">nmf_params</span><span class="p">,</span>
@@ -567,8 +567,8 @@
 
 <div class="viewcode-block" id="SymNMFk">
 <a class="viewcode-back" href="../../../SymNMFk.html#TELF.factorization.SymNMFk.SymNMFk">[docs]</a>
-<span class="k">class</span> <span class="nc">SymNMFk</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">SymNMFk</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
             <span class="n">n_perturbs</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
             <span class="n">n_iters</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
@@ -683,7 +683,7 @@
             
 <div class="viewcode-block" id="SymNMFk.fit">
 <a class="viewcode-back" href="../../../SymNMFk.html#TELF.factorization.SymNMFk.SymNMFk.fit">[docs]</a>
-    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Ks</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;SymNMFk&quot;</span><span class="p">,</span> <span class="n">note</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Ks</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;SymNMFk&quot;</span><span class="p">,</span> <span class="n">note</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
 
         <span class="c1">#</span>
         <span class="c1"># check X format</span>

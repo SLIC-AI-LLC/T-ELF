@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TELF.factorization.decompositions.nmf_mc_fro_mu &#8212; TELF 0.0.41 documentation</title>
+    <title>TELF.factorization.decompositions.nmf_mc_fro_mu &#8212; TELF 0.0.42 documentation</title>
   
   
   
@@ -29,7 +29,7 @@
   <link href="../../../../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 <link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
   
@@ -39,7 +39,7 @@
   <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../../../../_static/documentation_options.js?v=1983794d"></script>
+    <script src="../../../../_static/documentation_options.js?v=0ef7f92b"></script>
     <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -125,7 +125,7 @@
   
   
   
-    <p class="title logo__title">TELF 0.0.41 documentation</p>
+    <p class="title logo__title">TELF 0.0.42 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -323,14 +323,14 @@
                   
   <h1>Source code for TELF.factorization.decompositions.nmf_mc_fro_mu</h1><div class="highlight"><pre>
 <span></span><span class="c1"># %%</span>
-<span class="kn">from</span> <span class="nn">.utilities.generic_utils</span> <span class="kn">import</span> <span class="n">get_np</span><span class="p">,</span> <span class="n">get_scipy</span><span class="p">,</span> <span class="n">update_opts</span>
-<span class="kn">from</span> <span class="nn">.utilities.math_utils</span> <span class="kn">import</span> <span class="n">prune</span><span class="p">,</span> <span class="n">unprune</span><span class="p">,</span> <span class="n">fro_norm</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.utilities.generic_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_np</span><span class="p">,</span> <span class="n">get_scipy</span><span class="p">,</span> <span class="n">update_opts</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.utilities.math_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">prune</span><span class="p">,</span> <span class="n">unprune</span><span class="p">,</span> <span class="n">fro_norm</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 
 <div class="viewcode-block" id="H_update_ADMM">
 <a class="viewcode-back" href="../../../../TELF.factorization.decompositions.html#TELF.factorization.decompositions.nmf_mc_fro_mu.H_update_ADMM">[docs]</a>
-<span class="k">def</span> <span class="nf">H_update_ADMM</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">opts</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dual</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">use_gpu</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">H_update_ADMM</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">opts</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dual</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">use_gpu</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    ADMM algorithm for the right factor in a nonnegative optimization with Frobenius norm loss function. ||X-WH||_F^2</span>
 
@@ -354,7 +354,7 @@
 
 <div class="viewcode-block" id="W_update_ADMM">
 <a class="viewcode-back" href="../../../../TELF.factorization.decompositions.html#TELF.factorization.decompositions.nmf_mc_fro_mu.W_update_ADMM">[docs]</a>
-<span class="k">def</span> <span class="nf">W_update_ADMM</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">opts</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dual</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">use_gpu</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">W_update_ADMM</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">opts</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dual</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">use_gpu</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    ADMM algorithm for the left factor in a nonnegative optimization with Frobenius norm loss function. ||X-WH||_F^2</span>
 
@@ -419,7 +419,7 @@
 
 <div class="viewcode-block" id="H_update_MU">
 <a class="viewcode-back" href="../../../../TELF.factorization.decompositions.html#TELF.factorization.decompositions.nmf_mc_fro_mu.H_update_MU">[docs]</a>
-<span class="k">def</span> <span class="nf">H_update_MU</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">opts</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">use_gpu</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">H_update_MU</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">opts</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">use_gpu</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Multiplicative update algorithm for the right factor in a nonnegative optimization with Frobenius norm loss function. ||X-WH||_F^2</span>
 
@@ -440,7 +440,7 @@
 
 <div class="viewcode-block" id="W_update_MU">
 <a class="viewcode-back" href="../../../../TELF.factorization.decompositions.html#TELF.factorization.decompositions.nmf_mc_fro_mu.W_update_MU">[docs]</a>
-<span class="k">def</span> <span class="nf">W_update_MU</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">opts</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">use_gpu</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">W_update_MU</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">opts</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">use_gpu</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Multiplicative update algorithm for the left factor in a nonnegative optimization with Frobenius norm loss function. ||X-WH||_F^2</span>
 
@@ -501,7 +501,7 @@
 
 <div class="viewcode-block" id="nmf_with_ADMM">
 <a class="viewcode-back" href="../../../../TELF.factorization.decompositions.html#TELF.factorization.decompositions.nmf_mc_fro_mu.nmf_with_ADMM">[docs]</a>
-<span class="k">def</span> <span class="nf">nmf_with_ADMM</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">lowerthres</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">upperthres</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">opts</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">use_gpu</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">nmf_with_ADMM</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">lowerthres</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">upperthres</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">opts</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">use_gpu</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Multiplicative update algorithm for NMF with Frobenius norm loss function. ||X-WH||_F^2</span>
 
@@ -626,7 +626,7 @@
 
 <div class="viewcode-block" id="old_nmf">
 <a class="viewcode-back" href="../../../../TELF.factorization.decompositions.html#TELF.factorization.decompositions.nmf_mc_fro_mu.old_nmf">[docs]</a>
-<span class="k">def</span> <span class="nf">old_nmf</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">lowerthres</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">upperthres</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">opts</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">use_gpu</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">old_nmf</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">lowerthres</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">upperthres</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">opts</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">use_gpu</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Multiplicative update algorithm for NMF with Frobenius norm loss function. ||X-WH||_F^2</span>
 
@@ -727,7 +727,7 @@
 
 <div class="viewcode-block" id="nmf">
 <a class="viewcode-back" href="../../../../TELF.factorization.decompositions.html#TELF.factorization.decompositions.nmf_mc_fro_mu.nmf">[docs]</a>
-<span class="k">def</span> <span class="nf">nmf</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">lowerthres</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">upperthres</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">opts</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">Mask</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">use_gpu</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">nmf</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">lowerthres</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">upperthres</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">opts</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">Mask</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">use_gpu</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    penalized nmf with adaptive alpha</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -826,7 +826,7 @@
 
 <div class="viewcode-block" id="thres_norm">
 <a class="viewcode-back" href="../../../../TELF.factorization.decompositions.html#TELF.factorization.decompositions.nmf_mc_fro_mu.thres_norm">[docs]</a>
-<span class="k">def</span> <span class="nf">thres_norm</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">H</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">thres_norm</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">H</span><span class="p">):</span>
     <span class="c1"># try to normalize BOTH W,H by dividing to column minimum</span>
     <span class="n">Wsum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">Hsum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -843,7 +843,7 @@
 
 <div class="viewcode-block" id="old_find_thres_WH">
 <a class="viewcode-back" href="../../../../TELF.factorization.decompositions.html#TELF.factorization.decompositions.nmf_mc_fro_mu.old_find_thres_WH">[docs]</a>
-<span class="k">def</span> <span class="nf">old_find_thres_WH</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Wn</span><span class="p">,</span> <span class="n">Hn</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;grid_search&quot;</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="s2">&quot;best&quot;</span><span class="p">,</span> <span class="n">npoint</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">old_find_thres_WH</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Wn</span><span class="p">,</span> <span class="n">Hn</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;grid_search&quot;</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="s2">&quot;best&quot;</span><span class="p">,</span> <span class="n">npoint</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
     <span class="c1"># Wn, Hn are normalized using thres_norm function</span>
 
     <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;W@H&quot;</span><span class="p">:</span>
@@ -907,7 +907,7 @@
 
 <div class="viewcode-block" id="roc_W_H">
 <a class="viewcode-back" href="../../../../TELF.factorization.decompositions.html#TELF.factorization.decompositions.nmf_mc_fro_mu.roc_W_H">[docs]</a>
-<span class="k">def</span> <span class="nf">roc_W_H</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">H</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">roc_W_H</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">H</span><span class="p">):</span>
     <span class="n">Lthres</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">W</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">H</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))))</span>
     <span class="n">Lthres</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
     <span class="n">fpr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">Lthres</span><span class="p">),</span> <span class="mi">1</span><span class="p">))</span>

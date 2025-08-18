@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TELF.pre_processing.Vulture.vulture &#8212; TELF 0.0.41 documentation</title>
+    <title>TELF.pre_processing.Vulture.vulture &#8212; TELF 0.0.42 documentation</title>
   
   
   
@@ -29,7 +29,7 @@
   <link href="../../../../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 <link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
   
@@ -39,7 +39,7 @@
   <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../../../../_static/documentation_options.js?v=1983794d"></script>
+    <script src="../../../../_static/documentation_options.js?v=0ef7f92b"></script>
     <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -125,7 +125,7 @@
   
   
   
-    <p class="title logo__title">TELF 0.0.41 documentation</p>
+    <p class="title logo__title">TELF 0.0.42 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -335,36 +335,36 @@
 <span class="sd">derivative works, distribute copies to the public, perform publicly and display publicly, and to permit</span>
 <span class="sd">others to do so.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">uuid</span>
-<span class="kn">import</span> <span class="nn">pickle</span>
-<span class="kn">import</span> <span class="nn">pathlib</span>
-<span class="kn">import</span> <span class="nn">warnings</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
-<span class="kn">import</span> <span class="nn">multiprocessing</span>
-<span class="kn">from</span> <span class="nn">joblib</span> <span class="kn">import</span> <span class="n">Parallel</span><span class="p">,</span> <span class="n">delayed</span><span class="p">,</span> <span class="n">parallel_backend</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">uuid</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pickle</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pathlib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tqdm</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">multiprocessing</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">joblib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Parallel</span><span class="p">,</span> <span class="n">delayed</span><span class="p">,</span> <span class="n">parallel_backend</span>
 
-<span class="kn">from</span> <span class="nn">.modules.simple_clean</span> <span class="kn">import</span> <span class="n">SimpleCleaner</span>
-<span class="kn">from</span> <span class="nn">.modules.lemmatize</span> <span class="kn">import</span> <span class="n">LemmatizeCleaner</span>
-<span class="kn">from</span> <span class="nn">.modules.substitute</span> <span class="kn">import</span> <span class="n">SubstitutionCleaner</span>
-<span class="kn">from</span> <span class="nn">.modules.detect_nonenglish</span> <span class="kn">import</span> <span class="n">RemoveNonEnglishCleaner</span>
-<span class="kn">from</span> <span class="nn">.modules.ner</span> <span class="kn">import</span> <span class="n">NEDetector</span>
-<span class="kn">from</span> <span class="nn">.default_stop_words</span> <span class="kn">import</span> <span class="n">STOP_WORDS</span>
-<span class="kn">from</span> <span class="nn">.default_stop_phrases</span> <span class="kn">import</span> <span class="n">STOP_PHRASES</span>
-<span class="kn">from</span> <span class="nn">...helpers.file_system</span> <span class="kn">import</span> <span class="n">check_path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.modules.simple_clean</span><span class="w"> </span><span class="kn">import</span> <span class="n">SimpleCleaner</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.modules.lemmatize</span><span class="w"> </span><span class="kn">import</span> <span class="n">LemmatizeCleaner</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.modules.substitute</span><span class="w"> </span><span class="kn">import</span> <span class="n">SubstitutionCleaner</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.modules.detect_nonenglish</span><span class="w"> </span><span class="kn">import</span> <span class="n">RemoveNonEnglishCleaner</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.modules.ner</span><span class="w"> </span><span class="kn">import</span> <span class="n">NEDetector</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.default_stop_words</span><span class="w"> </span><span class="kn">import</span> <span class="n">STOP_WORDS</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.default_stop_phrases</span><span class="w"> </span><span class="kn">import</span> <span class="n">STOP_PHRASES</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">...helpers.file_system</span><span class="w"> </span><span class="kn">import</span> <span class="n">check_path</span>
 
 <span class="k">try</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">mpi4py</span> <span class="kn">import</span> <span class="n">MPI</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mpi4py</span><span class="w"> </span><span class="kn">import</span> <span class="n">MPI</span>
 <span class="k">except</span><span class="p">:</span>
     <span class="n">MPI</span> <span class="o">=</span> <span class="kc">None</span>
 
 
 <div class="viewcode-block" id="chunk_tuple_list">
 <a class="viewcode-back" href="../../../../Vulture.html#TELF.pre_processing.Vulture.vulture.chunk_tuple_list">[docs]</a>
-<span class="k">def</span> <span class="nf">chunk_tuple_list</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">n_chunks</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">chunk_tuple_list</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">n_chunks</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Splits the given list of (key, value) tuples into sub-lists.</span>
 
@@ -396,7 +396,7 @@
 
 <div class="viewcode-block" id="Vulture">
 <a class="viewcode-back" href="../../../../Vulture.html#TELF.pre_processing.Vulture.vulture.Vulture">[docs]</a>
-<span class="k">class</span> <span class="nc">Vulture</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Vulture</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Vulture is a parallel, multi-node parallel, and distributed parallel document</span>
 <span class="sd">    pre-processing tool.</span>
@@ -439,7 +439,7 @@
     <span class="p">]</span>
     
     
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">n_jobs</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_nodes</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">parallel_backend</span> <span class="o">=</span> <span class="s2">&quot;multiprocessing&quot;</span><span class="p">,</span> <span class="n">cache</span> <span class="o">=</span> <span class="s1">&#39;/tmp&#39;</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">n_jobs</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_nodes</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">parallel_backend</span> <span class="o">=</span> <span class="s2">&quot;threading&quot;</span><span class="p">,</span> <span class="n">cache</span> <span class="o">=</span> <span class="s1">&#39;/tmp&#39;</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span> <span class="o">=</span> <span class="n">n_jobs</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_nodes</span> <span class="o">=</span> <span class="n">n_nodes</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">parallel_backend</span> <span class="o">=</span> <span class="n">parallel_backend</span>
@@ -470,7 +470,7 @@
 
 <div class="viewcode-block" id="Vulture.operate">
 <a class="viewcode-back" href="../../../../Vulture.html#TELF.pre_processing.Vulture.vulture.Vulture.operate">[docs]</a>
-    <span class="k">def</span> <span class="nf">operate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">documents</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">save_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">operate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">documents</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">save_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
         
         <span class="k">if</span> <span class="n">steps</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">steps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_OPERATOR_PIPELINE</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -516,7 +516,7 @@
         
 <div class="viewcode-block" id="Vulture.clean">
 <a class="viewcode-back" href="../../../../Vulture.html#TELF.pre_processing.Vulture.vulture.Vulture.clean">[docs]</a>
-    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">documents</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">substitutions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">save_path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">documents</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">substitutions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">save_path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">save_path</span> <span class="o">=</span> <span class="n">save_path</span>
         <span class="k">if</span> <span class="n">steps</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">steps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_PIPELINE</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -559,7 +559,7 @@
         
 <div class="viewcode-block" id="Vulture.clean_dataframe">
 <a class="viewcode-back" href="../../../../Vulture.html#TELF.pre_processing.Vulture.vulture.Vulture.clean_dataframe">[docs]</a>
-    <span class="k">def</span> <span class="nf">clean_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">substitutions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">clean_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">substitutions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                         <span class="n">append_to_original_df</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">concat_cleaned_cols</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         
         <span class="k">if</span> <span class="ow">not</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">is_unique</span><span class="p">:</span>  <span class="c1"># DataFrame must have unique indices for mapping</span>
@@ -607,13 +607,13 @@
 
     
     
-    <span class="k">def</span> <span class="nf">_mpi_init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">documents</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_mpi_init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">documents</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rank</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">chunk_tuple_list</span><span class="p">(</span><span class="n">documents</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_nodes</span><span class="p">))</span> <span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_mpi_save_chunk_to_disk</span><span class="p">(</span><span class="n">chunk</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">is_clean</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
     
-    <span class="k">def</span> <span class="nf">_mpi_get_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rank</span><span class="p">,</span> <span class="n">is_clean</span><span class="p">,</span> <span class="n">custom_fn</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_mpi_get_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rank</span><span class="p">,</span> <span class="n">is_clean</span><span class="p">,</span> <span class="n">custom_fn</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">custom_fn</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">is_clean</span><span class="p">:</span>
                 <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;vulture_</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">unique_id</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">rank</span><span class="si">}</span><span class="s1">_clean.p&#39;</span>
@@ -623,32 +623,32 @@
             <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;vulture_</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">unique_id</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">rank</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">custom_fn</span><span class="si">}</span><span class="s1">.p&#39;</span>
     
     
-    <span class="k">def</span> <span class="nf">_mpi_save_chunk_to_disk</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">rank</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">is_clean</span><span class="p">,</span> <span class="n">custom_fn</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_mpi_save_chunk_to_disk</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">rank</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">is_clean</span><span class="p">,</span> <span class="n">custom_fn</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">fn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mpi_get_name</span><span class="p">(</span><span class="n">rank</span><span class="p">,</span> <span class="n">is_clean</span><span class="p">,</span> <span class="n">custom_fn</span><span class="p">)</span>
 
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">,</span> <span class="n">fn</span><span class="p">),</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fh</span><span class="p">:</span>
             <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">fh</span><span class="p">)</span>
 
                 
-    <span class="k">def</span> <span class="nf">_mpi_load_chunk_from_disk</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rank</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">is_clean</span><span class="p">,</span> <span class="n">custom_fn</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_mpi_load_chunk_from_disk</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rank</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">is_clean</span><span class="p">,</span> <span class="n">custom_fn</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">fn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mpi_get_name</span><span class="p">(</span><span class="n">rank</span><span class="p">,</span> <span class="n">is_clean</span><span class="p">,</span> <span class="n">custom_fn</span><span class="o">=</span><span class="n">custom_fn</span><span class="p">)</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="p">,</span> <span class="n">fn</span><span class="p">),</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fh</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fh</span><span class="p">)</span>
         
 
-    <span class="k">def</span> <span class="nf">_mpi_combine</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">custom_fn</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_mpi_combine</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">custom_fn</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">clean_documents</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">rank</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_nodes</span><span class="p">):</span>
             <span class="n">clean_documents</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mpi_load_chunk_from_disk</span><span class="p">(</span><span class="n">rank</span><span class="p">,</span> <span class="n">is_clean</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">custom_fn</span><span class="o">=</span><span class="n">custom_fn</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">clean_documents</span>
     
     
-    <span class="k">def</span> <span class="nf">_save_documents</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">documents</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_save_documents</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">documents</span><span class="p">):</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_path</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fh</span><span class="p">:</span>
             <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">documents</span><span class="p">,</span> <span class="n">fh</span><span class="p">)</span>
     
     
-    <span class="k">def</span> <span class="nf">_clean_helper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">clean_documents</span><span class="p">,</span> <span class="n">steps</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_clean_helper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">clean_documents</span><span class="p">,</span> <span class="n">steps</span><span class="p">):</span>
         <span class="n">frozen</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_jobs</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">cleaner</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">steps</span><span class="p">,</span> <span class="n">total</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">steps</span><span class="p">),</span> <span class="n">disable</span><span class="o">=</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">):</span>
@@ -663,7 +663,7 @@
         <span class="k">return</span> <span class="n">clean_documents</span> 
         
         
-    <span class="k">def</span> <span class="nf">_parallel_helper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">documents</span><span class="p">,</span> <span class="n">cleaners</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parallel_helper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">documents</span><span class="p">,</span> <span class="n">cleaners</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Helper function to run processing of given documents in parallel</span>
 
@@ -708,13 +708,13 @@
         
         
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_parallel_worker</span><span class="p">(</span><span class="n">documents</span><span class="p">,</span> <span class="n">chunk_start</span><span class="p">,</span> <span class="n">chunk_end</span><span class="p">,</span> <span class="n">cleaner</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_parallel_worker</span><span class="p">(</span><span class="n">documents</span><span class="p">,</span> <span class="n">chunk_start</span><span class="p">,</span> <span class="n">chunk_end</span><span class="p">,</span> <span class="n">cleaner</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">chunk_start</span><span class="p">,</span> <span class="n">chunk_end</span><span class="p">):</span>
             <span class="n">documents</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">cleaner</span><span class="p">(</span><span class="n">documents</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
         
 <div class="viewcode-block" id="Vulture.use_mpi">
 <a class="viewcode-back" href="../../../../Vulture.html#TELF.pre_processing.Vulture.vulture.Vulture.use_mpi">[docs]</a>
-    <span class="k">def</span> <span class="nf">use_mpi</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">use_mpi</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_nodes</span></div>
 
 
@@ -723,31 +723,31 @@
     
     
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">n_jobs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">n_jobs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n_jobs</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">n_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">n_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_n_nodes</span>
     
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">parallel_backend</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">parallel_backend</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parallel_backend</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">cache</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">cache</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span>
     
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">save_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">save_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_save_path</span>
     
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">verbose</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">verbose</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_verbose</span>
     
     <span class="nd">@n_jobs</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">n_jobs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_jobs</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">n_jobs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_jobs</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">n_jobs</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;n_jobs must be an int!&#39;</span><span class="p">)</span>
 
@@ -761,7 +761,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_n_jobs</span> <span class="o">=</span> <span class="n">n_jobs</span>
 
     <span class="nd">@n_nodes</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">n_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_nodes</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">n_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_nodes</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">n_nodes</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;n_nodes must be an int!&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="mi">1</span> <span class="o">&gt;</span> <span class="n">n_nodes</span><span class="p">:</span>
@@ -771,7 +771,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_n_nodes</span> <span class="o">=</span> <span class="n">n_nodes</span>
         
     <span class="nd">@parallel_backend</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">parallel_backend</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parallel_backend</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">parallel_backend</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parallel_backend</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">parallel_backend</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;parallel_backend must be an str!&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">parallel_backend</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">PARALLEL_BACKEND_OPTIONS</span><span class="p">:</span>
@@ -779,7 +779,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_parallel_backend</span> <span class="o">=</span> <span class="n">parallel_backend</span>
 
     <span class="nd">@cache</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">cache</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">cache</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cache</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cache</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">)):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;`cache` must either be a str or a pathlib.Path object!&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cache</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
@@ -793,7 +793,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span> <span class="o">=</span> <span class="n">cache</span>
 
     <span class="nd">@save_path</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">save_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">save_path</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">save_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">save_path</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">save_path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_save_path</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="k">return</span>
@@ -812,7 +812,7 @@
 
         
     <span class="nd">@verbose</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">verbose</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">verbose</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">verbose</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">verbose</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">verbose</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_verbose</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">verbose</span><span class="p">)</span>  <span class="c1"># convert False to 0, True to 1</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">verbose</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>

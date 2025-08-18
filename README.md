@@ -128,6 +128,7 @@ python post_install.py # use the following, for example, for GPU system: <python
 |   Cheetah  |                        Fast search by keywords and phrases                       |    [Link](examples/Cheetah)         |
 |    Bunny   | Dataset generation tool for documents and their citations/references |  [Link](examples/Bunny)  |
 |  Penguin   |         Text storage tool                                    | [Link](examples/Penguin) |
+|  Lynx   |         Streamlit UI                                    | [Link](examples/Lynx) |
 |    Termite   | Knowladge graph building tool | :soon: |
 
 
@@ -136,7 +137,7 @@ python post_install.py # use the following, for example, for GPU system: <python
 | **Example** |                            **Description**                           | **Link** |
 |:----------:|:--------------------------------------------------------------------:|:-----------:|
 |   NM Law Data           |                        Domain specific data for AI and RAG system written in our  [paper](https://arxiv.org/abs/2502.20364) about New Mexico Law that uses the TELF pipeline       |  [Link](examples/NM%20Law%20Data)|
-|    Full TELF Pipeline   | An end-to-end pipeline demonstration, from data collection to analysis | :soon:   |
+|    Full TELF Pipeline   | An end-to-end pipeline demonstration, from collection to analysis |  [Link](examples/Full%20TELF%20Pipeline)  |
 
 
 ## How to Cite T-ELF?

@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>TELF.pre_processing.Squirrel: Dataset pruning tool &#8212; TELF 0.0.41 documentation</title>
+    <title>TELF.pre_processing.Squirrel: Dataset pruning tool &#8212; TELF 0.0.42 documentation</title>
   
   
   
@@ -30,7 +30,7 @@
   <link href="_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 <link href="_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
   
@@ -40,7 +40,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="_static/documentation_options.js?v=1983794d"></script>
+    <script src="_static/documentation_options.js?v=0ef7f92b"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -126,7 +126,7 @@
   
   
   
-    <p class="title logo__title">TELF 0.0.41 documentation</p>
+    <p class="title logo__title">TELF 0.0.42 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -534,7 +534,7 @@
 <h1>Module Contents<a class="headerlink" href="#id6" title="Link to this heading">#</a></h1>
 <dl class="py class" id="module-TELF.pre_processing.Squirrel.pruners.llm_prune">
 <dt class="sig sig-object py" id="TELF.pre_processing.Squirrel.pruners.llm_prune.LLMPruner">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">TELF.pre_processing.Squirrel.pruners.llm_prune.</span></span><span class="sig-name descname"><span class="pre">LLMPruner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">llm_model_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">llm_api_url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">llm_vote_trials</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">llm_promote_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">llm_temperature</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TELF/pre_processing/Squirrel/pruners/llm_prune.html#LLMPruner"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#TELF.pre_processing.Squirrel.pruners.llm_prune.LLMPruner" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">TELF.pre_processing.Squirrel.pruners.llm_prune.</span></span><span class="sig-name descname"><span class="pre">LLMPruner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">llm_model_name:</span> <span class="pre">str,</span> <span class="pre">llm_api_url:</span> <span class="pre">str,</span> <span class="pre">llm_vote_trials:</span> <span class="pre">int,</span> <span class="pre">llm_promote_threshold:</span> <span class="pre">float,</span> <span class="pre">llm_temperature:</span> <span class="pre">float,</span> <span class="pre">verbose:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True,</span> <span class="pre">prompt:</span> <span class="pre">~typing.Callable[[str,</span> <span class="pre">~typing.Iterable[str]],</span> <span class="pre">str]</span> <span class="pre">=</span> <span class="pre">&lt;function</span> <span class="pre">build_json_vote_prompt&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/TELF/pre_processing/Squirrel/pruners/llm_prune.html#LLMPruner"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#TELF.pre_processing.Squirrel.pruners.llm_prune.LLMPruner" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Perform LLM-based refinement on an embedding-pruned dataset, annotating each
 document with an <cite>llm_accept</cite> boolean column.</p>
@@ -547,6 +547,11 @@ document with an <cite>llm_accept</cite> boolean column.</p>
 <li><p><strong>llm_promote_threshold</strong> (<em>float</em>) – Fraction of “yes” votes required to accept a previously rejected doc.</p></li>
 <li><p><strong>llm_temperature</strong> (<em>float</em>) – Sampling temperature for the LLM.</p></li>
 <li><p><strong>verbose</strong> (<em>bool</em>) – Whether to show tqdm progress bars.</p></li>
+<li><p><strong>prompt</strong> (<em>Callable</em><em>[</em><em>[</em><em>str</em><em>, </em><em>Iterable</em><em>[</em><em>str</em><em>]</em><em>]</em><em>, </em><em>str</em><em>]</em>) – <p>Function that contains the prompt for the LLM.</p>
+<p>This function should take in a string and iterable where the string is the candidate document</p>
+<p>and the iterable is the context or target context examples to compare the candidate docuiment to.</p>
+<p>Default is <code class="docutils literal notranslate"><span class="pre">TELF.helpers.prompts.build_json_vote_prompt</span></code></p>
+</p></li>
 </ul>
 </dd>
 </dl>

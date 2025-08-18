@@ -658,8 +658,11 @@ class Orca:
             affiliations = scopus_affiliations.get(eid)
             if affiliations is not None:
                 for aff_id, aff_info_shallow in affiliations.items():
+                    if isinstance(aff_info_shallow, list):
+                        continue
                     del_list = []  # items to remove
                     aff_info = copy.deepcopy(aff_info_shallow)
+
                     for i in range(len(aff_info['authors'])):
                         scopus_id = str(aff_info['authors'][i])
                         if scopus_id not in scopus_to_slic:
@@ -813,6 +816,8 @@ class Orca:
                 year = int(year)
                 
             for aff_id, info in affiliations.items():
+                if isinstance(info, list):
+                    continue
                 aff_name = info.get('name', 'Unknown')
                 aff_country = info.get('country', 'Unknown')
 

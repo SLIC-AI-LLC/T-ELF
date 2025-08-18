@@ -16,6 +16,7 @@ from matplotlib.cm import get_cmap
 from matplotlib.colors import to_hex
 from scipy.spatial import ConvexHull
 import logging
+import math
 log = logging.getLogger(__name__)
 from .file_system import check_path
 from .data_structures import sum_dicts
@@ -112,49 +113,36 @@ def plot_authors_graph(df, id_col='s2_author_ids', name_col='s2_authors', title=
     )
     return fig
 
-def create_wordcloud_from_df(df, col, n=30, save_path=None, figsize=(600,600)):
+def create_wordcloud_from_df(df, col, n=30, save_path=None, figsize=(6, 6)):
     """
-    Generate and display a word cloud from a specified DataFrame column.
-    
-    Parameters:
-    -----------
-    df: pd.DataFrame
-        The DataFrame containing the text data.
-    col: str
-        The column name in the DataFrame with the text data.
-    n: int, optional
-        The number of top words to consider for the word cloud. Default is 30.
-    save_path: str, optional
-        Path to save the word cloud image. If not provided, the image is displayed but not saved.
-    figsize: (int, int), optional
-        A tuple specifying the size of the displayed image in inches. Default is (600,600).
-    
-    Returns:
-    --------
-    None: 
-        Displays the word cloud using matplotlib. If save_path is provided, the word cloud is saved to the 
-        specified path and not displayed.
+    Generate a word cloud from `df[col]` and either display it
+    or save it to `save_path`.
     """
-    # calculate the frequencies
-    tokens    = [x.split() for x in df[col].to_list() if not pd.isna(x)]
-    top_words = [dict(Counter(x)) for x in tokens]
-    top_words = sum_dicts(top_words, n=n)
+    # 1) Build frequencies ---------------------------------------------------
+    tokens = [s.split() for s in df[col].dropna()]
+    freq   = Counter(word for row in tokens for word in row).most_common(n)
+    freq   = dict(freq)
 
-    # generate the word cloud image
-    figsize_x, figsize_y = figsize
-    wc = WordCloud(background_color="white", width=figsize_x*100, height=figsize_y*100)
-    wc.generate_from_frequencies(top_words)
-    
-    # display the word cloud using matplotlib
-    plt.figure(figsize=figsize)
-    plt.imshow(wc, interpolation="bilinear")
-    plt.axis("off")
-    
-    if save_path is not None:
-        plt.savefig(save_path, dpi=300)
-        plt.close()
+    # 2) Generate cloud ------------------------------------------------------
+    wc = WordCloud(background_color="white",
+                   width=int(figsize[0]*200),
+                   height=int(figsize[1]*200))
+    wc.generate_from_frequencies(freq)
+
+    # 3) Plot on a *local* figure/axes (thread-safe) -------------------------
+    fig, ax = plt.subplots(figsize=figsize, dpi=200)
+    ax.imshow(wc, interpolation="bilinear")
+    ax.axis("off")
+    fig.tight_layout()
+
+    # 4) Save or show --------------------------------------------------------
+    if save_path:
+        Path(save_path).parent.mkdir(parents=True, exist_ok=True)
+        fig.savefig(save_path, bbox_inches="tight", pad_inches=0.1)
     else:
         plt.show()
+
+    plt.close(fig)
 
 
 def _cmap_map(function, cmap):

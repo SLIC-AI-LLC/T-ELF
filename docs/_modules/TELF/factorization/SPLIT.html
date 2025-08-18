@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TELF.factorization.SPLIT &#8212; TELF 0.0.41 documentation</title>
+    <title>TELF.factorization.SPLIT &#8212; TELF 0.0.42 documentation</title>
   
   
   
@@ -29,7 +29,7 @@
   <link href="../../../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 <link href="../../../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
   
@@ -39,7 +39,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../../../_static/documentation_options.js?v=1983794d"></script>
+    <script src="../../../_static/documentation_options.js?v=0ef7f92b"></script>
     <script src="../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -125,7 +125,7 @@
   
   
   
-    <p class="title logo__title">TELF 0.0.41 documentation</p>
+    <p class="title logo__title">TELF 0.0.42 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -322,26 +322,26 @@
                 <article class="bd-article">
                   
   <h1>Source code for TELF.factorization.SPLIT</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">.NMFk</span> <span class="kn">import</span> <span class="n">NMFk</span>
-<span class="kn">from</span> <span class="nn">.decompositions.nmf_fro_mu</span> <span class="kn">import</span> <span class="n">H_update</span> <span class="k">as</span> <span class="n">H_update_fro_mu</span>
-<span class="kn">from</span> <span class="nn">.decompositions.nmf_kl_mu</span> <span class="kn">import</span> <span class="n">H_update</span> <span class="k">as</span> <span class="n">H_update_kl_mu</span>
-<span class="kn">from</span> <span class="nn">..helpers.inits</span> <span class="kn">import</span> <span class="n">organize_required_params</span>
-<span class="kn">from</span> <span class="nn">.utilities.math</span> <span class="kn">import</span> <span class="n">MitH</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">scipy.sparse</span> <span class="kn">import</span> <span class="n">issparse</span>
-<span class="kn">from</span> <span class="nn">scipy.sparse</span> <span class="kn">import</span> <span class="n">hstack</span> <span class="k">as</span> <span class="n">sp_hstack</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">.NMFk</span><span class="w"> </span><span class="kn">import</span> <span class="n">NMFk</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.decompositions.nmf_fro_mu</span><span class="w"> </span><span class="kn">import</span> <span class="n">H_update</span> <span class="k">as</span> <span class="n">H_update_fro_mu</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.decompositions.nmf_kl_mu</span><span class="w"> </span><span class="kn">import</span> <span class="n">H_update</span> <span class="k">as</span> <span class="n">H_update_kl_mu</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..helpers.inits</span><span class="w"> </span><span class="kn">import</span> <span class="n">organize_required_params</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.utilities.math</span><span class="w"> </span><span class="kn">import</span> <span class="n">MitH</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.sparse</span><span class="w"> </span><span class="kn">import</span> <span class="n">issparse</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.sparse</span><span class="w"> </span><span class="kn">import</span> <span class="n">hstack</span> <span class="k">as</span> <span class="n">sp_hstack</span>
 
 <span class="k">try</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">cupy</span> <span class="k">as</span> <span class="nn">cp</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">cupy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cp</span>
 <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
     <span class="n">cp</span> <span class="o">=</span> <span class="kc">None</span>
 
 
 <div class="viewcode-block" id="SPLIT">
 <a class="viewcode-back" href="../../../SPLIT.html#TELF.factorization.SPLIT.SPLIT">[docs]</a>
-<span class="k">class</span> <span class="nc">SPLIT</span><span class="p">():</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">SPLIT</span><span class="p">():</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">Xs</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
                  <span class="n">Ks</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
                  <span class="n">nmfk_params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
@@ -445,7 +445,7 @@
 
 <div class="viewcode-block" id="SPLIT.fit">
 <a class="viewcode-back" href="../../../SPLIT.html#TELF.factorization.SPLIT.SPLIT.fit">[docs]</a>
-    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fname</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
 
         <span class="c1">#</span>
         <span class="c1"># APPLY NMFk ON Xs</span>
@@ -484,7 +484,7 @@
 
 <div class="viewcode-block" id="SPLIT.transform">
 <a class="viewcode-back" href="../../../SPLIT.html#TELF.factorization.SPLIT.SPLIT.transform">[docs]</a>
-    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
         <span class="c1"># LEARN H</span>
         <span class="n">information</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">information</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -525,14 +525,14 @@
 
 <div class="viewcode-block" id="SPLIT.fit_transform">
 <a class="viewcode-back" href="../../../SPLIT.html#TELF.factorization.SPLIT.SPLIT.fit_transform">[docs]</a>
-    <span class="k">def</span> <span class="nf">fit_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fit_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="SPLIT.set_params">
 <a class="viewcode-back" href="../../../SPLIT.html#TELF.factorization.SPLIT.SPLIT.set_params">[docs]</a>
-    <span class="k">def</span> <span class="nf">set_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">parameter</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">parameters</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameter</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span></div>
@@ -540,14 +540,14 @@
 
 <div class="viewcode-block" id="SPLIT.get_params">
 <a class="viewcode-back" href="../../../SPLIT.html#TELF.factorization.SPLIT.SPLIT.get_params">[docs]</a>
-    <span class="k">def</span> <span class="nf">get_params</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_params</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">vars</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
 
     <span class="c1"># ====================================================</span>
     <span class="c1"># Private Functions</span>
     <span class="c1"># ====================================================</span>
-    <span class="k">def</span> <span class="nf">_H_regression</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">H</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_H_regression</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">H</span><span class="p">):</span>
 
         <span class="n">H_learned_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">H_regress_func</span><span class="p">(</span>
             <span class="n">X</span><span class="o">=</span><span class="n">cp</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">H_regress_gpu</span> <span class="k">else</span> <span class="n">X</span><span class="p">,</span>
@@ -565,7 +565,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">H_learned_</span>
 
-    <span class="k">def</span> <span class="nf">_init_H_regress</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_init_H_regress</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">H_regress_init</span> <span class="o">==</span> <span class="s2">&quot;random&quot;</span><span class="p">:</span>
             <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">random_state</span><span class="p">)</span>
@@ -577,7 +577,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Unknown H regression initilization!&quot;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_get_M</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_M</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
 
         <span class="n">all_K</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">info</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">information</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
@@ -585,7 +585,7 @@
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">split_information</span><span class="p">[</span><span class="s2">&quot;H&quot;</span><span class="p">][:,</span> <span class="nb">sum</span><span class="p">(</span><span class="n">all_K</span><span class="p">[:</span><span class="n">num</span><span class="p">]):</span><span class="n">k</span><span class="o">+</span><span class="nb">sum</span><span class="p">(</span><span class="n">all_K</span><span class="p">[:</span><span class="n">num</span><span class="p">])]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">_get_split_Ks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_split_Ks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">all_K</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">info</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">information</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">all_K</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;k&quot;</span><span class="p">])</span>
@@ -593,7 +593,7 @@
         <span class="n">max_k</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">all_K</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
         <span class="k">return</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Ks_split_min</span><span class="p">,</span> <span class="n">max_k</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Ks_split_step</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_get_split_X</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_split_X</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
         <span class="n">Ws</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">info</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">information</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>

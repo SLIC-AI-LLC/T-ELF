@@ -4,7 +4,14 @@ import networkx as nx
 from tqdm import tqdm
 import plotly.graph_objs as go
 from .wolf import Wolf
+from tqdm import tqdm
+import os
+import pandas as pd
 
+from ...helpers.figures import create_wordcloud_from_df
+from ...helpers.filters import find_subdf
+from ...pre_processing.Vulture.tokens_analysis.top_words import get_top_words
+from ...helpers.frames import calculate_term_representations
 
 def create_slice_graphs(X, node_ids=None, node_attributes=None, slice_ids=None, verbose=False):
     """
@@ -893,3 +900,91 @@ def plot_matrix_directed_graph(X, node_ids, *, node_attributes=None, filter_isol
         )
     )
     return fig
+
+def save_components(df, ranking_df, g, col, results_dir, terms=None, save_excel=False):
+    wcc = g.strongly_connected_components()
+    
+    component_table_df = {
+        'component': [],
+        'num_papers': [],
+        'num_nodes': [],
+    }
+    
+    for i, c in tqdm(enumerate(wcc)):
+        output_dir = os.path.join(results_dir, str(i))
+        if not os.path.exists(output_dir):
+            os.mkdir(output_dir)
+
+        # get author ids from graph
+        components_nodes = list(c.G.nodes)
+        
+        # get the graph rankings for the given component
+        component_node_df = ranking_df.loc[ranking_df.node_id.isin(set(components_nodes))]
+        component_node_df.to_csv(os.path.join(output_dir, f'component_{i}_with_{len(c)}_nodes.csv'), index=False)
+        if save_excel:
+            component_node_df.to_excel(os.path.join(output_dir, f'component_{i}_with_{len(c)}_nodes.xlsx'), index=False)
+
+        # get the papers for the given component
+        component_document_df = find_subdf(df, col, components_nodes)
+        component_document_df.to_csv(os.path.join(output_dir, f'component_{i}_' \
+                                                  f'with_{len(component_document_df)}_documents.csv'), index=False)
+        
+        if save_excel:
+            component_document_df.to_excel(os.path.join(output_dir, f'component_{i}_' \
+                                                  f'with_{len(component_document_df)}_documents.xlsx'), index=False)
+            
+        # calculate attribution for component
+        if terms is not None:
+            attribution_df = calculate_term_representations(component_document_df, terms, col='cleaned_title_abstract')
+            attribution_df.to_csv(os.path.join(output_dir, f'component_{i}_attribution.csv'), index=False)
+            
+            if save_excel:
+                attribution_df.to_excel(os.path.join(output_dir, f'component_{i}_attribution.xlsx'), index=False)
+    
+        # build table
+        component_table_df['component'].append(i)
+        component_table_df['num_nodes'].append(len(c))
+        component_table_df['num_papers'].append(len(component_document_df))
+    
+        # visualize
+        num_nodes = len(component_node_df)
+        c.visualize(font_color      = 'black',
+                    node_color      = '#edede9',
+                    node_size       = 200,
+                    font_size       = 8,
+                    edge_width      = 0.08,
+                    highlight_nodes = None,
+                    save_path       = os.path.join(output_dir, f'component_{i}_with_{len(c)}_nodes.png'),
+                    figsize         = (6,6))
+        
+        
+    component_table_df = pd.DataFrame.from_dict(component_table_df)
+    component_table_df.to_csv(os.path.join(results_dir, 'component_table.csv'), index=False)
+
+
+def component_wordclouds(df, g, col, results_dir, top_words=30, text_col='clean_title_abstract'):
+    wcc = g.strongly_connected_components()
+    for i, c in tqdm(enumerate(wcc)):
+        output_dir = os.path.join(results_dir, str(i))
+        if not os.path.exists(output_dir):
+            os.mkdir(output_dir)
+
+        # get author ids from graph
+        components_nodes = list(c.G.nodes)
+
+        # get the papers for the given component
+        component_document_df = find_subdf(df, col, components_nodes)
+       
+        # create/save the wordcloud
+        create_wordcloud_from_df(
+                         df        = component_document_df, 
+                         col       = text_col, 
+                         n         = top_words, 
+                         save_path = os.path.join(output_dir, f'wordcloud_{i}.png'),
+                         figsize   = (6,6))
+    
+        # create top n-grams files as well
+        documents = [x for x in component_document_df[text_col].to_list() if not pd.isna(x)]
+        for n in range(1,4):
+            ngrams = get_top_words(documents, top_n=100, n_gram=n, verbose=False)
+            ngrams.to_csv(os.path.join(output_dir, f'top_{n}-grams.csv'), index=False)

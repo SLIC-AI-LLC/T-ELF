@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>TELF.pre_processing.Beaver: Fast matrix and tensor building tool &#8212; TELF 0.0.41 documentation</title>
+    <title>TELF.pre_processing.Beaver: Fast matrix and tensor building tool &#8212; TELF 0.0.42 documentation</title>
   
   
   
@@ -30,7 +30,7 @@
   <link href="_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 <link href="_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
   
@@ -40,7 +40,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="_static/documentation_options.js?v=1983794d"></script>
+    <script src="_static/documentation_options.js?v=0ef7f92b"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -126,7 +126,7 @@
   
   
   
-    <p class="title logo__title">TELF 0.0.41 documentation</p>
+    <p class="title logo__title">TELF 0.0.42 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -409,14 +409,14 @@
 <section id="example">
 <h1>Example<a class="headerlink" href="#example" title="Link to this heading">#</a></h1>
 <p>Several examples for Beaver can be found <a class="reference external" href="https://github.com/lanl/T-ELF/tree/main/examples/Beaver">here</a>. Here we will show example usage for creating a Document-Words matrix. First let’s load the example dataset (example dataset can be found <a class="reference external" href="https://github.com/lanl/T-ELF/tree/main/data">here</a>):</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../../data/sample.csv&quot;</span><span class="p">)</span>
 <span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>Next, let’s build the vocabulary:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">TELF.pre_processing</span> <span class="kn">import</span> <span class="n">Beaver</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">TELF.pre_processing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Beaver</span>
 
 <span class="n">beaver</span> <span class="o">=</span> <span class="n">Beaver</span><span class="p">()</span>
 <span class="n">settings</span> <span class="o">=</span> <span class="p">{</span>
@@ -444,7 +444,7 @@
 </pre></div>
 </div>
 <p>We cam then load the matrix:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scipy.sparse</span> <span class="k">as</span> <span class="nn">ss</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">scipy.sparse</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ss</span>
 
 <span class="c1"># load the saved file which is in Sparse COO format</span>
 <span class="n">X_csr_sparse</span> <span class="o">=</span> <span class="n">ss</span><span class="o">.</span><span class="n">load_npz</span><span class="p">(</span><span class="s2">&quot;documents_words.npz&quot;</span><span class="p">)</span>

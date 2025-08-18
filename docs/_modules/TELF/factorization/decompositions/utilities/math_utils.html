@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TELF.factorization.decompositions.utilities.math_utils &#8212; TELF 0.0.41 documentation</title>
+    <title>TELF.factorization.decompositions.utilities.math_utils &#8212; TELF 0.0.42 documentation</title>
   
   
   
@@ -29,7 +29,7 @@
   <link href="../../../../../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 <link href="../../../../../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../../../../../_static/graphviz.css?v=4ae1632d" />
   
@@ -39,7 +39,7 @@
   <link rel="preload" as="script" href="../../../../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../../../../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../../../../../_static/documentation_options.js?v=1983794d"></script>
+    <script src="../../../../../_static/documentation_options.js?v=0ef7f92b"></script>
     <script src="../../../../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -125,7 +125,7 @@
   
   
   
-    <p class="title logo__title">TELF 0.0.41 documentation</p>
+    <p class="title logo__title">TELF 0.0.42 documentation</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -322,14 +322,14 @@
                 <article class="bd-article">
                   
   <h1>Source code for TELF.factorization.decompositions.utilities.math_utils</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">.generic_utils</span> <span class="kn">import</span> <span class="n">get_np</span><span class="p">,</span> <span class="n">get_scipy</span>
-<span class="kn">import</span> <span class="nn">itertools</span>
-<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">.generic_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_np</span><span class="p">,</span> <span class="n">get_scipy</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">itertools</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tqdm</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
 
 
 <div class="viewcode-block" id="get_pac">
 <a class="viewcode-back" href="../../../../../TELF.factorization.decompositions.utilities.html#TELF.factorization.decompositions.utilities.math_utils.get_pac">[docs]</a>
-<span class="k">def</span> <span class="nf">get_pac</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">use_gpu</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_pac</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">use_gpu</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculates PAC score from consensus matrices</span>
 
@@ -373,7 +373,7 @@
 
 <div class="viewcode-block" id="prune">
 <a class="viewcode-back" href="../../../../../TELF.factorization.decompositions.utilities.html#TELF.factorization.decompositions.utilities.math_utils.prune">[docs]</a>
-<span class="k">def</span> <span class="nf">prune</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">use_gpu</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">other</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">keys_to_check_other</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;MASK&quot;</span><span class="p">]):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">prune</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">use_gpu</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">other</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">keys_to_check_other</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;MASK&quot;</span><span class="p">]):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Removes zero rows and columns from a matrix</span>
 
@@ -455,7 +455,7 @@
 
 <div class="viewcode-block" id="unprune">
 <a class="viewcode-back" href="../../../../../TELF.factorization.decompositions.utilities.html#TELF.factorization.decompositions.utilities.math_utils.unprune">[docs]</a>
-<span class="k">def</span> <span class="nf">unprune</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">indices</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">use_gpu</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">unprune</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">indices</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">use_gpu</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="n">np</span> <span class="o">=</span> <span class="n">get_np</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">use_gpu</span><span class="o">=</span><span class="n">use_gpu</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">axis</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">indices</span><span class="p">),</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">A</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
@@ -470,7 +470,7 @@
 
 <div class="viewcode-block" id="kl_divergence">
 <a class="viewcode-back" href="../../../../../TELF.factorization.decompositions.utilities.html#TELF.factorization.decompositions.utilities.math_utils.kl_divergence">[docs]</a>
-<span class="k">def</span> <span class="nf">kl_divergence</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">kl_divergence</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
     <span class="n">np</span> <span class="o">=</span> <span class="n">get_np</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
     <span class="n">scipy</span> <span class="o">=</span> <span class="n">get_scipy</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
     
@@ -497,9 +497,9 @@
 
 <div class="viewcode-block" id="norm_X">
 <a class="viewcode-back" href="../../../../../TELF.factorization.decompositions.utilities.html#TELF.factorization.decompositions.utilities.math_utils.norm_X">[docs]</a>
-<span class="k">def</span> <span class="nf">norm_X</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
-    <span class="kn">import</span> <span class="nn">scipy</span>
-    <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">norm_X</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">scipy</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
     <span class="k">if</span> <span class="n">scipy</span><span class="o">.</span><span class="n">sparse</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
         <span class="n">normX</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
@@ -509,7 +509,7 @@
 
 <div class="viewcode-block" id="relative_trinmf_error">
 <a class="viewcode-back" href="../../../../../TELF.factorization.decompositions.utilities.html#TELF.factorization.decompositions.utilities.math_utils.relative_trinmf_error">[docs]</a>
-<span class="k">def</span> <span class="nf">relative_trinmf_error</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">H</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">relative_trinmf_error</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">H</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    input:</span>
 <span class="sd">        X (sparse array, ndarray): shape $m \times n$ array or sparse array.</span>
@@ -535,7 +535,7 @@
 
 <div class="viewcode-block" id="relative_error_rescal">
 <a class="viewcode-back" href="../../../../../TELF.factorization.decompositions.utilities.html#TELF.factorization.decompositions.utilities.math_utils.relative_error_rescal">[docs]</a>
-<span class="k">def</span> <span class="nf">relative_error_rescal</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">A</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">normX</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">relative_error_rescal</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">A</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">normX</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    input:</span>
 <span class="sd">      X (sparse array, ndarray): shape $m \times n$ array or sparse array.</span>
@@ -556,7 +556,7 @@
 
 <div class="viewcode-block" id="relative_error">
 <a class="viewcode-back" href="../../../../../TELF.factorization.decompositions.utilities.html#TELF.factorization.decompositions.utilities.math_utils.relative_error">[docs]</a>
-<span class="k">def</span> <span class="nf">relative_error</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">MASK</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">normX</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">relative_error</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">MASK</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">normX</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    input:</span>
 <span class="sd">      X (sparse array, ndarray): shape $m \times n$ array or sparse array.</span>
@@ -627,7 +627,7 @@
 
 <div class="viewcode-block" id="fro_norm">
 <a class="viewcode-back" href="../../../../../TELF.factorization.decompositions.utilities.html#TELF.factorization.decompositions.utilities.math_utils.fro_norm">[docs]</a>
-<span class="k">def</span> <span class="nf">fro_norm</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">use_gpu</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">fro_norm</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">use_gpu</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="n">np</span> <span class="o">=</span> <span class="n">get_np</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">use_gpu</span><span class="o">=</span><span class="n">use_gpu</span><span class="p">)</span>
     <span class="n">scipy</span> <span class="o">=</span> <span class="n">get_scipy</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">use_gpu</span><span class="o">=</span><span class="n">use_gpu</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">scipy</span><span class="o">.</span><span class="n">sparse</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
@@ -638,7 +638,7 @@
 
 <div class="viewcode-block" id="nz_indices">
 <a class="viewcode-back" href="../../../../../TELF.factorization.decompositions.utilities.html#TELF.factorization.decompositions.utilities.math_utils.nz_indices">[docs]</a>
-<span class="k">def</span> <span class="nf">nz_indices</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">use_gpu</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">nz_indices</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">use_gpu</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="n">np</span> <span class="o">=</span> <span class="n">get_np</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">use_gpu</span><span class="o">=</span><span class="n">use_gpu</span><span class="p">)</span>
     <span class="n">scipy</span> <span class="o">=</span> <span class="n">get_scipy</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">use_gpu</span><span class="o">=</span><span class="n">use_gpu</span><span class="p">)</span>
     <span class="n">dtype</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">dtype</span>
@@ -692,7 +692,7 @@
 
 <div class="viewcode-block" id="masked_nmf">
 <a class="viewcode-back" href="../../../../../TELF.factorization.decompositions.utilities.html#TELF.factorization.decompositions.utilities.math_utils.masked_nmf">[docs]</a>
-<span class="k">def</span> <span class="nf">masked_nmf</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">W</span><span class="p">,</span><span class="n">H</span><span class="p">,</span><span class="n">mask</span><span class="p">,</span><span class="n">itr</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">masked_nmf</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">W</span><span class="p">,</span><span class="n">H</span><span class="p">,</span><span class="n">mask</span><span class="p">,</span><span class="n">itr</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">itr</span><span class="p">):</span>
         <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">mask</span><span class="p">,</span><span class="n">X</span><span class="p">,</span><span class="n">W</span><span class="nd">@H</span><span class="p">)</span>
         <span class="n">W</span> <span class="o">=</span> <span class="n">W_update</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">W</span><span class="p">,</span><span class="n">H</span><span class="p">,{</span><span class="s1">&#39;niter&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">})</span>
@@ -704,7 +704,7 @@
 
 <div class="viewcode-block" id="sparse_divide_product">
 <a class="viewcode-back" href="../../../../../TELF.factorization.decompositions.utilities.html#TELF.factorization.decompositions.utilities.math_utils.sparse_divide_product">[docs]</a>
-<span class="k">def</span> <span class="nf">sparse_divide_product</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">nz_rows</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nz_cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">use_gpu</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">sparse_divide_product</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">nz_rows</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nz_cols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">use_gpu</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Efficiently computes X/(A@B).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -725,7 +725,7 @@
 
 <div class="viewcode-block" id="sparse_dot_product">
 <a class="viewcode-back" href="../../../../../TELF.factorization.decompositions.utilities.html#TELF.factorization.decompositions.utilities.math_utils.sparse_dot_product">[docs]</a>
-<span class="k">def</span> <span class="nf">sparse_dot_product</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">nz_rows</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nz_cols</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">sparse_dot_product</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">nz_rows</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nz_cols</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Efficiently computes (A@B).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -746,7 +746,7 @@
 
 <div class="viewcode-block" id="nan_to_num">
 <a class="viewcode-back" href="../../../../../TELF.factorization.decompositions.utilities.html#TELF.factorization.decompositions.utilities.math_utils.nan_to_num">[docs]</a>
-<span class="k">def</span> <span class="nf">nan_to_num</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">num</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">nan_to_num</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">num</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Replaces nan in X with num</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -766,7 +766,7 @@
 
 <div class="viewcode-block" id="bary_coords">
 <a class="viewcode-back" href="../../../../../TELF.factorization.decompositions.utilities.html#TELF.factorization.decompositions.utilities.math_utils.bary_coords">[docs]</a>
-<span class="k">def</span> <span class="nf">bary_coords</span><span class="p">(</span><span class="n">H</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">bary_coords</span><span class="p">(</span><span class="n">H</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Computes generalized Barycentric coordinates from an activation matrix.</span>
 

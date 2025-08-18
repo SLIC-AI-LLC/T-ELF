@@ -277,8 +277,11 @@ def process_countries(row):
     if isinstance(row, str):
         row = ast.literal_eval(row)
     for k, v in row.items():
-        countries.append(v.get('country', 'Unknown'))
+        raw = v.get('country', None)
+        countries.append(raw if raw is not None else 'Unknown')
+        # countries.append(v.get('country', 'Unknown'))
     countries = list(set(countries))
+
     return ';'.join(countries)
 
 def process_affiliations(row):
@@ -291,7 +294,9 @@ def process_affiliations(row):
         row = ast.literal_eval(row)
     for k, v in row.items():
         affil_ids.append(k)
-        affil_names.append(v.get('name', 'Unknown'))
+        # affil_names.append(v.get('name', 'Unknown'))
+        raw = v.get('name', None)
+        affil_names.append(raw if raw is not None else 'Unknown')
     return ';'.join(affil_ids), ';'.join(affil_names)
 
 def sum_dicts(dict_list, n):
