@@ -17,3 +17,10 @@ negatives: Adversarial
 
 ## Machine learning 
 ## malware
+## ransomware
+## matrix
+## anomaly
+## anomaly detection
+## cluster analysis
+## cluster
+## unsupervised

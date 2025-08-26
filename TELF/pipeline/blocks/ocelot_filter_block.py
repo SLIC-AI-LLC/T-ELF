@@ -69,7 +69,7 @@ class OcelotFilterBlock(AnimalBlock):
             **kw,
         )
 
-    # ------------------------------------------------------ helpers
+        # ------------------------------------------------------ helpers
 
     def _rebuild_text_column(self, df: pd.DataFrame) -> pd.DataFrame:
         """
