@@ -6,6 +6,7 @@ sys.path += ["Penguin"]
 
 # Cheetah
 from .Cheetah.cheetah import Cheetah
+from .Cheetah.ocelot import Ocelot
 from .Cheetah.term_formatter import CheetahTermFormatter, convert_txt_to_cheetah_markdown
 from .Cheetah.term_generator import SearchTermGenerator
 

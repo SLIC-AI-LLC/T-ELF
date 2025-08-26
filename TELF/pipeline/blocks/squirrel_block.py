@@ -18,12 +18,14 @@ class SquirrelBlock(AnimalBlock):
         needs = CANONICAL_NEEDS,
         provides = ("df",),
         tag: str = "Squirrel",
+        low_count_backup: int = 25,
         conditional_needs: Sequence[Tuple[str, Any]]  = (),
         *,
         init_settings: Dict[str, Any] = None,
         call_settings: Dict[str, Any] = None,
         **kw,
     ) -> None:
+        self.low_count_backup = low_count_backup
         
         emb_pruner = EmbeddingPruner(
             embedding_model="SPECTER",
@@ -72,7 +74,7 @@ class SquirrelBlock(AnimalBlock):
         label_col   = self.init_settings['label_column']
         ref_label   = self.init_settings['reference_label']
         count_ref   = int((df[label_col] == ref_label).sum())
-        if count_ref < 25:
+        if self.low_count_backup and count_ref < self.low_count_backup:
             self.init_settings['pipeline'] = self.backup_pipeline
 
         if self.init_settings['data_column'] not in df.columns:
