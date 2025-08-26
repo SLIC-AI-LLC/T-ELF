@@ -56,3 +56,6 @@ from .group_summary_block import GroupSummaryBlock
 from .post_process_cluster_analysis_block import ClusteringAnalyzerBlock
 from .post_process_label_analysis_block import LabelAnalyzerBlock
 from .peacock_stats_block import PeacockStatsBlock
+from .ocelot_filter_block import OcelotFilterBlock
+from .auto_bunny_simple_block import AutoBunnySimpleBlock
+from .term_table_block  import TermTableBlock
